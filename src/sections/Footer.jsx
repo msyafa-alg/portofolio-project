@@ -4,7 +4,7 @@ import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
 const socials = [
   { icon: <FiGithub size={16} />,   href: 'https://github.com/msyafa-alg', label: 'GitHub'   },
   { icon: <FiLinkedin size={16} />, href: 'https://www.linkedin.com/in/syafa-algiffari-567a48375/', label: 'LinkedIn' },
-  { icon: <FiMail size={16} />,     href: '#', label: 'Email'    },
+  { icon: <FiMail size={16} />,     href: 'mailto:firdaussyafa12@gmail.com', label: 'Email'    },
 ]
 
 export default function Footer() {

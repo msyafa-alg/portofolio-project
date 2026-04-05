@@ -32,7 +32,7 @@ const projects = [
     emoji: '🎵', color: 'from-emerald-900/30 to-zinc-900/10',
     title: 'Music Chart',
     desc: 'Aplikasi web untuk menampilkan chart musik menggunakan data dinamis sebagai latihan pengolahan data dan frontend rendering.',
-    stack: ['Laravel', 'PHP', 'MySQL'],
+    stack: ['JavaScript', 'Web App'],
     demo: null,
     repo: 'https://github.com/msyafa-alg/musicchart',
   },
@@ -46,22 +46,53 @@ const projects = [
   },
 ]
 
-const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.12 } } }
-const card    = { hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } }
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
+}
+const card = {
+  hidden: { opacity: 0, y: 40, scale: 0.96 },
+  show:   { opacity: 1, y: 0,  scale: 1, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+}
 
 export default function Projects() {
   return (
-    <SectionWrapper id="projects" className="py-24 bg-zinc-900/30">
+    <SectionWrapper id="projects" className="py-24 bg-zinc-900/30" direction="up">
       <div className="max-w-5xl mx-auto px-6">
         <SectionLabel number="04" label="Projects" heading="Things I've Built" />
-        <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {projects.map(({ emoji, color, title, desc, stack, demo, repo }) => (
-            <motion.div key={title} variants={card} whileHover={{ y: -6, transition: { duration: 0.2 } }}
-              className="group bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-cyan-400/30 transition-colors flex flex-col">
-              <div className={`h-44 bg-gradient-to-br ${color} flex items-center justify-center`}>
-                <span className="text-5xl">{emoji}</span>
+            <motion.div
+              key={title}
+              variants={card}
+              whileHover={{ y: -8, transition: { duration: 0.25, ease: 'easeOut' } }}
+              className="group bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-cyan-400/30 transition-colors flex flex-col"
+            >
+              {/* Thumbnail */}
+              <div className={`h-44 bg-gradient-to-br ${color} flex items-center justify-center relative overflow-hidden`}>
+                <motion.span
+                  className="text-5xl"
+                  whileHover={{ scale: 1.2, rotate: 5 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {emoji}
+                </motion.span>
+                {/* Shine sweep on hover */}
+                <motion.div
+                  initial={{ x: '-100%', opacity: 0 }}
+                  whileHover={{ x: '200%', opacity: 0.15 }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent skew-x-12 pointer-events-none"
+                />
               </div>
+
               <div className="p-5 flex flex-col flex-1">
                 <h3 className="text-sm font-semibold text-zinc-100 mb-2">{title}</h3>
                 <p className="text-xs text-zinc-400 leading-relaxed mb-4 flex-1">{desc}</p>
@@ -70,15 +101,21 @@ export default function Projects() {
                 </div>
                 <div className="flex gap-3">
                   {demo && (
-                    <a href={demo} target="_blank" rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-cyan-400 transition-colors">
+                    <motion.a
+                      href={demo} target="_blank" rel="noopener noreferrer"
+                      whileHover={{ x: 2 }}
+                      className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-cyan-400 transition-colors"
+                    >
                       <FiExternalLink size={13} /> Demo
-                    </a>
+                    </motion.a>
                   )}
-                  <a href={repo} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-cyan-400 transition-colors">
+                  <motion.a
+                    href={repo} target="_blank" rel="noopener noreferrer"
+                    whileHover={{ x: 2 }}
+                    className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-cyan-400 transition-colors"
+                  >
                     <FiGithub size={13} /> GitHub
-                  </a>
+                  </motion.a>
                 </div>
               </div>
             </motion.div>
