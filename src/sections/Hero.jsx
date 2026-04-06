@@ -28,12 +28,6 @@ export default function Hero() {
   return (
     <section ref={ref} id="hero" className="min-h-screen flex items-center pt-20 max-w-5xl mx-auto px-6 overflow-hidden">
 
-      {/* Ambient glow blobs — purely decorative */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden -z-10">
-        <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-cyan-500/5 blur-[120px]" />
-        <div className="absolute top-1/2 -right-40 w-[400px] h-[400px] rounded-full bg-blue-600/5 blur-[100px]" />
-      </div>
-
       <motion.div style={{ y, opacity }} className="py-24 w-full">
         <motion.div
           variants={container}

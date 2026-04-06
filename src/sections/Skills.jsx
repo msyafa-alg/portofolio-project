@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
-import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaLinux, FaServer, FaLightbulb, FaUsers, FaBolt } from 'react-icons/fa'
-import { SiTailwindcss } from 'react-icons/si'
+import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaLinux, FaServer, FaLightbulb, FaUsers, FaBolt, FaPhp } from 'react-icons/fa'
+import { SiTailwindcss, SiLaravel } from 'react-icons/si'
 import SectionWrapper from '../components/SectionWrapper'
 import SectionLabel from '../components/SectionLabel'
 
@@ -10,6 +10,8 @@ const hardSkills = [
   { icon: <FaJs          className="text-yellow-400" />, label: 'JavaScript'    },
   { icon: <FaReact       className="text-cyan-400"   />, label: 'React'         },
   { icon: <SiTailwindcss className="text-sky-400"    />, label: 'Tailwind CSS'  },
+  { icon: <SiLaravel     className="text-red-400"    />, label: 'Laravel'       },
+  { icon: <FaPhp         className="text-indigo-400" />, label: 'PHP'           },
   { icon: <FaServer      className="text-emerald-400"/>, label: 'VPS & Hosting' },
   { icon: <FaLinux       className="text-zinc-300"   />, label: 'Linux Basics'  },
 ]
