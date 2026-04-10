@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { FiMail, FiLinkedin, FiGithub, FiSend, FiArrowUpRight } from 'react-icons/fi'
 import SectionWrapper from '../components/SectionWrapper'
 import SectionLabel from '../components/SectionLabel'
+import SuccessToast from '../components/SuccessToast'
 
 const socials = [
   { Icon: FiMail,     label: 'firdaussyafa12@gmail.com',        href: 'mailto:firdaussyafa12@gmail.com'                        },
@@ -43,7 +44,9 @@ export default function Contact() {
   }
 
   return (
-    <SectionWrapper id="contact" className="py-28">
+    <>
+      <SuccessToast show={success} onClose={() => setSuccess(false)} />
+      <SectionWrapper id="contact" className="py-28">
       <div className="max-w-5xl mx-auto px-6">
         <SectionLabel number="05" label="Contact" heading="Get In Touch"
           sub="Have a project in mind or just want to connect? Feel free to reach out." />
@@ -150,5 +153,6 @@ export default function Contact() {
         </div>
       </div>
     </SectionWrapper>
+    </>
   )
 }
