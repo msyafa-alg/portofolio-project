@@ -6,38 +6,43 @@ import SectionLabel from '../components/SectionLabel'
 import SuccessToast from '../components/SuccessToast'
 
 const socials = [
-  { Icon: FiMail,     label: 'firdaussyafa12@gmail.com',        href: 'mailto:firdaussyafa12@gmail.com'                        },
-  { Icon: FiLinkedin, label: 'linkedin.com/in/syafa-algiffari', href: 'https://www.linkedin.com/in/syafa-algiffari-567a48375/' },
-  { Icon: FiGithub,   label: 'github.com/msyafa-alg',           href: 'https://github.com/msyafa-alg'                         },
+  {
+    Icon: FiMail,
+    label: 'Email',
+    sub: 'firdaussyafa12@gmail.com',
+    href: 'mailto:firdaussyafa12@gmail.com',
+  },
+  {
+    Icon: FiLinkedin,
+    label: 'LinkedIn',
+    sub: 'syafa-algiffari',
+    href: 'https://www.linkedin.com/in/syafa-algiffari-567a48375/',
+  },
+  {
+    Icon: FiGithub,
+    label: 'GitHub',
+    sub: 'msyafa-alg',
+    href: 'https://github.com/msyafa-alg',
+  },
 ]
 
-const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } } }
-const fi      = { hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } } }
-
-const inputBase = {
-  width: '100%',
-  background: 'var(--bg-elevated)',
-  border: '1px solid var(--border)',
-  borderRadius: '0.875rem',
-  padding: '0.75rem 1rem',
-  fontSize: '0.8125rem',
-  color: 'var(--text-primary)',
-  outline: 'none',
-  fontFamily: 'inherit',
-  transition: 'border-color 0.2s, box-shadow 0.2s',
-}
-
 export default function Contact() {
-  const [form,    setForm]    = useState({ name: '', email: '', message: '' })
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    message: '',
+  })
+
   const [success, setSuccess] = useState(false)
 
-  const onChange = e => setForm(p => ({ ...p, [e.target.name]: e.target.value }))
-  const onFocus  = e => { e.target.style.borderColor = 'var(--border-strong)'; e.target.style.boxShadow = '0 0 0 3px var(--accent-subtle)' }
-  const onBlur   = e => { e.target.style.borderColor = 'var(--border)'; e.target.style.boxShadow = 'none' }
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
 
-  const onSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     if (!form.name || !form.email || !form.message) return
+
     setSuccess(true)
     setForm({ name: '', email: '', message: '' })
     setTimeout(() => setSuccess(false), 4000)
@@ -46,113 +51,127 @@ export default function Contact() {
   return (
     <>
       <SuccessToast show={success} onClose={() => setSuccess(false)} />
-      <SectionWrapper id="contact" className="py-28">
-      <div className="max-w-5xl mx-auto px-6">
-        <SectionLabel number="05" label="Contact" heading="Get In Touch"
-          sub="Have a project in mind or just want to connect? Feel free to reach out." />
 
-        <div className="grid md:grid-cols-2 gap-6">
+      <SectionWrapper id="contact">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-10 py-10 sm:py-12">
 
-          {/* Form */}
-          <motion.form onSubmit={onSubmit} variants={stagger} initial="hidden"
-            whileInView="show" viewport={{ once: true }}
-            className="gradient-border rounded-2xl p-6 space-y-4 noValidate"
-            style={{ background: 'var(--bg-card)' }}>
+          <SectionLabel
+            number="05"
+            label="Contact"
+            heading="Get In Touch"
+            sub="Feel free to reach out anytime."
+          />
 
-            {['name', 'email'].map(field => (
-              <motion.div key={field} variants={fi}>
-                <label className="block text-[10px] font-bold tracking-[0.18em] uppercase mb-2"
-                  style={{ color: 'var(--text-muted)' }}>{field}</label>
-                <input type={field === 'email' ? 'email' : 'text'}
-                  name={field} value={form[field]} onChange={onChange}
-                  onFocus={onFocus} onBlur={onBlur}
-                  placeholder={field === 'email' ? 'your@email.com' : 'Your name'}
-                  style={inputBase} />
-              </motion.div>
-            ))}
+          <div className="flex flex-col gap-6 mt-8 md:grid md:grid-cols-2 md:gap-8">
 
-            <motion.div variants={fi}>
-              <label className="block text-[10px] font-bold tracking-[0.18em] uppercase mb-2"
-                style={{ color: 'var(--text-muted)' }}>Message</label>
-              <textarea name="message" value={form.message} onChange={onChange}
-                onFocus={onFocus} onBlur={onBlur}
-                rows={5} placeholder="What's on your mind?"
-                style={{ ...inputBase, resize: 'none' }} />
-            </motion.div>
+            {/* FORM */}
+            <motion.form
+              onSubmit={handleSubmit}
+              className="rounded-2xl p-4 sm:p-6 backdrop-blur-xl space-y-4 sm:space-y-5"
+              style={{ border: '1px solid var(--border)', background: 'var(--bg-card)' }}
+            >
 
-            <motion.div variants={fi}>
-              <motion.button type="submit"
-                whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
-                className="w-full py-3 rounded-xl text-xs font-semibold tracking-wide flex items-center justify-center gap-2 transition-all"
-                style={{ background: 'var(--text-primary)', color: 'var(--bg)' }}>
-                <FiSend size={12} /> Send Message
-              </motion.button>
-            </motion.div>
+              {['name', 'email'].map((field) => (
+                <div key={field}>
+                  <label className="text-[11px] uppercase tracking-wider text-white/50 mb-1.5 block">
+                    {field}
+                  </label>
+                  <input
+                    type={field === 'email' ? 'email' : 'text'}
+                    name={field}
+                    value={form[field]}
+                    onChange={handleChange}
+                    placeholder={field === 'email' ? 'your@email.com' : 'Your name'}
+                    className="w-full text-sm px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-white/5 border border-white/10 
+                    focus:border-white/30 focus:ring-2 focus:ring-white/10 outline-none transition"
+                  />
+                </div>
+              ))}
 
-            {success && (
-              <motion.div initial={{ opacity: 0, y: 6, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }}
-                className="rounded-xl px-4 py-3 text-xs text-center font-medium"
-                style={{ background: 'rgba(52,211,153,0.07)', border: '1px solid rgba(52,211,153,0.18)', color: '#34d399' }}>
-                ✓ Message sent! I'll get back to you soon.
-              </motion.div>
-            )}
-          </motion.form>
-
-          {/* Info */}
-          <div className="flex flex-col gap-4">
-
-            {/* Socials */}
-            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="gradient-border rounded-2xl p-6 flex-1"
-              style={{ background: 'var(--bg-card)' }}>
-              <p className="text-[10px] font-bold tracking-[0.2em] uppercase mb-5"
-                style={{ color: 'var(--text-muted)' }}>Reach me directly</p>
-              <div className="space-y-3">
-                {socials.map(({ Icon, label, href }, i) => (
-                  <motion.a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                    initial={{ opacity: 0, x: 12 }} whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }} transition={{ delay: i * 0.07, duration: 0.5 }}
-                    whileHover={{ x: 3 }}
-                    className="flex items-center gap-3 group">
-                    <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all"
-                      style={{ background: 'var(--accent-subtle)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
-                      onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--border-hover)'; e.currentTarget.style.color = 'var(--text-primary)' }}
-                      onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-secondary)' }}>
-                      <Icon size={13} />
-                    </div>
-                    <span className="text-xs truncate transition-colors"
-                      style={{ color: 'var(--text-secondary)' }}
-                      onMouseEnter={e => e.currentTarget.style.color = 'var(--text-primary)'}
-                      onMouseLeave={e => e.currentTarget.style.color = 'var(--text-secondary)'}>
-                      {label}
-                    </span>
-                    <FiArrowUpRight size={10} className="ml-auto flex-shrink-0" style={{ color: 'var(--text-muted)' }} />
-                  </motion.a>
-                ))}
+              <div>
+                <label className="text-[11px] uppercase tracking-wider text-white/50 mb-1.5 block">
+                  Message
+                </label>
+                <textarea
+                  name="message"
+                  value={form.message}
+                  onChange={handleChange}
+                  rows={4}
+                  placeholder="Your message..."
+                  className="w-full text-sm px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-white/5 border border-white/10 
+                  focus:border-white/30 focus:ring-2 focus:ring-white/10 outline-none transition resize-none"
+                />
               </div>
-            </motion.div>
 
-            {/* Availability */}
-            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }} transition={{ delay: 0.12, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="gradient-border rounded-2xl p-6"
-              style={{ background: 'var(--bg-card)' }}>
-              <div className="flex items-center gap-2 mb-3">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
-                </span>
-                <span className="text-[10px] font-bold tracking-widest uppercase text-emerald-400">Available</span>
+              <button
+                type="submit"
+                className="w-full py-2.5 sm:py-3 rounded-xl bg-white text-black text-sm font-semibold 
+                flex items-center justify-center gap-2 active:scale-95 transition"
+              >
+                <FiSend size={14} />
+                Send Message
+              </button>
+
+              {success && (
+                <div className="text-xs text-green-400 bg-green-400/10 border border-green-400/20 
+                rounded-xl px-3 py-2.5 text-center">
+                  Message sent 🚀
+                </div>
+              )}
+            </motion.form>
+
+            {/* RIGHT */}
+            <div className="flex flex-col gap-5">
+
+              {/* SOCIAL */}
+              <div className="rounded-2xl p-4 sm:p-6 border border-white/10 bg-white/5 backdrop-blur-xl">
+                <p className="text-[11px] uppercase tracking-wider text-white/50 mb-4">
+                  Contact Info
+                </p>
+
+                <div className="space-y-3">
+                  {socials.map(({ Icon, label, sub, href }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 p-2 rounded-xl hover:bg-white/5 transition"
+                    >
+                      <div className="w-9 h-9 flex items-center justify-center rounded-xl 
+                      bg-white/5 border border-white/10">
+                        <Icon size={14} />
+                      </div>
+
+                      <div className="flex flex-col leading-tight">
+                        <span className="text-sm text-white">{label}</span>
+                        <span className="text-xs text-white/50">{sub}</span>
+                      </div>
+
+                      <FiArrowUpRight className="ml-auto text-white/40" />
+                    </a>
+                  ))}
+                </div>
               </div>
-              <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                Based in <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>Indonesia</strong>. Open to internships, collaborations, and learning opportunities.
-              </p>
-            </motion.div>
+
+              {/* STATUS */}
+              <div className="rounded-2xl p-4 sm:p-6 border border-white/10 bg-white/5 backdrop-blur-xl">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                  <span className="text-xs text-green-400 uppercase tracking-wider">
+                    Available
+                  </span>
+                </div>
+
+                <p className="text-sm text-white/70 leading-relaxed">
+                  Open for freelance, internship, and collaboration.
+                </p>
+              </div>
+
+            </div>
           </div>
         </div>
-      </div>
-    </SectionWrapper>
+      </SectionWrapper>
     </>
   )
 }

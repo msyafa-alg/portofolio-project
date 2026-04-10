@@ -30,7 +30,13 @@ export default function Navbar() {
     return () => obs.disconnect()
   }, [])
 
-  const go = href => { setMenuOpen(false); document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' }) }
+  const go = href => {
+    setMenuOpen(false)
+    // delay biar menu selesai nutup dulu sebelum scroll
+    setTimeout(() => {
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
+    }, 50)
+  }
 
   return (
     <motion.header

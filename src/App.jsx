@@ -1,4 +1,6 @@
-import Navbar         from './components/Navbar'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import Sidebar        from './components/Sidebar'
 import CustomCursor   from './components/CustomCursor'
 import ParticleField  from './components/ParticleField'
 import ShootingStars  from './components/ShootingStars'
@@ -12,13 +14,25 @@ import Projects       from './sections/Projects'
 import Contact        from './sections/Contact'
 import Footer         from './sections/Footer'
 
-const Divider = () => (
-  <div className="max-w-5xl mx-auto px-6">
-    <div className="h-px" style={{ background: 'linear-gradient(90deg, transparent, var(--border), transparent)' }} />
-  </div>
-)
+// Page transition variants
+const pageVariants = {
+  initial: { opacity: 0, y: 16, filter: 'blur(4px)' },
+  animate: { opacity: 1, y: 0,  filter: 'blur(0px)', transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } },
+  exit:    { opacity: 0, y: -10, filter: 'blur(4px)', transition: { duration: 0.25, ease: 'easeIn' } },
+}
+
+const pages = (setActivePage) => ({
+  home:      <Hero setActivePage={setActivePage} />,
+  about:     <About />,
+  skills:    <Skills />,
+  education: <Education />,
+  projects:  <Projects />,
+  contact:   <><Contact /><Footer /></>,
+})
 
 export default function App() {
+  const [activePage, setActivePage] = useState('home')
+
   return (
     <>
       <ScrollProgress />
@@ -38,26 +52,30 @@ export default function App() {
           style={{ background: 'radial-gradient(circle, var(--accent-glow) 0%, transparent 60%)' }} />
         <div className="absolute top-1/2 -right-96 w-[800px] h-[800px] rounded-full"
           style={{ background: 'radial-gradient(circle, var(--accent-subtle) 0%, transparent 60%)' }} />
-        <div className="absolute -bottom-72 left-1/3 w-[700px] h-[700px] rounded-full"
-          style={{ background: 'radial-gradient(circle, var(--accent-subtle) 0%, transparent 60%)' }} />
       </div>
 
-      <div className="relative z-10">
-        <Navbar />
-        <main>
-          <Hero />
-          <Divider />
-          <About />
-          <Divider />
-          <Skills />
-          <Divider />
-          <Education />
-          <Divider />
-          <Projects />
-          <Divider />
-          <Contact />
-        </main>
-        <Footer />
+      {/* Sidebar */}
+      <Sidebar activePage={activePage} setActivePage={setActivePage} />
+
+      {/* Main content area */}
+      <div className="relative z-10 lg:ml-60 min-h-screen flex flex-col">
+        {/* Mobile top padding */}
+        <div className="lg:hidden h-14" />
+
+        {/* Page content with transition */}
+        <div className="flex-1 overflow-y-auto">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activePage}
+              variants={pageVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              {pages(setActivePage)[activePage]}
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
 
       <BackToTop />
