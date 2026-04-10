@@ -1,113 +1,133 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
+import { FiArrowRight, FiDownload } from 'react-icons/fi'
+import useTyping from '../hooks/useTyping'
 
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.13, delayChildren: 0.1 } },
-}
+const container = { hidden: {}, show: { transition: { staggerChildren: 0.1, delayChildren: 0.25 } } }
 const item = {
-  hidden: { opacity: 0, y: 36, filter: 'blur(4px)' },
-  show:   { opacity: 1, y: 0,  filter: 'blur(0px)', transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 24, filter: 'blur(8px)' },
+  show:   { opacity: 1, y: 0,  filter: 'blur(0px)', transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
 }
-const float = {
-  animate: {
-    y: [0, -7, 0],
-    transition: { duration: 3.5, repeat: Infinity, ease: 'easeInOut' },
-  },
-}
+
+const roles = ['Frontend Developer', 'Server Enthusiast', 'IT Student', 'Web Builder']
 
 export default function Hero() {
   const ref = useRef(null)
-  const scrollTo = (id) => document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' })
+  const go  = id => document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' })
+  const typed = useTyping(roles, 70, 38, 2200)
 
-  // Parallax: text drifts up slightly as user scrolls
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const y       = useTransform(scrollYProgress, [0, 1], ['0%', '18%'])
-  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
+  const y       = useTransform(scrollYProgress, [0, 1], ['0%', '16%'])
+  const opacity = useTransform(scrollYProgress, [0, 0.55], [1, 0])
 
   return (
-    <section ref={ref} id="hero" className="min-h-screen flex items-center pt-20 max-w-5xl mx-auto px-6 overflow-hidden">
+    <section ref={ref} id="hero" className="relative min-h-screen flex items-center pt-16 overflow-hidden">
+      <motion.div style={{ y, opacity }} className="w-full max-w-5xl mx-auto px-6 py-24">
+        <motion.div variants={container} initial="hidden" animate="show"
+          className="flex flex-col-reverse md:flex-row md:items-center md:justify-between gap-14">
 
-      <motion.div style={{ y, opacity }} className="py-24 w-full">
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="flex flex-col-reverse md:flex-row md:items-center md:justify-between gap-12"
-        >
+          {/* Left */}
+          <div className="flex-1 max-w-lg">
 
-          {/* ── Left: text ── */}
-          <div className="flex-1">
-            <motion.div variants={item}>
-              <motion.span variants={float} animate="animate"
-                className="inline-flex items-center gap-2 text-xs font-medium tracking-widest text-cyan-400 uppercase border border-cyan-400/30 px-3 py-1 rounded-full mb-8">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+            {/* Badge */}
+            <motion.div variants={item} className="mb-7">
+              <span className="inline-flex items-center gap-2.5 text-[10px] font-semibold tracking-[0.18em] uppercase px-4 py-2 rounded-full glass"
+                style={{ color: 'var(--text-secondary)', border: '1px solid var(--border)' }}>
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50"
+                    style={{ background: 'var(--text-primary)' }} />
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5"
+                    style={{ background: 'var(--text-primary)' }} />
+                </span>
                 Available for opportunities
-              </motion.span>
+              </span>
             </motion.div>
 
-            <motion.h1 variants={item} className="text-5xl md:text-6xl font-extrabold text-zinc-100 leading-tight">
-              Muhammad Syafa
-            </motion.h1>
+            {/* Name */}
+            <motion.div variants={item} className="mb-2">
+              <h1 className="font-display font-bold leading-[1.02] tracking-tight"
+                style={{ fontSize: 'clamp(3rem, 7.5vw, 5rem)', color: 'var(--text-primary)' }}>
+                Muhammad<br />Syafa
+              </h1>
+            </motion.div>
 
-            <motion.p variants={item} className="text-xl md:text-2xl font-light text-zinc-500 mt-1 mb-5 tracking-wide">
+            <motion.p variants={item} className="text-lg font-light tracking-widest mb-6"
+              style={{ color: 'var(--text-muted)', letterSpacing: '0.08em' }}>
               Algiffari Firdaus
             </motion.p>
 
-            <motion.p variants={item} className="text-base md:text-lg text-cyan-400 font-medium tracking-wide mb-4">
-              IT Student &nbsp;•&nbsp; Frontend Developer &nbsp;•&nbsp; Server Enthusiast
+            {/* Typing */}
+            <motion.div variants={item} className="flex items-center gap-2 mb-5 font-mono text-sm"
+              style={{ color: 'var(--text-secondary)' }}>
+              <span style={{ color: 'var(--text-muted)' }}>$</span>
+              <span>{typed}</span>
+              <span className="typing-cursor" />
+            </motion.div>
+
+            {/* Tagline */}
+            <motion.p variants={item} className="text-sm leading-[1.9] mb-10 max-w-sm"
+              style={{ color: 'var(--text-secondary)' }}>
+              Building clean, efficient, and modern web experiences — one component at a time.
             </motion.p>
 
-            <motion.p variants={item} className="text-zinc-400 text-lg max-w-xl mb-10 leading-relaxed">
-              Building clean, efficient, and modern web experiences.
-            </motion.p>
-
-            <motion.div variants={item} className="flex flex-wrap gap-4">
+            {/* CTAs */}
+            <motion.div variants={item} className="flex flex-wrap gap-3">
               <motion.button
-                whileHover={{ scale: 1.05, boxShadow: '0 0 24px rgba(34,211,238,0.25)' }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => scrollTo('#projects')}
-                className="px-6 py-3 bg-cyan-400 text-zinc-950 font-semibold rounded-lg text-sm hover:bg-cyan-300 transition-colors">
+                whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
+                onClick={() => go('#projects')}
+                className="group flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold tracking-wide transition-all"
+                style={{ background: 'var(--text-primary)', color: 'var(--bg)' }}>
                 View Projects
+                <FiArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
               </motion.button>
               <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => scrollTo('#contact')}
-                className="px-6 py-3 border border-zinc-700 text-zinc-300 font-semibold rounded-lg text-sm hover:border-cyan-400 hover:text-cyan-400 transition-colors">
+                whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
+                onClick={() => go('#contact')}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold tracking-wide transition-all glass"
+                style={{ color: 'var(--text-secondary)', border: '1px solid var(--border)' }}
+                onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-hover)'}
+                onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}>
                 Contact Me
               </motion.button>
             </motion.div>
 
-            <motion.div variants={item} className="mt-16 flex items-center gap-2 text-zinc-700 text-xs">
-              <motion.div
-                animate={{ scaleY: [1, 1.4, 1], opacity: [0.4, 1, 0.4] }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                className="w-px h-10 bg-zinc-700 origin-top"
-              />
-              <span>Scroll to explore</span>
+            {/* Scroll */}
+            <motion.div variants={item} className="mt-14 flex items-center gap-3"
+              style={{ color: 'var(--text-muted)' }}>
+              <motion.div animate={{ y: [0, 5, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+                className="w-px h-8 rounded-full"
+                style={{ background: 'linear-gradient(to bottom, var(--text-muted), transparent)' }} />
+              <span className="text-[9px] tracking-[0.25em] uppercase font-semibold">Scroll</span>
             </motion.div>
           </div>
 
-          {/* ── Right: profile photo ── */}
+          {/* Right: photo */}
           <motion.div variants={item} className="flex justify-center md:justify-end flex-shrink-0">
-            <motion.div
-              whileHover={{ scale: 1.04 }}
-              transition={{ duration: 0.3 }}
-              className="relative w-40 h-40 md:w-48 md:h-48"
-            >
-              {/* Spinning gradient ring */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
-                className="absolute -inset-1 rounded-full bg-gradient-to-br from-cyan-400/50 via-blue-500/20 to-transparent blur-sm"
-              />
-              <img
-                src="/images/profile.jpeg"
-                alt="Profile Photo"
-                className="relative w-full h-full rounded-full object-cover object-center border-2 border-zinc-800 shadow-2xl shadow-black/60"
-              />
-            </motion.div>
+            <div className="relative">
+              {/* Rotating ring */}
+              <motion.div animate={{ rotate: 360 }} transition={{ duration: 16, repeat: Infinity, ease: 'linear' }}
+                className="absolute -inset-3 rounded-full pointer-events-none"
+                style={{
+                  background: 'conic-gradient(from 0deg, var(--border-strong), transparent 40%, var(--border), transparent 70%, var(--border-strong))',
+                  filter: 'blur(0.5px)',
+                }} />
+
+              <motion.div whileHover={{ scale: 1.03 }} transition={{ duration: 0.4, ease: 'easeOut' }}
+                className="relative w-44 h-44 md:w-52 md:h-52">
+                <img src="/images/profile.jpeg" alt="Muhammad Syafa"
+                  className="w-full h-full rounded-full object-cover object-center"
+                  style={{ border: '1px solid var(--border)', boxShadow: 'var(--shadow-xl)' }} />
+                <div className="absolute inset-0 rounded-full"
+                  style={{ background: 'linear-gradient(to top, var(--accent-subtle), transparent)' }} />
+              </motion.div>
+
+              {/* Badge */}
+              <motion.div animate={{ y: [0, -4, 0] }} transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+                className="absolute -bottom-3 -right-3 glass rounded-xl px-3 py-1.5 text-[11px] font-medium"
+                style={{ color: 'var(--text-secondary)', border: '1px solid var(--border)', boxShadow: 'var(--shadow-md)' }}>
+                💻 Open to work
+              </motion.div>
+            </div>
           </motion.div>
 
         </motion.div>

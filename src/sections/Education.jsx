@@ -7,10 +7,8 @@ const timeline = [
     school: 'SMK Wikrama — Rekayasa Perangkat Lunak',
     major: 'Sekolah IT · Rekayasa Perangkat Lunak',
     period: 'Current', current: true,
-    emoji: '💻',
-    color: 'from-cyan-500/10 to-blue-500/5',
-    border: 'border-cyan-500/20',
-    dot: 'bg-cyan-400',
+    logo: 'https://files.catbox.moe/44znrc.png',
+    logoBg: 'rgba(30,58,138,0.15)',
     desc: 'Mendalami ilmu IT di SMK Wikrama dengan fokus pada web development, jaringan, dan software engineering. Aktif membangun project dan mengeksplorasi server management di luar kurikulum.',
     tags: ['Web Dev', 'Networking', 'RPL'],
   },
@@ -18,10 +16,8 @@ const timeline = [
     school: 'Pesantren Fathan Mubina',
     major: 'MTs / Sekolah Menengah Pertama',
     period: 'Completed', current: false,
-    emoji: '🕌',
-    color: 'from-emerald-500/10 to-teal-500/5',
-    border: 'border-emerald-500/15',
-    dot: 'bg-zinc-500',
+    logo: 'https://files.catbox.moe/r34nyw.jpg',
+    logoBg: 'rgba(109,40,217,0.12)',
     desc: 'Menempuh pendidikan menengah pertama di Pesantren Fathan Mubina. Selain ilmu agama, mulai tertarik dengan dunia komputer dan teknologi yang akhirnya mendorong memilih jalur IT.',
     tags: ['Islamic Studies', 'Boarding School'],
   },
@@ -29,10 +25,8 @@ const timeline = [
     school: 'SDIT Almadinah Cibinong',
     major: 'Sekolah Dasar Islam Terpadu · Cibinong, Bogor',
     period: 'Completed', current: false,
-    emoji: '📚',
-    color: 'from-violet-500/10 to-purple-500/5',
-    border: 'border-violet-500/15',
-    dot: 'bg-zinc-500',
+    logo: 'https://files.catbox.moe/kwpewk.png',
+    logoBg: 'rgba(30,58,138,0.12)',
     desc: 'Menempuh pendidikan dasar di SDIT Almadinah Cibinong, sekolah berbasis Islam terpadu yang memadukan kurikulum nasional dengan pendidikan agama. Fondasi awal pembentukan karakter dan semangat belajar.',
     tags: ['SDIT', 'Cibinong', 'Bogor'],
   },
@@ -40,77 +34,75 @@ const timeline = [
 
 export default function Education() {
   return (
-    <SectionWrapper id="education" className="py-24" direction="up">
+    <SectionWrapper id="education" className="py-28">
       <div className="max-w-5xl mx-auto px-6">
         <SectionLabel number="03" label="Education" heading="Academic Background" />
 
-        <div className="relative space-y-5">
-
-          {/* Animated vertical line */}
+        <div className="relative space-y-4">
+          {/* Vertical line */}
           <motion.div
-            initial={{ scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute left-6 top-6 bottom-6 w-px bg-gradient-to-b from-cyan-400/40 via-zinc-700 to-transparent origin-top hidden md:block"
+            initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }} viewport={{ once: true }}
+            transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute left-[22px] top-6 bottom-6 w-px origin-top hidden md:block"
+            style={{ background: 'linear-gradient(to bottom, var(--border-hover), var(--border), transparent)' }}
           />
 
-          {timeline.map(({ school, major, period, current, emoji, color, border, dot, desc, tags }, i) => (
-            <motion.div
-              key={school}
-              initial={{ opacity: 0, x: -28 }}
-              whileInView={{ opacity: 1, x: 0 }}
+          {timeline.map(({ school, major, period, current, logo, logoBg, desc, tags }, i) => (
+            <motion.div key={school}
+              initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.15, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="relative md:pl-16"
-            >
-              {/* Timeline dot */}
-              <div className="absolute left-[18px] top-6 hidden md:flex items-center justify-center z-10">
+              transition={{ delay: i * 0.13, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+              className="relative md:pl-16">
+
+              {/* Dot */}
+              <div className="absolute left-[16px] top-6 hidden md:flex items-center justify-center z-10">
                 {current && (
-                  <motion.div
-                    animate={{ scale: [1, 2, 1], opacity: [0.4, 0, 0.4] }}
-                    transition={{ duration: 2.5, repeat: Infinity }}
-                    className="absolute w-3 h-3 rounded-full bg-cyan-400/40"
-                  />
+                  <motion.div animate={{ scale: [1, 2.4, 1], opacity: [0.35, 0, 0.35] }}
+                    transition={{ duration: 2.8, repeat: Infinity }}
+                    className="absolute w-3 h-3 rounded-full"
+                    style={{ background: 'var(--text-primary)' }} />
                 )}
-                <div className={`w-3 h-3 rounded-full ${dot} border-2 border-zinc-950 z-10`} />
+                <div className="w-3 h-3 rounded-full border-2 z-10"
+                  style={{
+                    background: current ? 'var(--text-primary)' : 'var(--bg-elevated)',
+                    borderColor: current ? 'var(--text-primary)' : 'var(--border-hover)',
+                  }} />
               </div>
 
-              {/* Card */}
               <motion.div
-                whileHover={{ x: 5, transition: { duration: 0.2 } }}
-                className={`relative bg-gradient-to-br ${color} border ${border} rounded-2xl p-6 overflow-hidden group cursor-default`}
-              >
-                {/* Background number watermark */}
-                <span className="absolute right-5 top-3 text-6xl font-black text-white/[0.03] select-none pointer-events-none">
+                whileHover={{ x: 4, transition: { duration: 0.2 } }}
+                className="gradient-border rounded-2xl p-6 cursor-default overflow-hidden relative"
+                style={{ background: 'var(--bg-card)' }}>
+
+                {/* Watermark */}
+                <span className="absolute right-4 top-1 font-display font-black select-none pointer-events-none"
+                  style={{ fontSize: '4.5rem', color: 'var(--accent-subtle)', lineHeight: 1 }}>
                   {String(i + 1).padStart(2, '0')}
                 </span>
 
                 <div className="flex items-start gap-4">
-                  {/* Emoji icon */}
-                  <div className="w-11 h-11 rounded-xl bg-zinc-900/60 border border-zinc-700/50 flex items-center justify-center text-xl flex-shrink-0">
-                    {emoji}
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden"
+                    style={{ background: logoBg, border: '1px solid var(--border)' }}>
+                    <img src={logo} alt={school} className="w-8 h-8 object-contain" />
                   </div>
-
                   <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center justify-between gap-2 mb-0.5">
-                      <h3 className="text-sm font-semibold text-zinc-100">{school}</h3>
-                      <span className={`text-xs px-2.5 py-0.5 rounded-full border font-medium ${
-                        current
-                          ? 'text-cyan-400 border-cyan-400/30 bg-cyan-400/5'
-                          : 'text-zinc-500 border-zinc-700 bg-zinc-800/40'
-                      }`}>
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+                      <h3 className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{school}</h3>
+                      <span className="text-[10px] font-medium px-2.5 py-0.5 rounded-full"
+                        style={{
+                          color: current ? 'var(--text-primary)' : 'var(--text-muted)',
+                          border: `1px solid ${current ? 'var(--border-hover)' : 'var(--border)'}`,
+                          background: current ? 'var(--accent-subtle)' : 'transparent',
+                        }}>
                         {period}
                       </span>
                     </div>
-
-                    <p className="text-xs text-zinc-500 mb-3">{major}</p>
-                    <p className="text-sm text-zinc-400 leading-relaxed mb-4">{desc}</p>
-
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2">
+                    <p className="text-[11px] mb-3" style={{ color: 'var(--text-muted)' }}>{major}</p>
+                    <p className="text-xs leading-relaxed mb-4" style={{ color: 'var(--text-secondary)' }}>{desc}</p>
+                    <div className="flex flex-wrap gap-1.5">
                       {tags.map(tag => (
-                        <span key={tag} className="text-xs px-2.5 py-0.5 rounded-full bg-zinc-900/60 border border-zinc-700/50 text-zinc-500">
+                        <span key={tag} className="text-[10px] px-2.5 py-0.5 rounded-full"
+                          style={{ background: 'var(--accent-subtle)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
                           {tag}
                         </span>
                       ))}
