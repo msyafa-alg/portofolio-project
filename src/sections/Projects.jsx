@@ -75,7 +75,7 @@ function FeaturedCard({ p, index }) {
       whileHover={{ y: -6, scale: 1.01 }}
       className="rounded-3xl overflow-hidden flex flex-col"
       style={{
-        background: 'rgba(255,255,255,0.02)',
+        background: 'var(--accent-subtle)',
         backdropFilter: 'blur(12px)',
         border: '1px solid var(--border)',
         boxShadow: '0 10px 30px rgba(0,0,0,0.25)'
@@ -139,7 +139,7 @@ function SecondaryCard({ p, index }) {
       whileHover={{ y: -4 }}
       className="rounded-2xl p-4 flex flex-col"
       style={{
-        background: 'rgba(255,255,255,0.015)',
+        background: 'var(--accent-subtle)',
         border: '1px solid var(--border)',
         boxShadow: '0 5px 20px rgba(0,0,0,0.2)'
       }}
@@ -202,3 +202,4 @@ export default function Projects() {
     </SectionWrapper>
   )
 }
+

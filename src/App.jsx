@@ -6,6 +6,7 @@ import ParticleField  from './components/ParticleField'
 import ShootingStars  from './components/ShootingStars'
 import ScrollProgress from './components/ScrollProgress'
 import BackToTop      from './components/BackToTop'
+import LoadingScreen  from './components/LoadingScreen'
 import Hero           from './sections/Hero'
 import About          from './sections/About'
 import Skills         from './sections/Skills'
@@ -14,11 +15,11 @@ import Projects       from './sections/Projects'
 import Contact        from './sections/Contact'
 import Footer         from './sections/Footer'
 
-// Page transition variants
+// Smoother page transition
 const pageVariants = {
-  initial: { opacity: 0, y: 16, filter: 'blur(4px)' },
-  animate: { opacity: 1, y: 0,  filter: 'blur(0px)', transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } },
-  exit:    { opacity: 0, y: -10, filter: 'blur(4px)', transition: { duration: 0.25, ease: 'easeIn' } },
+  initial: { opacity: 0, y: 10 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } },
+  exit:    { opacity: 0, y: -6, transition: { duration: 0.2, ease: 'easeIn' } },
 }
 
 const pages = (setActivePage) => ({
@@ -35,6 +36,7 @@ export default function App() {
 
   return (
     <>
+      <LoadingScreen />
       <ScrollProgress />
       <CustomCursor />
       <ShootingStars />

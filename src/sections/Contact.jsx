@@ -73,7 +73,7 @@ export default function Contact() {
 
               {['name', 'email'].map((field) => (
                 <div key={field}>
-                  <label className="text-[11px] uppercase tracking-wider text-white/50 mb-1.5 block">
+                  <label className="text-[11px] uppercase tracking-wider text-[var(--text-muted)] mb-1.5 block">
                     {field}
                   </label>
                   <input
@@ -89,7 +89,7 @@ export default function Contact() {
               ))}
 
               <div>
-                <label className="text-[11px] uppercase tracking-wider text-white/50 mb-1.5 block">
+                <label className="text-[11px] uppercase tracking-wider text-[var(--text-muted)] mb-1.5 block">
                   Message
                 </label>
                 <textarea
@@ -125,7 +125,7 @@ export default function Contact() {
 
               {/* SOCIAL */}
               <div className="rounded-2xl p-4 sm:p-6 border border-white/10 bg-white/5 backdrop-blur-xl">
-                <p className="text-[11px] uppercase tracking-wider text-white/50 mb-4">
+                <p className="text-[11px] uppercase tracking-wider text-[var(--text-muted)] mb-4">
                   Contact Info
                 </p>
 
@@ -144,11 +144,11 @@ export default function Contact() {
                       </div>
 
                       <div className="flex flex-col leading-tight">
-                        <span className="text-sm text-white">{label}</span>
-                        <span className="text-xs text-white/50">{sub}</span>
+                        <span className="text-sm text-[var(--text-primary)]">{label}</span>
+                        <span className="text-xs text-[var(--text-muted)]">{sub}</span>
                       </div>
 
-                      <FiArrowUpRight className="ml-auto text-white/40" />
+                      <FiArrowUpRight className="ml-auto text-[var(--text-muted)]" />
                     </a>
                   ))}
                 </div>
@@ -163,7 +163,7 @@ export default function Contact() {
                   </span>
                 </div>
 
-                <p className="text-sm text-white/70 leading-relaxed">
+                <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
                   Open for freelance, internship, and collaboration.
                 </p>
               </div>
@@ -175,3 +175,4 @@ export default function Contact() {
     </>
   )
 }
+
