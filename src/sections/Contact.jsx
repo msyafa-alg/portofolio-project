@@ -1,9 +1,14 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
+import emailjs from '@emailjs/browser'
 import { FiMail, FiLinkedin, FiGithub, FiSend, FiArrowUpRight } from 'react-icons/fi'
 import SectionWrapper from '../components/SectionWrapper'
 import SectionLabel from '../components/SectionLabel'
 import SuccessToast from '../components/SuccessToast'
+
+const EMAILJS_SERVICE  = 'service_v0rynvg'
+const EMAILJS_TEMPLATE = 'template_csq3uer'
+const EMAILJS_KEY      = '1UfkAKwDC7DZp3ucC'
 
 const socials = [
   {
@@ -27,25 +32,36 @@ const socials = [
 ]
 
 export default function Contact() {
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    message: '',
-  })
-
+  const formRef = useRef(null)
+  const [form,    setForm]    = useState({ name: '', email: '', message: '' })
   const [success, setSuccess] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error,   setError]   = useState('')
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
+  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async e => {
     e.preventDefault()
     if (!form.name || !form.email || !form.message) return
 
-    setSuccess(true)
-    setForm({ name: '', email: '', message: '' })
-    setTimeout(() => setSuccess(false), 4000)
+    setLoading(true)
+    setError('')
+
+    try {
+      await emailjs.sendForm(
+        EMAILJS_SERVICE,
+        EMAILJS_TEMPLATE,
+        formRef.current,
+        EMAILJS_KEY
+      )
+      setSuccess(true)
+      setForm({ name: '', email: '', message: '' })
+      setTimeout(() => setSuccess(false), 4000)
+    } catch (err) {
+      setError('Failed to send. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -66,6 +82,7 @@ export default function Contact() {
 
             {/* FORM */}
             <motion.form
+              ref={formRef}
               onSubmit={handleSubmit}
               className="rounded-2xl p-4 sm:p-6 backdrop-blur-xl space-y-4 sm:space-y-5"
               style={{ border: '1px solid var(--border)', background: 'var(--bg-card)' }}
@@ -105,12 +122,21 @@ export default function Contact() {
 
               <button
                 type="submit"
-                className="w-full py-2.5 sm:py-3 rounded-xl bg-white text-black text-sm font-semibold 
-                flex items-center justify-center gap-2 active:scale-95 transition"
+                disabled={loading}
+                className="w-full py-2.5 sm:py-3 rounded-xl text-sm font-semibold 
+                flex items-center justify-center gap-2 active:scale-95 transition disabled:opacity-60"
+                style={{ background: 'var(--text-primary)', color: 'var(--bg)' }}
               >
                 <FiSend size={14} />
-                Send Message
+                {loading ? 'Sending...' : 'Send Message'}
               </button>
+
+              {error && (
+                <div className="text-xs text-red-400 bg-red-400/10 border border-red-400/20 
+                rounded-xl px-3 py-2.5 text-center">
+                  {error}
+                </div>
+              )}
 
               {success && (
                 <div className="text-xs text-green-400 bg-green-400/10 border border-green-400/20 
