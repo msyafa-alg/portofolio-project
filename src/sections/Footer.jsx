@@ -14,7 +14,7 @@ export default function Footer() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-px"
         style={{ background: 'linear-gradient(90deg, transparent, var(--border-hover), transparent)' }} />
 
-      <div className="max-w-4xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-5">
+      <div className="px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-5">
 
         <div className="text-center md:text-left">
           <p className="font-display text-xs font-bold tracking-[0.15em] uppercase"
@@ -47,6 +47,10 @@ export default function Footer() {
     </footer>
   )
 }
+
+
+
+
 
 
 

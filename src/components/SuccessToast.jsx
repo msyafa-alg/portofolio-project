@@ -48,7 +48,7 @@ export default function SuccessToast({ show, onClose }) {
             {/* Close */}
             <button onClick={onClose}
               className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors"
-              style={{ color: 'var(--text-muted)', background: 'var(--accent-subtle)' }}
+              style={{ color: 'var(--text-muted)', background: 'var(--bg-elevated)' }}
               onMouseEnter={e => e.currentTarget.style.color = 'var(--text-primary)'}
               onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}>
               <FiX size={13} />
@@ -68,3 +68,4 @@ export default function SuccessToast({ show, onClose }) {
     </AnimatePresence>
   )
 }
+

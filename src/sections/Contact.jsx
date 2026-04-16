@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import emailjs from '@emailjs/browser'
 import { FiMail, FiLinkedin, FiGithub, FiSend, FiArrowUpRight } from 'react-icons/fi'
@@ -32,7 +32,6 @@ const socials = [
 ]
 
 export default function Contact() {
-  const formRef = useRef(null)
   const [form,    setForm]    = useState({ name: '', email: '', message: '' })
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -48,10 +47,16 @@ export default function Contact() {
     setError('')
 
     try {
-      await emailjs.sendForm(
+      await emailjs.send(
         EMAILJS_SERVICE,
         EMAILJS_TEMPLATE,
-        formRef.current,
+        {
+          from_name:  form.name,
+          from_email: form.email,
+          message:    form.message,
+          reply_to:   form.email,
+          time:       new Date().toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' }),
+        },
         EMAILJS_KEY
       )
       setSuccess(true)
@@ -68,8 +73,8 @@ export default function Contact() {
     <>
       <SuccessToast show={success} onClose={() => setSuccess(false)} />
 
-      <SectionWrapper id="contact">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-10 py-10 sm:py-12">
+      <SectionWrapper id="contact" className="py-8 md:py-10">
+        <div className="px-6 md:px-8">
 
           <SectionLabel
             number="05"
@@ -82,9 +87,8 @@ export default function Contact() {
 
             {/* FORM */}
             <motion.form
-              ref={formRef}
               onSubmit={handleSubmit}
-              className="rounded-2xl p-4 sm:p-6 backdrop-blur-xl space-y-4 sm:space-y-5"
+              className="rounded-2xl p-4 sm:p-6  space-y-4 sm:space-y-5"
               style={{ border: '1px solid var(--border)', background: 'var(--bg-card)' }}
             >
 
@@ -99,8 +103,8 @@ export default function Contact() {
                     value={form[field]}
                     onChange={handleChange}
                     placeholder={field === 'email' ? 'your@email.com' : 'Your name'}
-                    className="w-full text-sm px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-white/5 border border-white/10 
-                    focus:border-white/30 focus:ring-2 focus:ring-white/10 outline-none transition"
+                    className="w-full text-sm px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border)] 
+                    focus:border-[var(--border-hover)] focus:ring-2 focus:ring-[var(--border)] outline-none transition"
                   />
                 </div>
               ))}
@@ -115,8 +119,8 @@ export default function Contact() {
                   onChange={handleChange}
                   rows={4}
                   placeholder="Your message..."
-                  className="w-full text-sm px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-white/5 border border-white/10 
-                  focus:border-white/30 focus:ring-2 focus:ring-white/10 outline-none transition resize-none"
+                  className="w-full text-sm px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border)] 
+                  focus:border-[var(--border-hover)] focus:ring-2 focus:ring-[var(--border)] outline-none transition resize-none"
                 />
               </div>
 
@@ -139,7 +143,7 @@ export default function Contact() {
               )}
 
               {success && (
-                <div className="text-xs text-green-400 bg-green-400/10 border border-green-400/20 
+                <div className="text-xs text-[var(--text-secondary)] bg-[var(--bg-elevated)] border border-[var(--border)] 
                 rounded-xl px-3 py-2.5 text-center">
                   Message sent 🚀
                 </div>
@@ -150,7 +154,7 @@ export default function Contact() {
             <div className="flex flex-col gap-5">
 
               {/* SOCIAL */}
-              <div className="rounded-2xl p-4 sm:p-6 border border-white/10 bg-white/5 backdrop-blur-xl">
+              <div className="rounded-2xl p-4 sm:p-6 border border-[var(--border)] bg-[var(--bg-elevated)] ">
                 <p className="text-[11px] uppercase tracking-wider text-[var(--text-muted)] mb-4">
                   Contact Info
                 </p>
@@ -162,10 +166,10 @@ export default function Contact() {
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-3 p-2 rounded-xl hover:bg-white/5 transition"
+                      className="flex items-center gap-3 p-2 rounded-xl hover:bg-[var(--bg-elevated)] transition"
                     >
                       <div className="w-9 h-9 flex items-center justify-center rounded-xl 
-                      bg-white/5 border border-white/10">
+                      bg-[var(--bg-elevated)] border border-[var(--border)]">
                         <Icon size={14} />
                       </div>
 
@@ -181,10 +185,10 @@ export default function Contact() {
               </div>
 
               {/* STATUS */}
-              <div className="rounded-2xl p-4 sm:p-6 border border-white/10 bg-white/5 backdrop-blur-xl">
+              <div className="rounded-2xl p-4 sm:p-6 border border-[var(--border)] bg-[var(--bg-elevated)] ">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                  <span className="text-xs text-green-400 uppercase tracking-wider">
+                  <span className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-pulse" />
+                  <span className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">
                     Available
                   </span>
                 </div>
@@ -201,4 +205,9 @@ export default function Contact() {
     </>
   )
 }
+
+
+
+
+
 

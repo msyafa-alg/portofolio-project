@@ -1,177 +1,125 @@
 import { useState, useRef } from 'react'
-import { motion, useAnimationFrame, useMotionValue, useSpring } from 'framer-motion'
+import { motion, useAnimationFrame, useMotionValue } from 'framer-motion'
 import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaLinux, FaServer, FaPhp } from 'react-icons/fa'
 import { SiTailwindcss, SiLaravel, SiVercel, SiMysql } from 'react-icons/si'
 import SectionWrapper from '../components/SectionWrapper'
 import SectionLabel from '../components/SectionLabel'
 
-/* ================= DATA ================= */
-const featured = [
-  { icon: <FaReact />, name: 'React', level: 'Intermediate', color: '#22d3ee', size: 'lg', desc: 'Component-based UI' },
-  { icon: <FaJs />, name: 'JavaScript', level: 'Intermediate', color: '#eab308', size: 'md', desc: 'Core language' },
-  { icon: <SiTailwindcss />, name: 'Tailwind', level: 'Advanced', color: '#38bdf8', size: 'sm', desc: 'Utility CSS' },
-  { icon: <SiLaravel />, name: 'Laravel', level: 'Beginner', color: '#f87171', size: 'md', desc: 'Backend framework' },
-  { icon: <FaServer />, name: 'VPS', level: 'Intermediate', color: '#34d399', size: 'lg', desc: 'Server infra' },
-  { icon: <FaLinux />, name: 'Linux', level: 'Beginner', color: '#a78bfa', size: 'sm', desc: 'CLI usage' },
+/* ── All monochrome — no color props ── */
+const hardSkills = [
+  { icon: <FaHtml5 style={{ color: '#e34f26' }} />,       name: 'HTML',         level: 'Advanced'     },
+  { icon: <FaCss3Alt style={{ color: '#264de4' }} />,     name: 'CSS',           level: 'Advanced'     },
+  { icon: <FaJs style={{ color: '#f7df1e' }} />,          name: 'JavaScript',    level: 'Intermediate' },
+  { icon: <FaReact style={{ color: '#61dafb' }} />,       name: 'React',         level: 'Intermediate' },
+  { icon: <SiTailwindcss style={{ color: '#38bdf8' }} />, name: 'Tailwind CSS',  level: 'Advanced'     },
+  { icon: <SiLaravel style={{ color: '#ff2d20' }} />,     name: 'Laravel',       level: 'Beginner'     },
+  { icon: <FaPhp style={{ color: '#8892be' }} />,         name: 'PHP',           level: 'Beginner'     },
+  { icon: <SiMysql style={{ color: '#f29111' }} />,       name: 'MySQL',         level: 'Beginner'     },
+  { icon: <FaServer style={{ color: '#34d399' }} />,      name: 'VPS & Hosting', level: 'Intermediate' },
+  { icon: <FaLinux style={{ color: '#fcc624' }} />,       name: 'Linux',         level: 'Beginner'     },
+  { icon: <SiVercel />,                                   name: 'Vercel',        level: 'Intermediate' },
 ]
 
-const marquee = [
-  { icon: <FaHtml5 />, name: 'HTML', color: '#f97316' },
-  { icon: <FaCss3Alt />, name: 'CSS', color: '#3b82f6' },
-  { icon: <FaJs />, name: 'JavaScript', color: '#eab308' },
-  { icon: <FaReact />, name: 'React', color: '#22d3ee' },
-  { icon: <SiTailwindcss />, name: 'Tailwind', color: '#38bdf8' },
-  { icon: <SiLaravel />, name: 'Laravel', color: '#f87171' },
-  { icon: <SiMysql />, name: 'MySQL', color: '#f59e0b' },
+const softSkills = [
+  { emoji: '🧩', label: 'Problem Solving',    desc: 'Breaking complex issues into manageable steps'  },
+  { emoji: '⚡', label: 'Fast Learner',       desc: 'Quickly adapting to new tools and frameworks'   },
+  { emoji: '🤝', label: 'Team Collaboration', desc: 'Working effectively in group projects'          },
 ]
 
-const sizeMap = {
-  sm: { card: 'w-28 h-32', icon: 'text-xl w-9 h-9', name: 'text-xs' },
-  md: { card: 'w-32 h-36', icon: 'text-2xl w-10 h-10', name: 'text-sm' },
-  lg: { card: 'w-40 h-44', icon: 'text-3xl w-12 h-12', name: 'text-base' },
-}
-
-/* ================= CARD ================= */
-function Card({ skill, i }) {
-  const [hover, setHover] = useState(false)
-
-  const float = useMotionValue(0)
-  const spring = useSpring(float, { stiffness: 50, damping: 14 })
-  const t = useRef(i)
-
-  useAnimationFrame((_, d) => {
-    if (hover) return
-    t.current += d / 1000
-    float.set(Math.sin(t.current) * 6)
-  })
-
-  const s = sizeMap[skill.size]
-
-  return (
-    <motion.div
-      onHoverStart={() => setHover(true)}
-      onHoverEnd={() => setHover(false)}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -6, scale: 1.04 }}
-      transition={{ delay: i * 0.07 }}
-      style={{ y: spring }}
-      className={`${s.card} relative rounded-3xl flex flex-col items-center justify-center gap-2 p-4`}
-    >
-
-      <div className="absolute inset-0 rounded-3xl bg-white/[0.02] border border-white/5 backdrop-blur-xl" />
-
-      <motion.div
-        animate={{ opacity: hover ? 1 : 0 }}
-        className="absolute inset-0 rounded-3xl"
-        style={{
-          background: `radial-gradient(circle at 70% 30%, ${skill.color}20, transparent 70%)`,
-        }}
-      />
-
-      <motion.div
-        animate={{ scale: hover ? 1.08 : 1 }}
-        className={`${s.icon} flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] relative z-10`}
-        style={{ color: skill.color }}
-      >
-        {skill.icon}
-      </motion.div>
-
-      <p className={`${s.name} font-semibold text-primary relative z-10`}>
-        {skill.name}
-      </p>
-
-      <span className="text-[10px] text-muted border border-white/10 px-2 py-0.5 rounded-full relative z-10">
-        {skill.level}
-      </span>
-
-      <motion.p
-        animate={{ opacity: hover ? 1 : 0 }}
-        className="text-[10px] text-muted text-center relative z-10"
-      >
-        {skill.desc}
-      </motion.p>
-
-    </motion.div>
-  )
-}
-
-/* ================= MARQUEE ================= */
-function Marquee() {
+/* ── Marquee ── */
+function Marquee({ items, direction = 1, speed = 28 }) {
   const x = useMotionValue(0)
   const ref = useRef(null)
+  const [paused, setPaused] = useState(false)
 
-  useAnimationFrame((_, d) => {
-    const el = ref.current
-    if (!el) return
-    const w = el.scrollWidth / 2
-    let next = x.get() - d * 0.03
-    if (next < -w) next += w
+  useAnimationFrame((_, delta) => {
+    if (paused || !ref.current) return
+    const half = ref.current.scrollWidth / 2
+    let next = x.get() - (speed * direction * delta) / 1000
+    if (direction > 0 && next < -half) next += half
+    if (direction < 0 && next > 0)     next -= half
     x.set(next)
   })
 
-  const items = [...marquee, ...marquee]
-
   return (
-    <div className="overflow-hidden">
-      <motion.div ref={ref} style={{ x }} className="flex gap-3">
-        {items.map((s, i) => (
-          <div key={i} className="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/5 bg-white/[0.02]">
-            <span style={{ color: s.color, opacity: 0.8 }}>{s.icon}</span>
-            <span className="text-xs text-muted">{s.name}</span>
-          </div>
+    <div className="overflow-hidden relative"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}>
+      <div className="absolute left-0 top-0 bottom-0 w-12 z-10 pointer-events-none"
+        style={{ background: 'linear-gradient(90deg, var(--bg), transparent)' }} />
+      <div className="absolute right-0 top-0 bottom-0 w-12 z-10 pointer-events-none"
+        style={{ background: 'linear-gradient(-90deg, var(--bg), transparent)' }} />
+      <motion.div ref={ref} style={{ x }} className="flex gap-2 w-max py-1">
+        {[...items, ...items].map((s, i) => (
+          <motion.div key={i} whileHover={{ scale: 1.05, y: -2 }}
+            className="tech-pill flex-shrink-0">
+            <span style={{ fontSize: '0.9rem' }}>{s.icon}</span>
+            {s.name}
+          </motion.div>
         ))}
       </motion.div>
     </div>
   )
 }
 
-/* ================= MAIN ================= */
+const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.05, delayChildren: 0.05 } } }
+const cardAnim = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } } }
+
 export default function Skills() {
   return (
-    <SectionWrapper id="skills" className="py-16">
-      <div className="max-w-5xl mx-auto px-6">
-        <SectionLabel number="02" label="Skills" heading="What I Use" />
+    <SectionWrapper id="skills" className="py-8 md:py-10 overflow-hidden">
+      <div className="px-6 md:px-8">
+        <SectionLabel number="02" label="Skills" heading="What I Work With" />
 
-        {/* floating */}
-        <div className="relative mt-10 mb-10">
-          <div className="absolute inset-0 blur-[100px] opacity-20 bg-gradient-to-r from-cyan-400 via-purple-500 to-transparent" />
+        {/* Hard skills grid */}
+        <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }}
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 mb-8">
+          {hardSkills.map(({ icon, name, level }) => (
+            <motion.div key={name} variants={cardAnim}
+              whileHover={{ y: -2, borderColor: 'var(--border-hover)', transition: { duration: 0.15 } }}
+              className="flex items-center gap-3 rounded-xl px-3 py-2.5 cursor-default transition-colors"
+              style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '1rem', flexShrink: 0 }}>{icon}</span>
+              <div className="min-w-0">
+                <p className="text-xs font-medium truncate" style={{ color: 'var(--text-primary)' }}>{name}</p>
+                <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>{level}</p>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
 
-          <div className="flex flex-wrap justify-center gap-5 relative z-10">
-            {featured.map((s, i) => (
-              <Card key={s.name} skill={s} i={i} />
-            ))}
-          </div>
+        {/* Marquee */}
+        <div className="space-y-2 mb-10">
+          <Marquee items={hardSkills} direction={1}  speed={26} />
+          <Marquee items={[...hardSkills].reverse()} direction={-1} speed={22} />
         </div>
 
-        {/* marquee */}
-        <div className="mb-12">
-          <Marquee />
+        {/* Soft skills */}
+        <div className="flex items-center gap-3 mb-4">
+          <div className="h-px flex-1" style={{ background: 'var(--border)' }} />
+          <span className="text-[10px] font-semibold tracking-widest uppercase"
+            style={{ color: 'var(--text-muted)' }}>Soft Skills</span>
+          <div className="h-px flex-1" style={{ background: 'var(--border)' }} />
         </div>
-
-        {/* soft skills */}
-        <div className="grid md:grid-cols-3 gap-5">
-          {[
-            { emoji: '🧩', title: 'Problem Solving' },
-            { emoji: '⚡', title: 'Fast Learner' },
-            { emoji: '🤝', title: 'Team Work' },
-          ].map((s, i) => (
-            <motion.div
-              key={s.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              className="p-5 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-xl"
-            >
-              <div className="text-2xl mb-2">{s.emoji}</div>
-              <p className="text-sm font-semibold text-primary">{s.title}</p>
+        <div className="grid sm:grid-cols-3 gap-3">
+          {softSkills.map(({ emoji, label, desc }, i) => (
+            <motion.div key={label}
+              initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -2, transition: { duration: 0.15 } }}
+              className="rounded-xl p-4 cursor-default transition-colors"
+              style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}
+              onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-hover)'}
+              onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}>
+              <div className="text-xl mb-2">{emoji}</div>
+              <p className="text-sm font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>{label}</p>
+              <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>{desc}</p>
             </motion.div>
           ))}
         </div>
-
       </div>
     </SectionWrapper>
   )
 }
-
 

@@ -34,8 +34,8 @@ const timeline = [
 
 export default function Education() {
   return (
-    <SectionWrapper id="education" className="py-14">
-      <div className="max-w-4xl mx-auto px-6">
+    <SectionWrapper id="education" className="py-8 md:py-10">
+      <div className="px-6 md:px-8">
         <SectionLabel number="03" label="Education" heading="Academic Journey" />
 
         <div className="relative mt-10 space-y-6">
@@ -133,5 +133,9 @@ export default function Education() {
     </SectionWrapper>
   )
 }
+
+
+
+
 
 

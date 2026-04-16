@@ -16,26 +16,26 @@ const certificates = [
   {
     id: 1,
     title: 'Certificate 1',
-    issuer: 'Issuer Name',
+    issuer: 'Dicoding JS',
     date: '2024',
     image: '/images/cert-1.jpg',   // ganti dengan foto sertifikat kamu
-    desc: 'Deskripsi sertifikat pertama.',
+    desc: 'Deskripsi sertifikat pertama. Belajar Dasar Javascript',
   },
   {
     id: 2,
     title: 'Certificate 2',
-    issuer: 'Issuer Name',
+    issuer: 'Dicoding Web Dev Dasar',
     date: '2024',
     image: '/images/cert-2.jpg',
-    desc: 'Deskripsi sertifikat kedua.',
+    desc: 'Deskripsi sertifikat kedua. Belajar Dasar Pemrograman Website',
   },
   {
     id: 3,
     title: 'Certificate 3',
-    issuer: 'Issuer Name',
-    date: '2025',
+    issuer: 'K3',
+    date: '2024',
     image: '/images/cert-3.jpg',
-    desc: 'Deskripsi sertifikat ketiga.',
+    desc: 'Deskripsi sertifikat ketiga. keselamatan,Kenyamanan dan Keamanan Kerja',
   },
 ]
 
@@ -117,7 +117,7 @@ function CVTab() {
     <motion.div {...pageAnim} className="space-y-8">
       {/* Download button */}
       <div className="flex items-center justify-between">
-        <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+        <p className="text-base" style={{ color: 'var(--text-muted)' }}>
           Muhammad Syafa Algiffari Firdaus — IT Student & Web Developer
         </p>
         <a href="/cv.pdf" download
@@ -141,7 +141,7 @@ function CVTab() {
                   <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>{item.role}</p>
                   {item.period && (
                     <span className="text-[10px] flex-shrink-0 px-2 py-0.5 rounded-full"
-                      style={{ background: 'var(--accent-subtle)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
+                      style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
                       {item.period}
                     </span>
                   )}
@@ -189,7 +189,7 @@ function CertificatesTab() {
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-2"
                 style={{ background: 'var(--bg-elevated)' }}>
                 <FiAward size={28} style={{ color: 'var(--text-muted)' }} />
-                <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>Certificate Image</p>
+                <p className="text-base" style={{ color: 'var(--text-muted)' }}>Certificate Image</p>
               </div>
               {/* If image loads, show it on top */}
               {cert.image && (
@@ -200,7 +200,7 @@ function CertificatesTab() {
 
             <div className="p-3">
               <p className="text-xs font-semibold mb-0.5" style={{ color: 'var(--text-primary)' }}>{cert.title}</p>
-              <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>{cert.issuer} · {cert.date}</p>
+              <p className="text-base" style={{ color: 'var(--text-muted)' }}>{cert.issuer} · {cert.date}</p>
             </div>
           </motion.div>
         ))}
@@ -231,7 +231,7 @@ function CertificatesTab() {
                 ) : (
                   <div className="flex flex-col items-center gap-3">
                     <FiAward size={40} style={{ color: 'var(--text-muted)' }} />
-                    <p className="text-sm" style={{ color: 'var(--text-muted)' }}>No image available</p>
+                    <p className="text-base" style={{ color: 'var(--text-muted)' }}>No image available</p>
                   </div>
                 )}
               </div>
@@ -258,8 +258,8 @@ export default function About() {
   const [activeTab, setActiveTab] = useState('about')
 
   return (
-    <SectionWrapper id="about" className="py-10 md:py-14">
-      <div className="max-w-4xl mx-auto px-6 md:px-10">
+    <SectionWrapper id="about" className="py-8 md:py-10">
+      <div className="px-6 md:px-8">
         <SectionLabel number="01" label="About" heading="Who I Am" />
 
         {/* Sub-tab nav */}
@@ -291,3 +291,7 @@ export default function About() {
     </SectionWrapper>
   )
 }
+
+
+
+

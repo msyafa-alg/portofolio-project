@@ -34,3 +34,5 @@ export default function SectionLabel({ number, label, heading, sub }) {
     </motion.div>
   )
 }
+
+

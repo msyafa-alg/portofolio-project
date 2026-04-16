@@ -73,7 +73,7 @@ export default function Navbar() {
                   {on && (
                     <motion.span layoutId="nav-pill"
                       className="absolute inset-0 rounded-lg"
-                      style={{ background: 'var(--accent-subtle)', border: '1px solid var(--border-hover)' }}
+                      style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-hover)' }}
                       transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                     />
                   )}
@@ -125,3 +125,4 @@ export default function Navbar() {
     </motion.header>
   )
 }
+
