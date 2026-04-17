@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   FiHome, FiUser, FiZap, FiBook, FiFolder, FiMail,
-  FiSearch, FiMenu, FiX,
+  FiSearch, FiMenu, FiX, FiTerminal,
 } from 'react-icons/fi'
 import ThemeToggle from './ThemeToggle'
 
@@ -13,6 +13,10 @@ const navItems = [
   { icon: FiBook,   label: 'Education', id: 'education' },
   { icon: FiFolder, label: 'Projects',  id: 'projects'  },
   { icon: FiMail,   label: 'Contact',   id: 'contact'   },
+]
+
+const appItems = [
+  { icon: FiTerminal, label: 'JS Playground', id: 'playground-app' },
 ]
 
 export default function Sidebar({ activePage, setActivePage }) {
@@ -103,6 +107,33 @@ export default function Sidebar({ activePage, setActivePage }) {
                 <FiMenu size={10} className="relative z-10 flex-shrink-0"
                   style={{ color: 'var(--text-muted)' }} />
               )}
+            </motion.button>
+          )
+        })}
+
+        {/* Apps section */}
+        <div className="mt-4 mb-1 px-3">
+          <p className="text-[10px] font-semibold tracking-widest uppercase"
+            style={{ color: 'var(--text-muted)' }}>Apps</p>
+        </div>
+        {appItems.map(({ icon: Icon, label, id }) => {
+          const on = activePage === id
+          return (
+            <motion.button key={id} onClick={() => go(id)}
+              whileTap={{ scale: 0.98 }}
+              className="relative flex items-center gap-2.5 w-full px-3 py-2 rounded-lg text-[13px] font-medium text-left mb-0.5 transition-colors"
+              style={{ color: on ? 'var(--text-primary)' : 'var(--text-secondary)' }}
+              onMouseEnter={e => { if (!on) e.currentTarget.style.background = 'var(--bg-elevated)' }}
+              onMouseLeave={e => { if (!on) e.currentTarget.style.background = 'transparent' }}
+            >
+              {on && (
+                <motion.div layoutId="sidebar-active"
+                  className="absolute inset-0 rounded-lg"
+                  style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-hover)' }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 32 }} />
+              )}
+              <Icon size={14} className="relative z-10 flex-shrink-0" />
+              <span className="relative z-10 flex-1">{label}</span>
             </motion.button>
           )
         })}

@@ -14,6 +14,7 @@ import Education      from './sections/Education'
 import Projects       from './sections/Projects'
 import Contact        from './sections/Contact'
 import Footer         from './sections/Footer'
+import Playground     from './games/Playground'
 
 const pageVariants = {
   initial: { opacity: 0, y: 8 },
@@ -27,7 +28,8 @@ const pages = (setActivePage) => ({
   skills:    <Skills />,
   education: <Education />,
   projects:  <Projects />,
-  contact:   <><Contact /><Footer /></>,
+  contact:         <><Contact /><Footer /></>,
+  'playground-app': <Playground />,
 })
 
 export default function App() {
