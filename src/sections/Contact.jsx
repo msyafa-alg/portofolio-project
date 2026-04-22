@@ -47,16 +47,27 @@ export default function Contact() {
     setError('')
 
     try {
+      // Ambil IP + lokasi pengirim
+      let ipInfo = 'Unknown'
+      try {
+        const res = await fetch('https://ipapi.co/json/')
+        const data = await res.json()
+        ipInfo = `${data.ip} — ${data.city}, ${data.region}, ${data.country_name}`
+      } catch {
+        ipInfo = 'Could not retrieve'
+      }
+
       await emailjs.send(
         EMAILJS_SERVICE,
         EMAILJS_TEMPLATE,
         {
-          from_name:  form.name,   // untuk Subject: Contact Us : {{from_name}}
-          from_email: form.email,  // untuk Reply To: {{from_email}}
-          name:       form.name,   // untuk body: {{name}}
-          message:    form.message,// untuk body: {{message}}
+          from_name:  form.name,
+          from_email: form.email,
+          name:       form.name,
+          message:    form.message,
           reply_to:   form.email,
-          time:       new Date().toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' }), // untuk body: {{time}}
+          time:       new Date().toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' }),
+          ip_address: ipInfo,
         },
         EMAILJS_KEY
       )
