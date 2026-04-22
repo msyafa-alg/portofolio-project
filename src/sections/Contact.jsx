@@ -51,11 +51,12 @@ export default function Contact() {
         EMAILJS_SERVICE,
         EMAILJS_TEMPLATE,
         {
-          from_name:  form.name,
-          from_email: form.email,
-          message:    form.message,
+          from_name:  form.name,   // untuk Subject: Contact Us : {{from_name}}
+          from_email: form.email,  // untuk Reply To: {{from_email}}
+          name:       form.name,   // untuk body: {{name}}
+          message:    form.message,// untuk body: {{message}}
           reply_to:   form.email,
-          time:       new Date().toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' }),
+          time:       new Date().toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' }), // untuk body: {{time}}
         },
         EMAILJS_KEY
       )

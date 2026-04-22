@@ -59,6 +59,15 @@ const projects = [
     demo: null,
     repo: 'https://github.com/msyafa-alg/musicchart',
   },
+  {
+    id: 7, featured: false,
+    image: 'https://ibb.co.com/gFys1QFw',
+    title: 'Kabeki Warkop',
+    desc: 'Website Untuk Melihat Menu dan Deskripsi Warkop Modelan Seperti linktree',
+    stack: ['HTML', 'CSS'],
+    demo: null,
+    repo: 'https://github.com/msyafa-alg/kabeki',
+  },
 ]
 
 const featured  = projects.filter(p => p.featured)
