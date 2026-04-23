@@ -4,6 +4,7 @@ import { FiMapPin, FiBriefcase, FiExternalLink, FiGithub, FiArrowRight } from 'r
 import { FaReact, FaHtml5, FaCss3Alt, FaJs, FaPhp, FaLinux, FaServer } from 'react-icons/fa'
 import { SiTailwindcss, SiLaravel, SiVercel, SiMysql } from 'react-icons/si'
 import useTyping from '../hooks/useTyping'
+import { useLang } from '../context/LangContext'
 
 /* ── Data ── */
 const roles = ['Frontend Developer', 'Server Enthusiast', 'IT Student', 'Web Builder']
@@ -140,7 +141,7 @@ function ProjectCard({ p, i, setActivePage }) {
 }
 
 /* ── Testimonials drag scroll ── */
-function Testimonials() {
+function Testimonials({ t }) {
   const scrollRef = useRef(null)
   const [dragging, setDragging] = useState(false)
   const [startX, setStartX] = useState(0)
@@ -149,7 +150,7 @@ function Testimonials() {
   return (
     <div>
       <p className="text-xs font-semibold tracking-widest uppercase mb-3"
-        style={{ color: 'var(--text-muted)' }}>Clients & Partners</p>
+        style={{ color: 'var(--text-muted)' }}>{t.clientsTitle}</p>
       <div ref={scrollRef}
         onMouseDown={e => { setDragging(true); setStartX(e.pageX - scrollRef.current.offsetLeft); setScrollLeft(scrollRef.current.scrollLeft) }}
         onMouseMove={e => { if (!dragging) return; e.preventDefault(); scrollRef.current.scrollLeft = scrollLeft - (e.pageX - scrollRef.current.offsetLeft - startX) }}
@@ -201,6 +202,7 @@ const fadeUp = { hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0, transi
 
 export default function Hero({ setActivePage }) {
   const typed = useTyping(roles, 70, 38, 2200)
+  const { t } = useLang()
 
   return (
     <motion.div variants={stagger} initial="hidden" animate="show"
@@ -242,15 +244,13 @@ export default function Hero({ setActivePage }) {
               <span className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full animate-pulse"
                   style={{ background: 'var(--text-secondary)' }} />
-                Open To Work
+                {t.openToWork}
               </span>
             </div>
           </div>
         </div>
         <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', lineHeight: '1.8' }}>
-          IT student at <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>SMK Wikrama</strong> focused
-          on building clean, efficient, and modern web experiences. Passionate about frontend development
-          and server infrastructure.
+          {t.bio('SMK Wikrama')}
         </p>
       </motion.div>
 
@@ -265,13 +265,13 @@ export default function Hero({ setActivePage }) {
       <motion.div variants={fadeUp}>
         <div className="flex items-center justify-between mb-4">
           <p className="text-xs font-semibold tracking-widest uppercase"
-            style={{ color: 'var(--text-muted)' }}>Featured Projects</p>
+            style={{ color: 'var(--text-muted)' }}>{t.featuredProjects}</p>
           <button onClick={() => setActivePage('projects')}
             className="flex items-center gap-1 text-xs font-medium transition-colors"
             style={{ color: 'var(--text-muted)' }}
             onMouseEnter={e => e.currentTarget.style.color = 'var(--text-primary)'}
             onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}>
-            See all <FiArrowRight size={10} />
+            {t.seeAll} <FiArrowRight size={10} />
           </button>
         </div>
         <div className="grid sm:grid-cols-2 gap-4">
@@ -283,7 +283,7 @@ export default function Hero({ setActivePage }) {
 
       {/* ── Testimonials ── */}
       <motion.div variants={fadeUp}>
-        <Testimonials />
+        <Testimonials t={t} />
       </motion.div>
 
       {/* ── CTA ── */}
@@ -293,17 +293,17 @@ export default function Hero({ setActivePage }) {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <p className="text-sm font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>
-              Let's work together
+              {t.letsWork}
             </p>
             <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-              Open to internships, collaborations, and learning opportunities.
+              {t.letsWorkSub}
             </p>
           </div>
           <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
             onClick={() => setActivePage('contact')}
             className="flex-shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold"
             style={{ background: 'var(--text-primary)', color: 'var(--bg)' }}>
-            Contact Me <FiArrowRight size={12} />
+            {t.contactMe} <FiArrowRight size={12} />
           </motion.button>
         </div>
       </motion.div>

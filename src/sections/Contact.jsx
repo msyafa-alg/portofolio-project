@@ -5,6 +5,7 @@ import { FiMail, FiLinkedin, FiGithub, FiSend, FiArrowUpRight } from 'react-icon
 import SectionWrapper from '../components/SectionWrapper'
 import SectionLabel from '../components/SectionLabel'
 import SuccessToast from '../components/SuccessToast'
+import { useLang } from '../context/LangContext'
 
 const EMAILJS_SERVICE  = 'service_v0rynvg'
 const EMAILJS_TEMPLATE = 'template_csq3uer'
@@ -32,6 +33,7 @@ const socials = [
 ]
 
 export default function Contact() {
+  const { t } = useLang()
   const [form,    setForm]    = useState({ name: '', email: '', message: '' })
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -90,9 +92,9 @@ export default function Contact() {
 
           <SectionLabel
             number="05"
-            label="Contact"
-            heading="Get In Touch"
-            sub="Feel free to reach out anytime."
+            label={t.nav.contact}
+            heading={t.getInTouch}
+            sub={t.getInTouchSub}
           />
 
           <div className="flex flex-col gap-6 mt-8 md:grid md:grid-cols-2 md:gap-8">
@@ -144,7 +146,7 @@ export default function Contact() {
                 style={{ background: 'var(--text-primary)', color: 'var(--bg)' }}
               >
                 <FiSend size={14} />
-                {loading ? 'Sending...' : 'Send Message'}
+                {loading ? t.sending : t.send}
               </button>
 
               {error && (
@@ -201,8 +203,7 @@ export default function Contact() {
                 <div className="flex items-center gap-2 mb-2">
                   <span className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-pulse" />
                   <span className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">
-                    Available
-                  </span>
+                    Available                  </span>
                 </div>
 
                 <p className="text-sm text-[var(--text-secondary)] leading-relaxed">

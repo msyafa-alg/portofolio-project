@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiUser, FiFileText, FiAward, FiDownload, FiExternalLink } from 'react-icons/fi'
+import { FiUser, FiFileText, FiAward, FiDownload } from 'react-icons/fi'
 import SectionWrapper from '../components/SectionWrapper'
 import SectionLabel from '../components/SectionLabel'
+import { useLang } from '../context/LangContext'
 
 /* ─── Sub-tab nav ─── */
 const tabs = [
@@ -256,11 +257,18 @@ function CertificatesTab() {
 /* ─── Main ─── */
 export default function About() {
   const [activeTab, setActiveTab] = useState('about')
+  const { t } = useLang()
+
+  const tabs = [
+    { id: 'about', label: t.nav.about,        icon: FiUser      },
+    { id: 'cv',    label: 'CV',               icon: FiFileText  },
+    { id: 'certs', label: t.nav.education + ' Certs', icon: FiAward },
+  ]
 
   return (
     <SectionWrapper id="about" className="py-8 md:py-10">
       <div className="px-6 md:px-8">
-        <SectionLabel number="01" label="About" heading="Who I Am" />
+        <SectionLabel number="01" label={t.nav.about} heading={t.whoIAm} />
 
         {/* Sub-tab nav */}
         <div className="flex items-center gap-1 mb-8 p-1 rounded-xl w-fit"
