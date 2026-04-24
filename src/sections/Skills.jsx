@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { motion, useAnimationFrame, useMotionValue } from 'framer-motion'
 import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaLinux, FaServer, FaPhp } from 'react-icons/fa'
 import { SiTailwindcss, SiLaravel, SiVercel, SiMysql } from 'react-icons/si'
+import { FiTarget, FiZap, FiUsers } from 'react-icons/fi'
 import SectionWrapper from '../components/SectionWrapper'
 import SectionLabel from '../components/SectionLabel'
 
@@ -21,9 +22,9 @@ const hardSkills = [
 ]
 
 const softSkills = [
-  { emoji: '🧩', label: 'Problem Solving',    desc: 'Breaking complex issues into manageable steps'  },
-  { emoji: '⚡', label: 'Fast Learner',       desc: 'Quickly adapting to new tools and frameworks'   },
-  { emoji: '🤝', label: 'Team Collaboration', desc: 'Working effectively in group projects'          },
+  { icon: <FiTarget size={16} />, label: 'Problem Solving',    desc: 'Breaking complex issues into manageable steps'  },
+  { icon: <FiZap size={16} />,    label: 'Fast Learner',       desc: 'Quickly adapting to new tools and frameworks'   },
+  { icon: <FiUsers size={16} />,  label: 'Team Collaboration', desc: 'Working effectively in group projects'          },
 ]
 
 /* ── Marquee ── */
@@ -102,7 +103,7 @@ export default function Skills() {
           <div className="h-px flex-1" style={{ background: 'var(--border)' }} />
         </div>
         <div className="grid sm:grid-cols-3 gap-3">
-          {softSkills.map(({ emoji, label, desc }, i) => (
+          {softSkills.map(({ icon, label, desc }, i) => (
             <motion.div key={label}
               initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -112,7 +113,10 @@ export default function Skills() {
               style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}
               onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-hover)'}
               onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}>
-              <div className="text-xl mb-2">{emoji}</div>
+              <div className="mb-3 w-8 h-8 rounded-lg flex items-center justify-center"
+                style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
+                {icon}
+              </div>
               <p className="text-sm font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>{label}</p>
               <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>{desc}</p>
             </motion.div>

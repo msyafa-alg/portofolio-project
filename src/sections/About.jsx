@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiUser, FiFileText, FiAward, FiDownload } from 'react-icons/fi'
+import { FiUser, FiFileText, FiAward, FiDownload, FiBox, FiCpu, FiBookOpen, FiZap } from 'react-icons/fi'
+import { FiLayers, FiTrendingUp, FiUsers } from 'react-icons/fi'
 import SectionWrapper from '../components/SectionWrapper'
 import SectionLabel from '../components/SectionLabel'
 import { useLang } from '../context/LangContext'
@@ -49,10 +50,10 @@ const pageAnim = {
 
 /* ─── About tab ─── */
 const stats = [
-  { value: '6+',  label: 'Projects',     icon: '🚀' },
-  { value: '9+',  label: 'Technologies', icon: '⚡' },
-  { value: 'SMK', label: 'IT Track',     icon: '🎓' },
-  { value: '∞',   label: 'Curiosity',    icon: '🔥' },
+  { value: '6+',  label: 'Projects',     icon: <FiBox size={16} />        },
+  { value: '9+',  label: 'Technologies', icon: <FiCpu size={16} />        },
+  { value: 'SMK', label: 'IT Track',     icon: <FiBookOpen size={16} />   },
+  { value: '∞',   label: 'Curiosity',    icon: <FiTrendingUp size={16} /> },
 ]
 
 function AboutTab() {
@@ -76,7 +77,7 @@ function AboutTab() {
           {stats.map(({ value, label, icon }) => (
             <div key={label} className="gradient-border rounded-2xl p-4 cursor-default"
               style={{ background: 'var(--bg-card)' }}>
-              <div className="text-lg mb-2">{icon}</div>
+              <div className="mb-2" style={{ color: 'var(--text-muted)' }}>{icon}</div>
               <p className="text-xl font-bold font-display mb-0.5" style={{ color: 'var(--text-primary)' }}>{value}</p>
               <p className="text-[10px] tracking-wide uppercase" style={{ color: 'var(--text-muted)' }}>{label}</p>
             </div>
