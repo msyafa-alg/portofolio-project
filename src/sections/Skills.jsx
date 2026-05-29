@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useRef, useState } from 'react'
 import { motion, useAnimationFrame, useMotionValue } from 'framer-motion'
 import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaLinux, FaServer, FaPhp } from 'react-icons/fa'
 import { SiTailwindcss, SiLaravel, SiVercel, SiMysql } from 'react-icons/si'
@@ -6,19 +6,26 @@ import { FiTarget, FiZap, FiUsers } from 'react-icons/fi'
 import SectionWrapper from '../components/SectionWrapper'
 import SectionLabel from '../components/SectionLabel'
 
-/* ── All monochrome — no color props ── */
+/* level → numeric for bar width */
+const levelMap = { Advanced: 90, Intermediate: 65, Beginner: 35 }
+const levelColor = {
+  Advanced:     'var(--text-primary)',
+  Intermediate: 'var(--text-secondary)',
+  Beginner:     'var(--text-muted)',
+}
+
 const hardSkills = [
   { icon: <FaHtml5 style={{ color: '#e34f26' }} />,       name: 'HTML',         level: 'Advanced'     },
-  { icon: <FaCss3Alt style={{ color: '#264de4' }} />,     name: 'CSS',           level: 'Advanced'     },
-  { icon: <FaJs style={{ color: '#f7df1e' }} />,          name: 'JavaScript',    level: 'Intermediate' },
-  { icon: <FaReact style={{ color: '#61dafb' }} />,       name: 'React',         level: 'Intermediate' },
-  { icon: <SiTailwindcss style={{ color: '#38bdf8' }} />, name: 'Tailwind CSS',  level: 'Advanced'     },
-  { icon: <SiLaravel style={{ color: '#ff2d20' }} />,     name: 'Laravel',       level: 'Beginner'     },
-  { icon: <FaPhp style={{ color: '#8892be' }} />,         name: 'PHP',           level: 'Beginner'     },
-  { icon: <SiMysql style={{ color: '#f29111' }} />,       name: 'MySQL',         level: 'Beginner'     },
-  { icon: <FaServer style={{ color: '#34d399' }} />,      name: 'VPS & Hosting', level: 'Intermediate' },
-  { icon: <FaLinux style={{ color: '#fcc624' }} />,       name: 'Linux',         level: 'Beginner'     },
-  { icon: <SiVercel />,                                   name: 'Vercel',        level: 'Intermediate' },
+  { icon: <FaCss3Alt style={{ color: '#264de4' }} />,     name: 'CSS',          level: 'Advanced'     },
+  { icon: <FaJs style={{ color: '#f7df1e' }} />,          name: 'JavaScript',   level: 'Intermediate' },
+  { icon: <FaReact style={{ color: '#61dafb' }} />,       name: 'React',        level: 'Intermediate' },
+  { icon: <SiTailwindcss style={{ color: '#38bdf8' }} />, name: 'Tailwind CSS', level: 'Advanced'     },
+  { icon: <SiLaravel style={{ color: '#ff2d20' }} />,     name: 'Laravel',      level: 'Beginner'     },
+  { icon: <FaPhp style={{ color: '#8892be' }} />,         name: 'PHP',          level: 'Beginner'     },
+  { icon: <SiMysql style={{ color: '#f29111' }} />,       name: 'MySQL',        level: 'Beginner'     },
+  { icon: <FaServer style={{ color: '#34d399' }} />,      name: 'VPS & Hosting',level: 'Intermediate' },
+  { icon: <FaLinux style={{ color: '#fcc624' }} />,       name: 'Linux',        level: 'Beginner'     },
+  { icon: <SiVercel />,                                   name: 'Vercel',       level: 'Intermediate' },
 ]
 
 const softSkills = [
@@ -63,6 +70,43 @@ function Marquee({ items, direction = 1, speed = 28 }) {
   )
 }
 
+/* ── Skill row with animated bar ── */
+function SkillRow({ icon, name, level, index }) {
+  const pct = levelMap[level]
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -12 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.05, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      className="flex items-center gap-3 group">
+      {/* Icon */}
+      <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+        style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', fontSize: '0.95rem' }}>
+        {icon}
+      </div>
+      {/* Name + bar */}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-xs font-medium" style={{ color: 'var(--text-primary)' }}>{name}</span>
+          <span className="text-[10px] font-medium" style={{ color: levelColor[level] }}>{level}</span>
+        </div>
+        {/* Track */}
+        <div className="h-1 rounded-full overflow-hidden" style={{ background: 'var(--bg-elevated)' }}>
+          <motion.div
+            initial={{ width: 0 }}
+            whileInView={{ width: `${pct}%` }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.05 + 0.2, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="h-full rounded-full"
+            style={{ background: levelColor[level] }}
+          />
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
 const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.05, delayChildren: 0.05 } } }
 const cardAnim = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } } }
 
@@ -72,22 +116,22 @@ export default function Skills() {
       <div className="px-6 md:px-8">
         <SectionLabel number="02" label="Skills" heading="What I Work With" />
 
-        {/* Hard skills grid */}
-        <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }}
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 mb-8">
-          {hardSkills.map(({ icon, name, level }) => (
-            <motion.div key={name} variants={cardAnim}
-              whileHover={{ y: -2, borderColor: 'var(--border-hover)', transition: { duration: 0.15 } }}
-              className="flex items-center gap-3 rounded-xl px-3 py-2.5 cursor-default transition-colors"
-              style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
-              <span style={{ color: 'var(--text-muted)', fontSize: '1rem', flexShrink: 0 }}>{icon}</span>
-              <div className="min-w-0">
-                <p className="text-xs font-medium truncate" style={{ color: 'var(--text-primary)' }}>{name}</p>
-                <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>{level}</p>
-              </div>
-            </motion.div>
+        {/* Legend */}
+        <div className="flex items-center gap-4 mb-5">
+          {Object.entries(levelColor).map(([label, color]) => (
+            <div key={label} className="flex items-center gap-1.5">
+              <div className="w-2 h-2 rounded-full" style={{ background: color }} />
+              <span className="text-[10px]" style={{ color: 'var(--text-muted)' }}>{label}</span>
+            </div>
           ))}
-        </motion.div>
+        </div>
+
+        {/* Skill rows — two columns on md+ */}
+        <div className="grid md:grid-cols-2 gap-x-8 gap-y-4 mb-10">
+          {hardSkills.map((s, i) => (
+            <SkillRow key={s.name} {...s} index={i} />
+          ))}
+        </div>
 
         {/* Marquee */}
         <div className="space-y-2 mb-10">
@@ -126,4 +170,3 @@ export default function Skills() {
     </SectionWrapper>
   )
 }
-

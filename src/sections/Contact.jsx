@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import emailjs from '@emailjs/browser'
-import { FiMail, FiLinkedin, FiGithub, FiSend, FiArrowUpRight } from 'react-icons/fi'
+import { FiMail, FiLinkedin, FiGithub, FiSend, FiArrowUpRight, FiUser, FiMessageSquare, FiAlertCircle, FiCheckCircle } from 'react-icons/fi'
 import SectionWrapper from '../components/SectionWrapper'
 import SectionLabel from '../components/SectionLabel'
 import SuccessToast from '../components/SuccessToast'
@@ -32,24 +32,72 @@ const socials = [
   },
 ]
 
+/* ── Validation helpers ── */
+const validators = {
+  name:    v => v.trim().length < 2  ? 'Name must be at least 2 characters.' : '',
+  email:   v => !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) ? 'Enter a valid email address.' : '',
+  message: v => v.trim().length < 10 ? 'Message must be at least 10 characters.' : '',
+}
+
+/* ── Field component ── */
+function Field({ label, icon: Icon, error, touched, children }) {
+  return (
+    <div>
+      <label className="flex items-center gap-1.5 text-[11px] uppercase tracking-wider mb-1.5"
+        style={{ color: 'var(--text-muted)' }}>
+        <Icon size={10} />
+        {label}
+      </label>
+      {children}
+      <AnimatePresence>
+        {touched && error && (
+          <motion.p
+            initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.18 }}
+            className="flex items-center gap-1 text-[11px] mt-1.5"
+            style={{ color: '#f87171' }}>
+            <FiAlertCircle size={10} /> {error}
+          </motion.p>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
 export default function Contact() {
   const { t } = useLang()
   const [form,    setForm]    = useState({ name: '', email: '', message: '' })
+  const [touched, setTouched] = useState({ name: false, email: false, message: false })
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error,   setError]   = useState('')
 
-  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value })
+  const errors = {
+    name:    validators.name(form.name),
+    email:   validators.email(form.email),
+    message: validators.message(form.message),
+  }
+  const isValid = !errors.name && !errors.email && !errors.message
+
+  const handleChange = e => {
+    const { name, value } = e.target
+    setForm(f => ({ ...f, [name]: value }))
+  }
+
+  const handleBlur = e => {
+    setTouched(t => ({ ...t, [e.target.name]: true }))
+  }
 
   const handleSubmit = async e => {
     e.preventDefault()
-    if (!form.name || !form.email || !form.message) return
+    // Mark all touched on submit
+    setTouched({ name: true, email: true, message: true })
+    if (!isValid) return
 
     setLoading(true)
     setError('')
 
     try {
-      // Ambil IP + lokasi pengirim
       let ipInfo = 'Unknown'
       try {
         const res = await fetch('https://ipapi.co/json/')
@@ -75,13 +123,21 @@ export default function Contact() {
       )
       setSuccess(true)
       setForm({ name: '', email: '', message: '' })
+      setTouched({ name: false, email: false, message: false })
       setTimeout(() => setSuccess(false), 4000)
-    } catch (err) {
+    } catch {
       setError('Failed to send. Please try again.')
     } finally {
       setLoading(false)
     }
   }
+
+  const inputBase = `w-full text-sm px-3 py-2.5 rounded-xl outline-none transition-all`
+  const inputStyle = (field) => ({
+    background: 'var(--bg-elevated)',
+    border: `1px solid ${touched[field] && errors[field] ? '#f87171' : touched[field] && !errors[field] ? 'var(--border-hover)' : 'var(--border)'}`,
+    color: 'var(--text-primary)',
+  })
 
   return (
     <>
@@ -102,111 +158,132 @@ export default function Contact() {
             {/* FORM */}
             <motion.form
               onSubmit={handleSubmit}
-              className="rounded-2xl p-4 sm:p-6  space-y-4 sm:space-y-5"
+              noValidate
+              className="rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5"
               style={{ border: '1px solid var(--border)', background: 'var(--bg-card)' }}
             >
+              <Field label={t.name} icon={FiUser} error={errors.name} touched={touched.name}>
+                <input
+                  type="text"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder={t.namePlaceholder}
+                  className={inputBase}
+                  style={inputStyle('name')}
+                />
+              </Field>
 
-              {['name', 'email'].map((field) => (
-                <div key={field}>
-                  <label className="text-[11px] uppercase tracking-wider text-[var(--text-muted)] mb-1.5 block">
-                    {field}
-                  </label>
-                  <input
-                    type={field === 'email' ? 'email' : 'text'}
-                    name={field}
-                    value={form[field]}
-                    onChange={handleChange}
-                    placeholder={field === 'email' ? 'your@email.com' : 'Your name'}
-                    className="w-full text-sm px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border)] 
-                    focus:border-[var(--border-hover)] focus:ring-2 focus:ring-[var(--border)] outline-none transition"
-                  />
-                </div>
-              ))}
+              <Field label={t.email} icon={FiMail} error={errors.email} touched={touched.email}>
+                <input
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder={t.emailPlaceholder}
+                  className={inputBase}
+                  style={inputStyle('email')}
+                />
+              </Field>
 
-              <div>
-                <label className="text-[11px] uppercase tracking-wider text-[var(--text-muted)] mb-1.5 block">
-                  Message
-                </label>
+              <Field label={t.message} icon={FiMessageSquare} error={errors.message} touched={touched.message}>
                 <textarea
                   name="message"
                   value={form.message}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   rows={4}
-                  placeholder="Your message..."
-                  className="w-full text-sm px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border)] 
-                  focus:border-[var(--border-hover)] focus:ring-2 focus:ring-[var(--border)] outline-none transition resize-none"
+                  placeholder={t.messagePlaceholder}
+                  className={`${inputBase} resize-none`}
+                  style={inputStyle('message')}
                 />
-              </div>
+                {/* Character count */}
+                <p className="text-right text-[10px] mt-1" style={{ color: 'var(--text-muted)' }}>
+                  {form.message.length} chars
+                </p>
+              </Field>
 
-              <button
+              <motion.button
                 type="submit"
                 disabled={loading}
-                className="w-full py-2.5 sm:py-3 rounded-xl text-sm font-semibold 
-                flex items-center justify-center gap-2 active:scale-95 transition disabled:opacity-60"
+                whileHover={!loading ? { scale: 1.01 } : {}}
+                whileTap={!loading ? { scale: 0.98 } : {}}
+                className="w-full py-2.5 rounded-xl text-sm font-semibold flex items-center justify-center gap-2 transition-opacity disabled:opacity-60"
                 style={{ background: 'var(--text-primary)', color: 'var(--bg)' }}
               >
-                <FiSend size={14} />
-                {loading ? t.sending : t.send}
-              </button>
+                {loading ? (
+                  <>
+                    <motion.span
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
+                      className="inline-block w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full"
+                    />
+                    {t.sending}
+                  </>
+                ) : (
+                  <><FiSend size={13} /> {t.send}</>
+                )}
+              </motion.button>
 
-              {error && (
-                <div className="text-xs text-red-400 bg-red-400/10 border border-red-400/20 
-                rounded-xl px-3 py-2.5 text-center">
-                  {error}
-                </div>
-              )}
-
-              {success && (
-                <div className="text-xs text-[var(--text-secondary)] bg-[var(--bg-elevated)] border border-[var(--border)] 
-                rounded-xl px-3 py-2.5 text-center">
-                  Message sent 🚀
-                </div>
-              )}
+              <AnimatePresence>
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                    className="flex items-center gap-2 text-xs px-3 py-2.5 rounded-xl"
+                    style={{ background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.2)', color: '#f87171' }}>
+                    <FiAlertCircle size={12} /> {error}
+                  </motion.div>
+                )}
+                {success && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                    className="flex items-center gap-2 text-xs px-3 py-2.5 rounded-xl"
+                    style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
+                    <FiCheckCircle size={12} /> {t.sent}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.form>
 
             {/* RIGHT */}
             <div className="flex flex-col gap-5">
 
               {/* SOCIAL */}
-              <div className="rounded-2xl p-4 sm:p-6 border border-[var(--border)] bg-[var(--bg-elevated)] ">
-                <p className="text-[11px] uppercase tracking-wider text-[var(--text-muted)] mb-4">
+              <div className="rounded-2xl p-4 sm:p-6 border border-[var(--border)] bg-[var(--bg-elevated)]">
+                <p className="text-[11px] uppercase tracking-wider mb-4" style={{ color: 'var(--text-muted)' }}>
                   Contact Info
                 </p>
-
                 <div className="space-y-3">
                   {socials.map(({ Icon, label, sub, href }) => (
-                    <a
-                      key={label}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-3 p-2 rounded-xl hover:bg-[var(--bg-elevated)] transition"
-                    >
-                      <div className="w-9 h-9 flex items-center justify-center rounded-xl 
-                      bg-[var(--bg-elevated)] border border-[var(--border)]">
+                    <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                      className="flex items-center gap-3 p-2 rounded-xl transition-colors"
+                      style={{ color: 'inherit' }}
+                      onMouseEnter={e => e.currentTarget.style.background = 'var(--bg-card)'}
+                      onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
+                      <div className="w-9 h-9 flex items-center justify-center rounded-xl bg-[var(--bg-elevated)] border border-[var(--border)]">
                         <Icon size={14} />
                       </div>
-
                       <div className="flex flex-col leading-tight">
-                        <span className="text-sm text-[var(--text-primary)]">{label}</span>
-                        <span className="text-xs text-[var(--text-muted)]">{sub}</span>
+                        <span className="text-sm" style={{ color: 'var(--text-primary)' }}>{label}</span>
+                        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{sub}</span>
                       </div>
-
-                      <FiArrowUpRight className="ml-auto text-[var(--text-muted)]" />
+                      <FiArrowUpRight className="ml-auto" style={{ color: 'var(--text-muted)' }} />
                     </a>
                   ))}
                 </div>
               </div>
 
               {/* STATUS */}
-              <div className="rounded-2xl p-4 sm:p-6 border border-[var(--border)] bg-[var(--bg-elevated)] ">
+              <div className="rounded-2xl p-4 sm:p-6 border border-[var(--border)] bg-[var(--bg-elevated)]">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="w-2 h-2 bg-[var(--text-secondary)] rounded-full animate-pulse" />
-                  <span className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">
-                    Available                  </span>
+                  <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--text-secondary)' }} />
+                  <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
+                    Available
+                  </span>
                 </div>
-
-                <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                   Open for freelance, internship, and collaboration.
                 </p>
               </div>
@@ -218,9 +295,3 @@ export default function Contact() {
     </>
   )
 }
-
-
-
-
-
-

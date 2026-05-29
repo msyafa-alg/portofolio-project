@@ -216,7 +216,7 @@ export default function Hero({ setActivePage }) {
               className="w-16 h-16 rounded-full object-cover"
               style={{ border: '1px solid var(--border)' }} />
             <span className="absolute bottom-0.5 right-0.5 w-2.5 h-2.5 rounded-full border-2"
-              style={{ background: 'var(--border-strong)', borderColor: 'var(--bg)' }} />
+              style={{ background: '#22c55e', borderColor: 'var(--bg)' }} />
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap mb-0.5">
@@ -224,8 +224,8 @@ export default function Hero({ setActivePage }) {
                 style={{ color: 'var(--text-primary)' }}>Muhammad Syafa</h1>
               {/* Verified badge — monochrome */}
               <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-                <circle cx="7.5" cy="7.5" r="7.5" fill="var(--border-strong)" />
-                <path d="M4.5 7.5l2 2 4-4" stroke="var(--bg)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <circle cx="7.5" cy="7.5" r="7.5" fill="#1d9bf0" />
+                <path d="M4.5 7.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
             <p className="text-xs mb-2" style={{ color: 'var(--text-muted)' }}>@msyafa-alg</p>

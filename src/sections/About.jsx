@@ -94,35 +94,86 @@ function CVTab() {
     {
       title: 'Experience',
       items: [
-        { role: 'Freelance Web Developer', place: 'Self-employed', period: '2023 – Present', desc: 'Building websites and web apps for clients — from e-commerce to company profiles.' },
+        {
+          role: 'Freelance Web Developer',
+          place: 'Self-employed',
+          period: '2023 – Present',
+          desc: 'Delivered web projects for multiple clients — including e-commerce stores, company profiles, and custom web apps. Handled full cycle from design to deployment.',
+          tags: ['React', 'Laravel', 'VPS'],
+        },
+        {
+          role: 'Laravel Project — Client Work',
+          place: 'Jihad Akbar · Remote',
+          period: '2024',
+          desc: 'Built a standalone Laravel application for a client. Handled backend logic, database design, and deployment.',
+          tags: ['Laravel', 'PHP', 'MySQL'],
+        },
+        {
+          role: 'Warkop Website',
+          place: 'Jaki · Remote',
+          period: '2024',
+          desc: 'Designed and developed a business profile website for a local coffee shop. Focused on clean UI and mobile responsiveness.',
+          tags: ['HTML', 'CSS', 'JavaScript'],
+        },
+        {
+          role: 'Tongkrongan Website',
+          place: 'Ridwan Surya · Remote',
+          period: '2024',
+          desc: 'Built a community hangout website with a modern look and smooth user experience.',
+          tags: ['React', 'Tailwind CSS'],
+        },
       ],
     },
     {
       title: 'Education',
       items: [
-        { role: 'SMK Wikrama — Rekayasa Perangkat Lunak', place: 'Bogor', period: 'Current', desc: 'Vocational IT track focused on software engineering and networking.' },
-        { role: 'Pesantren Fathan Mubina', place: 'MTs', period: 'Completed', desc: 'Junior high school with Islamic boarding school curriculum.' },
-        { role: 'SDIT Almadinah Cibinong', place: 'Cibinong, Bogor', period: 'Completed', desc: 'Islamic integrated elementary school.' },
+        {
+          role: 'SMK Wikrama — Rekayasa Perangkat Lunak',
+          place: 'Bogor',
+          period: 'Current',
+          desc: 'Vocational IT track focused on software engineering, web development, and networking.',
+          tags: ['Web Dev', 'Networking', 'RPL'],
+        },
+        {
+          role: 'Pesantren Fathan Mubina',
+          place: 'MTs · Boarding School',
+          period: 'Completed',
+          desc: 'Junior high with Islamic boarding school curriculum. Developed early interest in computers and technology.',
+          tags: [],
+        },
+        {
+          role: 'SDIT Almadinah Cibinong',
+          place: 'Cibinong, Bogor',
+          period: 'Completed',
+          desc: 'Islamic integrated elementary school. Foundation of character and love for learning.',
+          tags: [],
+        },
       ],
     },
     {
-      title: 'Skills',
+      title: 'Technical Skills',
       items: [
-        { role: 'Frontend', place: '', period: '', desc: 'HTML, CSS, JavaScript, React, Tailwind CSS' },
-        { role: 'Backend', place: '', period: '', desc: 'Laravel, PHP, MySQL' },
-        { role: 'Infrastructure', place: '', period: '', desc: 'VPS, Linux, Nginx, SSL' },
+        { role: 'Frontend',        place: '', period: '', desc: 'HTML · CSS · JavaScript · React · Tailwind CSS', tags: [] },
+        { role: 'Backend',         place: '', period: '', desc: 'Laravel · PHP · MySQL',                          tags: [] },
+        { role: 'Infrastructure',  place: '', period: '', desc: 'VPS · Linux · Nginx · SSL · Vercel',             tags: [] },
       ],
     },
   ]
 
   return (
     <motion.div {...pageAnim} className="space-y-8">
-      {/* Download button */}
+      {/* Header */}
       <div className="flex items-center justify-between">
-        <p className="text-base" style={{ color: 'var(--text-muted)' }}>
-          Muhammad Syafa Algiffari Firdaus — IT Student & Web Developer
-        </p>
-        <a href="/cv.pdf" download
+        <div>
+          <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
+            Muhammad Syafa Algiffari Firdaus
+          </p>
+          <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            IT Student · Web Developer · Bogor, Indonesia
+          </p>
+        </div>
+        <a href="https://drive.google.com/file/d/1e-zS0v0oQLBGf3OZf68U6ymV1ahuaXoc/view?usp=sharing"
+          target="_blank" rel="noopener noreferrer"
           className="flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-medium transition-all"
           style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
           onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--border-hover)'; e.currentTarget.style.color = 'var(--text-primary)' }}
@@ -150,6 +201,16 @@ function CVTab() {
                 </div>
                 {item.place && <p className="text-[11px] mb-1" style={{ color: 'var(--text-muted)' }}>{item.place}</p>}
                 <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{item.desc}</p>
+                {item.tags && item.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mt-2">
+                    {item.tags.map(tag => (
+                      <span key={tag} className="text-[10px] px-2 py-0.5 rounded-full"
+                        style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -261,9 +322,9 @@ export default function About() {
   const { t } = useLang()
 
   const tabs = [
-    { id: 'about', label: t.nav.about,        icon: FiUser      },
-    { id: 'cv',    label: 'CV',               icon: FiFileText  },
-    { id: 'certs', label: t.nav.education + ' Certs', icon: FiAward },
+    { id: 'about', label: t.nav.about,   icon: FiUser     },
+    { id: 'cv',    label: 'CV',          icon: FiFileText },
+    { id: 'certs', label: 'Certificate', icon: FiAward    },
   ]
 
   return (
@@ -272,22 +333,26 @@ export default function About() {
         <SectionLabel number="01" label={t.nav.about} heading={t.whoIAm} />
 
         {/* Sub-tab nav */}
-        <div className="flex items-center gap-1 mb-8 p-1 rounded-xl w-fit"
-          style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
-          {tabs.map(({ id, label, icon: Icon }) => (
-            <button key={id} onClick={() => setActiveTab(id)}
-              className="relative flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-colors"
-              style={{ color: activeTab === id ? 'var(--text-primary)' : 'var(--text-muted)' }}>
-              {activeTab === id && (
-                <motion.div layoutId="about-tab"
-                  className="absolute inset-0 rounded-lg"
-                  style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 32 }} />
-              )}
-              <Icon size={13} className="relative z-10" />
-              <span className="relative z-10">{label}</span>
-            </button>
-          ))}
+        <div className="inline-flex items-center gap-1 p-1 rounded-2xl mb-8"
+          style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+          {tabs.map(({ id, label, icon: Icon }) => {
+            const on = activeTab === id
+            return (
+              <motion.button key={id} onClick={() => setActiveTab(id)}
+                whileTap={{ scale: 0.97 }}
+                className="relative flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-colors"
+                style={{ color: on ? 'var(--text-primary)' : 'var(--text-muted)' }}>
+                {on && (
+                  <motion.div layoutId="about-tab"
+                    className="absolute inset-0 rounded-xl"
+                    style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-hover)' }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 32 }} />
+                )}
+                <Icon size={12} className="relative z-10" />
+                <span className="relative z-10 font-semibold">{label}</span>
+              </motion.button>
+            )
+          })}
         </div>
 
         {/* Tab content */}
