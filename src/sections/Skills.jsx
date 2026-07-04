@@ -5,6 +5,7 @@ import { SiTailwindcss, SiLaravel, SiVercel, SiMysql } from 'react-icons/si'
 import { FiTarget, FiZap, FiUsers } from 'react-icons/fi'
 import SectionWrapper from '../components/SectionWrapper'
 import SectionLabel from '../components/SectionLabel'
+import { useLang } from '../context/LangContext'
 
 /* level → numeric for bar width */
 const levelMap = { Advanced: 90, Intermediate: 65, Beginner: 35 }
@@ -111,17 +112,18 @@ const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.05, delay
 const cardAnim = { hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } } }
 
 export default function Skills() {
+  const { t } = useLang()
   return (
     <SectionWrapper id="skills" className="py-8 md:py-10 overflow-hidden">
       <div className="px-6 md:px-8">
-        <SectionLabel number="02" label="Skills" heading="What I Work With" />
+        <SectionLabel number="02" label={t.nav.skills} heading={t.whatIWorkWith} />
 
         {/* Legend */}
         <div className="flex items-center gap-4 mb-5">
           {Object.entries(levelColor).map(([label, color]) => (
             <div key={label} className="flex items-center gap-1.5">
               <div className="w-2 h-2 rounded-full" style={{ background: color }} />
-              <span className="text-[10px]" style={{ color: 'var(--text-muted)' }}>{label}</span>
+              <span className="text-[10px]" style={{ color: 'var(--text-muted)' }}>{t[label.toLowerCase()]}</span>
             </div>
           ))}
         </div>
@@ -143,12 +145,12 @@ export default function Skills() {
         <div className="flex items-center gap-3 mb-4">
           <div className="h-px flex-1" style={{ background: 'var(--border)' }} />
           <span className="text-[10px] font-semibold tracking-widest uppercase"
-            style={{ color: 'var(--text-muted)' }}>Soft Skills</span>
+            style={{ color: 'var(--text-muted)' }}>{t.softSkills}</span>
           <div className="h-px flex-1" style={{ background: 'var(--border)' }} />
         </div>
         <div className="grid sm:grid-cols-3 gap-3">
-          {softSkills.map(({ icon, label, desc }, i) => (
-            <motion.div key={label}
+          {softSkills.map(({ icon }, i) => (
+            <motion.div key={t.soft[i].label}
               initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
@@ -161,8 +163,8 @@ export default function Skills() {
                 style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
                 {icon}
               </div>
-              <p className="text-sm font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>{label}</p>
-              <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>{desc}</p>
+              <p className="text-sm font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>{t.soft[i].label}</p>
+              <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>{t.soft[i].desc}</p>
             </motion.div>
           ))}
         </div>

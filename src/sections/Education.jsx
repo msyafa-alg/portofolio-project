@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import SectionWrapper from '../components/SectionWrapper'
 import SectionLabel from '../components/SectionLabel'
+import { useLang } from '../context/LangContext'
 
 const timeline = [
   {
@@ -33,10 +34,11 @@ const timeline = [
 ]
 
 export default function Education() {
+  const { t } = useLang()
   return (
     <SectionWrapper id="education" className="py-8 md:py-10">
       <div className="px-6 md:px-8">
-        <SectionLabel number="03" label="Education" heading="Academic Journey" />
+        <SectionLabel number="03" label={t.nav.education} heading={t.academicJourney} />
 
         <div className="relative mt-10 space-y-6">
           {/* LINE */}
@@ -101,7 +103,7 @@ export default function Education() {
                     <div className="flex justify-between items-center mb-1">
                       <h3 className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{item.school}</h3>
                       <span className="text-[10px] px-2 py-0.5 rounded-full" style={{ border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
-                        {item.period}
+                        {item.current ? t.current : t.completed}
                       </span>
                     </div>
 

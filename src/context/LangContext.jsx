@@ -20,6 +20,11 @@ export const translations = {
     bio: (name) => `IT student at ${name} focused on building clean, efficient, and modern web experiences. Passionate about frontend development and server infrastructure.`,
     featuredProjects: 'Featured Projects',
     seeAll: 'See all',
+    toolsUsed: 'Tools That I Have Used',
+    projectsCompleted: 'Projects Completed',
+    clients: 'Clients',
+    technologies: 'Technologies',
+    yearsOfLearning: 'Years of Learning',
     clientsTitle: 'Clients & Partners',
     letsWork: "Let's work together",
     letsWorkSub: 'Open to internships, collaborations, and learning opportunities.',
@@ -28,6 +33,15 @@ export const translations = {
 
     // About
     whoIAm: 'Who I Am',
+    aboutTab: 'About',
+    cvTab: 'CV',
+    certsTab: 'Certificate',
+    downloadCv: 'Download CV',
+    experience: 'Experience',
+    clickToView: 'Click a certificate to view full size.',
+    certificateImage: 'Certificate Image',
+    noImage: 'No image available',
+    close: 'Close',
     aboutBio: [
       (smk) => <>I'm an IT student at <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{smk}</strong> with a strong focus on <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>web development</strong> and <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>server infrastructure</strong>.</>,
       () => <>My journey started with curiosity about how websites work — from front-end interfaces to the servers that power them. I enjoy building things that are both functional and well-structured.</>,
@@ -40,6 +54,9 @@ export const translations = {
     whatIWorkWith: 'What I Work With',
     technicalSkills: 'Technical Skills',
     softSkills: 'Soft Skills',
+    advanced: 'Advanced',
+    intermediate: 'Intermediate',
+    beginner: 'Beginner',
     soft: [
       { label: 'Problem Solving',    desc: 'Breaking complex issues into manageable steps'  },
       { label: 'Fast Learner',       desc: 'Quickly adapting to new tools and frameworks'   },
@@ -48,6 +65,7 @@ export const translations = {
 
     // Education
     academicBackground: 'Academic Background',
+    academicJourney: 'Academic Journey',
     current: 'Current',
     completed: 'Completed',
     edu: [
@@ -58,6 +76,10 @@ export const translations = {
 
     // Projects
     thingsIBuilt: "Things I've Built",
+    allFilter: 'All',
+    noProjects: 'No projects found for',
+    view: 'View',
+    github: 'GitHub',
     liveDemo: 'Live Demo',
     source: 'Source',
 
@@ -71,6 +93,8 @@ export const translations = {
     namePlaceholder: 'Your name', emailPlaceholder: 'your@email.com', messagePlaceholder: "What's on your mind?",
     send: 'Send Message', sending: 'Sending...', sent: "✓ Message sent! I'll get back to you soon.",
     failed: 'Failed to send. Please try again.',
+    toastSuccess: 'Message sent!',
+    toastReply: "I'll get back to you soon.",
   },
 
   id: {
@@ -90,6 +114,11 @@ export const translations = {
     bio: (name) => `Siswa IT di ${name} yang fokus membangun pengalaman web yang bersih, efisien, dan modern. Passionate di frontend development dan infrastruktur server.`,
     featuredProjects: 'Proyek Unggulan',
     seeAll: 'Lihat semua',
+    toolsUsed: 'Tools yang Saya Gunakan',
+    projectsCompleted: 'Proyek Selesai',
+    clients: 'Klien',
+    technologies: 'Teknologi',
+    yearsOfLearning: 'Tahun Belajar',
     clientsTitle: 'Klien & Mitra',
     letsWork: 'Ayo bekerja sama',
     letsWorkSub: 'Terbuka untuk magang, kolaborasi, dan peluang belajar.',
@@ -98,6 +127,15 @@ export const translations = {
 
     // About
     whoIAm: 'Siapa Saya',
+    aboutTab: 'Tentang',
+    cvTab: 'CV',
+    certsTab: 'Sertifikat',
+    downloadCv: 'Unduh CV',
+    experience: 'Pengalaman',
+    clickToView: 'Klik sertifikat untuk melihat ukuran penuh.',
+    certificateImage: 'Gambar Sertifikat',
+    noImage: 'Gambar tidak tersedia',
+    close: 'Tutup',
     aboutBio: [
       (smk) => <>Saya siswa IT di <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{smk}</strong> dengan fokus kuat pada <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>pengembangan web</strong> dan <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>infrastruktur server</strong>.</>,
       () => <>Perjalanan saya dimulai dari rasa ingin tahu tentang cara kerja website — dari antarmuka front-end hingga server yang mendukungnya. Saya suka membangun sesuatu yang fungsional dan terstruktur.</>,
@@ -110,6 +148,9 @@ export const translations = {
     whatIWorkWith: 'Yang Saya Gunakan',
     technicalSkills: 'Keahlian Teknis',
     softSkills: 'Soft Skills',
+    advanced: 'Mahir',
+    intermediate: 'Menengah',
+    beginner: 'Dasar',
     soft: [
       { label: 'Pemecahan Masalah',  desc: 'Memecah masalah kompleks menjadi langkah yang terkelola' },
       { label: 'Cepat Belajar',      desc: 'Cepat beradaptasi dengan tools dan framework baru'       },
@@ -118,6 +159,7 @@ export const translations = {
 
     // Education
     academicBackground: 'Latar Belakang Akademik',
+    academicJourney: 'Perjalanan Akademik',
     current: 'Aktif',
     completed: 'Selesai',
     edu: [
@@ -128,6 +170,10 @@ export const translations = {
 
     // Projects
     thingsIBuilt: 'Yang Pernah Saya Buat',
+    allFilter: 'Semua',
+    noProjects: 'Tidak ada proyek untuk',
+    view: 'Lihat',
+    github: 'GitHub',
     liveDemo: 'Demo Langsung',
     source: 'Kode',
 
@@ -141,6 +187,8 @@ export const translations = {
     namePlaceholder: 'Nama kamu', emailPlaceholder: 'email@kamu.com', messagePlaceholder: 'Ada yang ingin disampaikan?',
     send: 'Kirim Pesan', sending: 'Mengirim...', sent: '✓ Pesan terkirim! Saya akan segera membalas.',
     failed: 'Gagal mengirim. Coba lagi.',
+    toastSuccess: 'Pesan berhasil dikirim!',
+    toastReply: 'Saya akan segera membalasnya.',
   },
 }
 

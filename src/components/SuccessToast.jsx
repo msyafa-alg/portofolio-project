@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiCheck, FiX } from 'react-icons/fi'
+import { useLang } from '../context/LangContext'
 
 export default function SuccessToast({ show, onClose }) {
+  const { t } = useLang()
   // Auto close after 5s
   useEffect(() => {
     if (!show) return
@@ -54,7 +56,7 @@ export default function SuccessToast({ show, onClose }) {
                   transition={{ delay: 0.2, duration: 0.3 }}
                   className="text-sm font-semibold"
                   style={{ color: 'var(--text-primary)' }}>
-                  Pesan berhasil dikirim!
+                  {t.toastSuccess}
                 </motion.p>
                 <motion.p
                   initial={{ opacity: 0, x: 8 }}
@@ -62,7 +64,7 @@ export default function SuccessToast({ show, onClose }) {
                   transition={{ delay: 0.28, duration: 0.3 }}
                   className="text-xs mt-0.5"
                   style={{ color: 'var(--text-muted)' }}>
-                  Saya akan segera membalasnya.
+                  {t.toastReply}
                 </motion.p>
               </div>
 

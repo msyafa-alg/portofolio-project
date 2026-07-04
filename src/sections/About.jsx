@@ -6,13 +6,6 @@ import SectionWrapper from '../components/SectionWrapper'
 import SectionLabel from '../components/SectionLabel'
 import { useLang } from '../context/LangContext'
 
-/* ─── Sub-tab nav ─── */
-const tabs = [
-  { id: 'about', label: 'About',        icon: FiUser      },
-  { id: 'cv',    label: 'CV',           icon: FiFileText  },
-  { id: 'certs', label: 'Certificates', icon: FiAward     },
-]
-
 /* ─── Certificates data ─── */
 const certificates = [
   {
@@ -49,37 +42,34 @@ const pageAnim = {
 }
 
 /* ─── About tab ─── */
-const stats = [
-  { value: '6+',  label: 'Projects',     icon: <FiBox size={16} />        },
-  { value: '9+',  label: 'Technologies', icon: <FiCpu size={16} />        },
-  { value: 'SMK', label: 'IT Track',     icon: <FiBookOpen size={16} />   },
-  { value: '∞',   label: 'Curiosity',    icon: <FiTrendingUp size={16} /> },
-]
-
 function AboutTab() {
+  const { t } = useLang()
+  const statsData = [
+    { value: '6+',  key: 'projects',     icon: <FiBox size={16} />        },
+    { value: '9+',  key: 'technologies', icon: <FiCpu size={16} />        },
+    { value: 'SMK', key: 'track',        icon: <FiBookOpen size={16} />   },
+    { value: '∞',   key: 'curiosity',    icon: <FiTrendingUp size={16} /> },
+  ]
   return (
     <motion.div {...pageAnim} className="space-y-6">
       <div className="grid md:grid-cols-5 gap-8 items-start">
         <div className="md:col-span-3 space-y-4">
-          {[
-            <>I'm an IT student at <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>SMK Wikrama</strong> with a strong focus on <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>web development</strong> and <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>server infrastructure</strong>.</>,
-            <>My journey started with curiosity about how websites work — from front-end interfaces to the servers that power them. I enjoy building things that are both functional and well-structured.</>,
-            <>Currently deepening my skills in modern web technologies, Linux server management, and VPS hosting — while continuously growing as a developer.</>,
-          ].map((line, i) => (
-            <p key={i} className="text-sm leading-[1.9]" style={{ color: 'var(--text-secondary)' }}>{line}</p>
+          {t.aboutBio.map((line, i) => (
+            <p key={i} className="text-sm leading-[1.9]" style={{ color: 'var(--text-secondary)' }}>{line('SMK Wikrama')}</p>
           ))}
-          <blockquote className="mt-6 pl-4 text-sm italic"
-            style={{ borderLeft: '1px solid var(--border-hover)', color: 'var(--text-muted)' }}>
-            "Code is not just logic — it's craft."
-          </blockquote>
-        </div>
+<blockquote className="mt-6 pl-4 text-sm italic"
+              style={{ borderLeft: '1px solid var(--border-hover)', color: 'var(--text-muted)' }}>
+              {t.quote}
+            </blockquote>
+            <hr className="my-4 border-t" style={{ borderColor: 'var(--border)', opacity: 0.3 }} />
+          </div>
         <div className="md:col-span-2 grid grid-cols-2 gap-3">
-          {stats.map(({ value, label, icon }) => (
-            <div key={label} className="gradient-border rounded-2xl p-4 cursor-default"
+          {statsData.map(({ value, key, icon }) => (
+            <div key={key} className="gradient-border rounded-2xl p-4 cursor-default"
               style={{ background: 'var(--bg-card)' }}>
               <div className="mb-2" style={{ color: 'var(--text-muted)' }}>{icon}</div>
               <p className="text-xl font-bold font-display mb-0.5" style={{ color: 'var(--text-primary)' }}>{value}</p>
-              <p className="text-[10px] tracking-wide uppercase" style={{ color: 'var(--text-muted)' }}>{label}</p>
+              <p className="text-[10px] tracking-wide uppercase" style={{ color: 'var(--text-muted)' }}>{t.stats[key]}</p>
             </div>
           ))}
         </div>
@@ -90,9 +80,10 @@ function AboutTab() {
 
 /* ─── CV tab ─── */
 function CVTab() {
+  const { t } = useLang()
   const sections = [
     {
-      title: 'Experience',
+      title: t.experience,
       items: [
         {
           role: 'Freelance Web Developer',
@@ -125,7 +116,7 @@ function CVTab() {
       ],
     },
     {
-      title: 'Education',
+      title: t.nav.education,
       items: [
         {
           role: 'SMK Wikrama — Rekayasa Perangkat Lunak',
@@ -151,7 +142,7 @@ function CVTab() {
       ],
     },
     {
-      title: 'Technical Skills',
+      title: t.technicalSkills,
       items: [
         { role: 'Frontend',        place: '', period: '', desc: 'HTML · CSS · JavaScript · React · Tailwind CSS', tags: [] },
         { role: 'Backend',         place: '', period: '', desc: 'Laravel · PHP · MySQL',                          tags: [] },
@@ -174,11 +165,14 @@ function CVTab() {
         </div>
         <a href="https://drive.google.com/file/d/1zrCCOV-FjByQ3M2vY9M8RqJbZGb51aya/view?usp=sharing"
           target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-medium transition-all"
-          style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--border-hover)'; e.currentTarget.style.color = 'var(--text-primary)' }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-secondary)' }}>
-          <FiDownload size={12} /> Download CV
+          className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all"
+          style={{ background: 'var(--text-primary)', color: 'var(--bg)', border: '1px solid var(--text-primary)' }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'var(--bg)'; e.currentTarget.style.color = 'var(--text-primary)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'var(--text-primary)'; e.currentTarget.style.color = 'var(--bg)'; }}>
+          <motion.span whileHover={{ rotate: 15 }} className="inline-block">
+            <FiDownload size={14} />
+          </motion.span>
+          {t.downloadCv}
         </a>
       </div>
 
@@ -188,14 +182,16 @@ function CVTab() {
             style={{ color: 'var(--text-muted)' }}>{sec.title}</p>
           <div className="space-y-2">
             {sec.items.map((item, i) => (
-              <div key={i} className="rounded-xl p-4"
+              <motion.div key={i} className="rounded-xl p-4 cursor-default"
+                whileHover={{ y: -4, borderColor: 'var(--border-hover)', boxShadow: 'var(--shadow-md)' }}
+                transition={{ duration: 0.15 }}
                 style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
                 <div className="flex items-start justify-between gap-3 mb-1">
                   <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>{item.role}</p>
                   {item.period && (
                     <span className="text-[10px] flex-shrink-0 px-2 py-0.5 rounded-full"
                       style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
-                      {item.period}
+                      {item.period === 'Current' ? t.current : item.period === 'Completed' ? t.completed : item.period}
                     </span>
                   )}
                 </div>
@@ -211,7 +207,7 @@ function CVTab() {
                     ))}
                   </div>
                 )}
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -222,12 +218,13 @@ function CVTab() {
 
 /* ─── Certificates tab ─── */
 function CertificatesTab() {
+  const { t } = useLang()
   const [selected, setSelected] = useState(null)
 
   return (
     <motion.div {...pageAnim}>
       <p className="text-xs mb-4" style={{ color: 'var(--text-muted)' }}>
-        Click a certificate to view full size.
+        {t.clickToView}
       </p>
 
       <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -252,7 +249,7 @@ function CertificatesTab() {
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-2"
                 style={{ background: 'var(--bg-elevated)' }}>
                 <FiAward size={28} style={{ color: 'var(--text-muted)' }} />
-                <p className="text-base" style={{ color: 'var(--text-muted)' }}>Certificate Image</p>
+                <p className="text-base" style={{ color: 'var(--text-muted)' }}>{t.certificateImage}</p>
               </div>
               {/* If image loads, show it on top */}
               {cert.image && (
@@ -294,7 +291,7 @@ function CertificatesTab() {
                 ) : (
                   <div className="flex flex-col items-center gap-3">
                     <FiAward size={40} style={{ color: 'var(--text-muted)' }} />
-                    <p className="text-base" style={{ color: 'var(--text-muted)' }}>No image available</p>
+                    <p className="text-base" style={{ color: 'var(--text-muted)' }}>{t.noImage}</p>
                   </div>
                 )}
               </div>
@@ -305,7 +302,7 @@ function CertificatesTab() {
                 <button onClick={() => setSelected(null)}
                   className="mt-4 text-xs px-3 py-1.5 rounded-xl transition-all"
                   style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
-                  Close
+                  {t.close}
                 </button>
               </div>
             </motion.div>
@@ -322,9 +319,9 @@ export default function About() {
   const { t } = useLang()
 
   const tabs = [
-    { id: 'about', label: t.nav.about,   icon: FiUser     },
-    { id: 'cv',    label: 'CV',          icon: FiFileText },
-    { id: 'certs', label: 'Certificate', icon: FiAward    },
+    { id: 'about', label: t.aboutTab,  icon: FiUser     },
+    { id: 'cv',    label: t.cvTab,     icon: FiFileText },
+    { id: 'certs', label: t.certsTab,  icon: FiAward    },
   ]
 
   return (
@@ -338,10 +335,11 @@ export default function About() {
           {tabs.map(({ id, label, icon: Icon }) => {
             const on = activeTab === id
             return (
-              <motion.button key={id} onClick={() => setActiveTab(id)}
-                whileTap={{ scale: 0.97 }}
-                className="relative flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-colors"
-                style={{ color: on ? 'var(--text-primary)' : 'var(--text-muted)' }}>
+<motion.button key={id} onClick={() => setActiveTab(id)}
+                  whileTap={{ scale: 0.97 }}
+                  whileHover={{ scale: 1.02, backgroundColor: 'var(--bg-elevated)' }}
+                  className="relative flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium transition-colors"
+                  style={{ color: on ? 'var(--text-primary)' : 'var(--text-muted)' }}>
                 {on && (
                   <motion.div layoutId="about-tab"
                     className="absolute inset-0 rounded-xl"

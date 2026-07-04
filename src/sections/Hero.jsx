@@ -40,9 +40,16 @@ const featuredProjects = [
     demo: 'https://luminebeauty-project.vercel.app/',
     repo: 'https://github.com/msyafa-alg/luminebeauty',
   },
-]
+];
+
+// Statistics to display below bio
+const statKeys = [
+  'projectsCompleted', 'clients', 'technologies', 'yearsOfLearning'
+];
 
 const testimonials = [
+  { name: 'Pak Rizki',     role: 'Client — Website Rayon Sekolah',  initial: 'PR',
+    text: 'Website rayon sekolahnya sangat membantu dalam koordinasi. Tampilan modern dan mudah digunakan. Terima kasih!' },
   { name: 'Jihad Akbar',   role: 'Client — Laravel Project',       initial: 'JA',
     text: 'Mantap, sip! Project mandiri Laravel hasilnya bagus banget. Sangat puas.' },
   { name: 'Jaki',          role: 'Client — Website Warkop',         initial: 'JK',
@@ -90,6 +97,7 @@ function Marquee({ items, speed = 28 }) {
 
 /* ── Project Card ── */
 function ProjectCard({ p, i, setActivePage }) {
+  const { t } = useLang()
   const [hov, setHov] = useState(false)
   return (
     <motion.div
@@ -119,12 +127,12 @@ function ProjectCard({ p, i, setActivePage }) {
           <a href={p.demo} target="_blank" rel="noopener noreferrer"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold"
             style={{ background: 'var(--text-primary)', color: 'var(--bg)' }}>
-            <FiExternalLink size={11} /> View
+            <FiExternalLink size={11} /> {t.view}
           </a>
           <a href={p.repo} target="_blank" rel="noopener noreferrer"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold"
             style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}>
-            <FiGithub size={11} /> GitHub
+            <FiGithub size={11} /> {t.github}
           </a>
         </motion.div>
       </div>
@@ -212,16 +220,19 @@ export default function Hero({ setActivePage }) {
       <motion.div variants={fadeUp}>
         <div className="flex items-start gap-4 mb-4">
           <div className="relative flex-shrink-0">
+            {/* Gradient glow behind avatar */}
+            <div className="absolute inset-0 rounded-full pointer-events-none"
+                 style={{ background: 'radial-gradient(circle at center, rgba(255,255,255,0.15), transparent)', filter: 'blur(8px)' }} />
             <img src="/images/profile.jpeg" alt="Muhammad Syafa"
               className="w-16 h-16 rounded-full object-cover"
               style={{ border: '1px solid var(--border)' }} />
-            <span className="absolute bottom-0.5 right-0.5 w-2.5 h-2.5 rounded-full border-2"
+            <span className="absolute bottom-0.5 right-0.5 w-2.5 h-2.5 rounded-full border-2 animate-pulse"
               style={{ background: '#22c55e', borderColor: 'var(--bg)' }} />
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap mb-0.5">
-              <h1 className="font-display font-bold text-xl leading-tight"
-                style={{ color: 'var(--text-primary)' }}>Muhammad Syafa</h1>
+<h1 className="font-display font-extrabold text-3xl leading-tight"
+                      style={{ color: 'var(--text-primary)' }}>Muhammad Syafa</h1>
               {/* Verified badge — monochrome */}
               <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
                 <circle cx="7.5" cy="7.5" r="7.5" fill="#1d9bf0" />
@@ -252,12 +263,28 @@ export default function Hero({ setActivePage }) {
         <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', lineHeight: '1.8' }}>
           {t.bio('SMK Wikrama')}
         </p>
+        {/* Statistics */}
+        <div className="flex flex-wrap gap-4 mt-4">
+          {[12, 8, 15, 5].map((val, i) => (
+            <motion.div key={statKeys[i]}
+              initial={{ opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ delay: i * 0.1, duration: 0.4 }}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10"
+              style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
+            >
+              <span className="font-medium text-sm">{val}</span>
+              <span className="text-xs text-muted" style={{ color: 'var(--text-muted)' }}>{t[statKeys[i]]}</span>
+            </motion.div>
+          ))}
+        </div>
       </motion.div>
 
       {/* ── Tools ── */}
       <motion.div variants={fadeUp}>
         <p className="text-xs font-semibold tracking-widest uppercase mb-3"
-          style={{ color: 'var(--text-muted)' }}>Tools That I Have Used</p>
+          style={{ color: 'var(--text-muted)' }}>{t.toolsUsed}</p>
         <Marquee items={tools} speed={26} />
       </motion.div>
 
