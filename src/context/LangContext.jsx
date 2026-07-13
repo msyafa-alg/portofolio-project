@@ -17,7 +17,7 @@ export const translations = {
 
     // Hero
     openToWork: 'Open To Work',
-    bio: (name) => `IT student at ${name} focused on building clean, efficient, and modern web experiences. Passionate about frontend development and server infrastructure.`,
+    bio: (name) => `IT student at ${name} focused on building clean, efficient, and modern web experiences. Passionate about frontend development.`,
     featuredProjects: 'Featured Projects',
     seeAll: 'See all',
     toolsUsed: 'Tools That I Have Used',
@@ -43,9 +43,9 @@ export const translations = {
     noImage: 'No image available',
     close: 'Close',
     aboutBio: [
-      (smk) => <>I'm an IT student at <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{smk}</strong> with a strong focus on <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>web development</strong> and <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>server infrastructure</strong>.</>,
-      () => <>My journey started with curiosity about how websites work — from front-end interfaces to the servers that power them. I enjoy building things that are both functional and well-structured.</>,
-      () => <>Currently deepening my skills in modern web technologies, Linux server management, and VPS hosting — while continuously growing as a developer.</>,
+      (smk) => <>I'm an IT student at <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{smk}</strong> with a focus on <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>web development</strong>.</>,
+      () => <>My journey started with curiosity about how websites work. I enjoy building things that are both functional and well-structured.</>,
+      () => <>Currently deepening my skills in modern web technologies while continuously growing as a developer.</>,
     ],
     quote: '"Code is not just logic — it\'s craft."',
     stats: { projects: 'Projects', technologies: 'Technologies', track: 'IT Track', curiosity: 'Curiosity' },
@@ -69,7 +69,7 @@ export const translations = {
     current: 'Current',
     completed: 'Completed',
     edu: [
-      { desc: 'Studying IT at SMK Wikrama with focus on web development, networking, and software engineering. Actively building projects and exploring server management.', tags: ['Web Dev', 'Networking', 'RPL'] },
+      { desc: 'Studying IT at SMK Wikrama with focus on web development, networking, and software engineering. Actively building projects.', tags: ['Web Dev', 'Networking', 'RPL'] },
       { desc: 'Completed junior high at Pesantren Fathan Mubina. Alongside Islamic studies, developed early interest in computers and technology.', tags: ['Islamic Studies', 'Boarding School'] },
       { desc: 'Completed elementary school at SDIT Almadinah Cibinong, an Islamic integrated school. Foundation of character and love for learning.', tags: ['SDIT', 'Cibinong', 'Bogor'] },
     ],
@@ -111,7 +111,7 @@ export const translations = {
 
     // Hero
     openToWork: 'Buka Peluang Kerja',
-    bio: (name) => `Siswa IT di ${name} yang fokus membangun pengalaman web yang bersih, efisien, dan modern. Passionate di frontend development dan infrastruktur server.`,
+    bio: (name) => `Siswa IT di ${name} yang fokus membangun pengalaman web yang bersih, efisien, dan modern. Passionate di frontend development.`,
     featuredProjects: 'Proyek Unggulan',
     seeAll: 'Lihat semua',
     toolsUsed: 'Tools yang Saya Gunakan',
@@ -137,9 +137,9 @@ export const translations = {
     noImage: 'Gambar tidak tersedia',
     close: 'Tutup',
     aboutBio: [
-      (smk) => <>Saya siswa IT di <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{smk}</strong> dengan fokus kuat pada <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>pengembangan web</strong> dan <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>infrastruktur server</strong>.</>,
-      () => <>Perjalanan saya dimulai dari rasa ingin tahu tentang cara kerja website — dari antarmuka front-end hingga server yang mendukungnya. Saya suka membangun sesuatu yang fungsional dan terstruktur.</>,
-      () => <>Saat ini memperdalam keahlian di teknologi web modern, manajemen server Linux, dan VPS hosting — sambil terus berkembang sebagai developer.</>,
+      (smk) => <>Saya siswa IT di <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{smk}</strong> dengan fokus pada <strong style={{ color: 'var(--text-primary)', fontWeight: 600 }}>pengembangan web</strong>.</>,
+      () => <>Perjalanan saya dimulai dari rasa ingin tahu tentang cara kerja website. Saya suka membangun sesuatu yang fungsional dan terstruktur.</>,
+      () => <>Saat ini memperdalam keahlian di teknologi web modern sambil terus berkembang sebagai developer.</>,
     ],
     quote: '"Kode bukan sekadar logika — ini adalah seni."',
     stats: { projects: 'Proyek', technologies: 'Teknologi', track: 'Jalur IT', curiosity: 'Rasa Ingin Tahu' },
@@ -163,7 +163,7 @@ export const translations = {
     current: 'Aktif',
     completed: 'Selesai',
     edu: [
-      { desc: 'Mendalami IT di SMK Wikrama dengan fokus web development, jaringan, dan software engineering. Aktif membangun proyek dan mengeksplorasi manajemen server.', tags: ['Web Dev', 'Jaringan', 'RPL'] },
+      { desc: 'Mendalami IT di SMK Wikrama dengan fokus web development, jaringan, dan software engineering. Aktif membangun proyek.', tags: ['Web Dev', 'Jaringan', 'RPL'] },
       { desc: 'Menempuh MTs di Pesantren Fathan Mubina. Selain ilmu agama, mulai tertarik dengan komputer dan teknologi yang mendorong memilih jalur IT.', tags: ['Studi Islam', 'Pesantren'] },
       { desc: 'Menempuh SD di SDIT Almadinah Cibinong, sekolah Islam terpadu. Fondasi awal pembentukan karakter dan semangat belajar.', tags: ['SDIT', 'Cibinong', 'Bogor'] },
     ],

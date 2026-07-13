@@ -10,7 +10,7 @@ const timeline = [
     period: 'Current', current: true,
     logo: 'https://files.catbox.moe/44znrc.png',
     logoBg: 'rgba(30,58,138,0.12)',
-    desc: 'Fokus ke web development, networking, dan software engineering. Aktif eksplorasi project dan server di luar kurikulum.',
+    desc: 'Fokus ke web development, networking, dan software engineering. Aktif eksplorasi project di luar kurikulum.',
     tags: ['Web Dev', 'Networking', 'RPL'],
   },
   {

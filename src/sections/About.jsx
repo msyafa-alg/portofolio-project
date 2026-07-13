@@ -90,7 +90,7 @@ function CVTab() {
           place: 'Self-employed',
           period: '2023 – Present',
           desc: 'Delivered web projects for multiple clients — including e-commerce stores, company profiles, and custom web apps. Handled full cycle from design to deployment.',
-          tags: ['React', 'Laravel', 'VPS'],
+          tags: ['React', 'Laravel'],
         },
         {
           role: 'Laravel Project — Client Work',
@@ -146,7 +146,7 @@ function CVTab() {
       items: [
         { role: 'Frontend',        place: '', period: '', desc: 'HTML · CSS · JavaScript · React · Tailwind CSS', tags: [] },
         { role: 'Backend',         place: '', period: '', desc: 'Laravel · PHP · MySQL',                          tags: [] },
-        { role: 'Infrastructure',  place: '', period: '', desc: 'VPS · Linux · Nginx · SSL · Vercel',             tags: [] },
+        { role: 'Deployment',  place: '', period: '', desc: 'Vercel',             tags: [] },
       ],
     },
   ]
@@ -183,8 +183,8 @@ function CVTab() {
           <div className="space-y-2">
             {sec.items.map((item, i) => (
               <motion.div key={i} className="rounded-xl p-4 cursor-default"
-                whileHover={{ y: -4, borderColor: 'var(--border-hover)', boxShadow: 'var(--shadow-md)' }}
-                transition={{ duration: 0.15 }}
+                whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                className="card-lift rounded-xl p-4 cursor-default"
                 style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
                 <div className="flex items-start justify-between gap-3 mb-1">
                   <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>{item.role}</p>

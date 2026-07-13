@@ -1,13 +1,13 @@
 import { useState, useRef } from 'react'
 import { motion, useAnimationFrame, useMotionValue } from 'framer-motion'
 import { FiMapPin, FiBriefcase, FiExternalLink, FiGithub, FiArrowRight } from 'react-icons/fi'
-import { FaReact, FaHtml5, FaCss3Alt, FaJs, FaPhp, FaLinux, FaServer } from 'react-icons/fa'
+import { FaReact, FaHtml5, FaCss3Alt, FaJs, FaPhp } from 'react-icons/fa'
 import { SiTailwindcss, SiLaravel, SiVercel, SiMysql } from 'react-icons/si'
 import useTyping from '../hooks/useTyping'
 import { useLang } from '../context/LangContext'
 
 /* ── Data ── */
-const roles = ['Frontend Developer', 'Server Enthusiast', 'IT Student', 'Web Builder']
+const roles = ['Frontend Developer', 'IT Student', 'Web Builder']
 
 const tools = [
   { icon: <FaReact style={{ color: '#61dafb' }} />,       name: 'React'        },
@@ -16,8 +16,6 @@ const tools = [
   { icon: <SiLaravel style={{ color: '#ff2d20' }} />,     name: 'Laravel'      },
   { icon: <FaPhp style={{ color: '#8892be' }} />,         name: 'PHP'          },
   { icon: <SiMysql style={{ color: '#f29111' }} />,       name: 'MySQL'        },
-  { icon: <FaServer style={{ color: '#34d399' }} />,      name: 'VPS'          },
-  { icon: <FaLinux style={{ color: '#fcc624' }} />,       name: 'Linux'        },
   { icon: <SiVercel />,                                   name: 'Vercel'       },
   { icon: <FaHtml5 style={{ color: '#e34f26' }} />,       name: 'HTML'         },
   { icon: <FaCss3Alt style={{ color: '#264de4' }} />,     name: 'CSS'          },
@@ -42,7 +40,6 @@ const featuredProjects = [
   },
 ];
 
-// Statistics to display below bio
 const statKeys = [
   'projectsCompleted', 'clients', 'technologies', 'yearsOfLearning'
 ];
@@ -84,11 +81,10 @@ function Marquee({ items, speed = 28 }) {
         style={{ background: 'linear-gradient(-90deg, var(--bg), transparent)' }} />
       <motion.div ref={ref} style={{ x }} className="flex gap-2 w-max py-1">
         {[...items, ...items].map((t, i) => (
-          <motion.span key={i} whileHover={{ scale: 1.05, y: -2 }}
-            className="tech-pill flex-shrink-0">
+          <span key={i} className="tech-pill">
             <span style={{ fontSize: '0.85rem' }}>{t.icon}</span>
             {t.name}
-          </motion.span>
+          </span>
         ))}
       </motion.div>
     </div>
@@ -106,32 +102,36 @@ function ProjectCard({ p, i, setActivePage }) {
       transition={{ delay: 0.15 + i * 0.08, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       onHoverStart={() => setHov(true)}
       onHoverEnd={() => setHov(false)}
-      whileHover={{ y: -3, transition: { duration: 0.2 } }}
-      className="rounded-xl overflow-hidden cursor-default"
+      whileHover={{ y: -4, transition: { duration: 0.2 } }}
+      className="rounded-xl overflow-hidden cursor-default card-lift"
       style={{
         background: 'var(--bg-card)',
         border: `1px solid ${hov ? 'var(--border-hover)' : 'var(--border)'}`,
-        boxShadow: hov ? 'var(--shadow-md)' : 'none',
+        boxShadow: hov ? 'var(--shadow-md)' : 'var(--shadow-sm)',
         transition: 'border-color 0.2s, box-shadow 0.2s',
       }}>
       {/* Thumbnail */}
-      <div className="relative h-32 overflow-hidden" style={{ background: 'var(--bg-elevated)' }}>
+      <div className="relative h-36 overflow-hidden" style={{ background: 'var(--bg-elevated)' }}>
         <img src={p.image} alt={p.title}
-          className="w-full h-full object-cover object-top transition-transform duration-500"
-          style={{ transform: hov ? 'scale(1.04)' : 'scale(1)' }} />
+          className="w-full h-full object-cover object-top transition-transform duration-700"
+          style={{ transform: hov ? 'scale(1.06)' : 'scale(1)' }} />
         <div className="absolute inset-0"
           style={{ background: 'linear-gradient(to top, var(--bg-card) 0%, transparent 55%)' }} />
-        {/* Hover buttons */}
-        <motion.div animate={{ opacity: hov ? 1 : 0 }} transition={{ duration: 0.2 }}
-          className="absolute inset-0 flex items-center justify-center gap-2">
+        {/* Hover overlay — glass buttons */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: hov ? 1 : 0 }}
+          transition={{ duration: 0.25 }}
+          className="absolute inset-0 flex items-center justify-center gap-2.5"
+          style={{ background: hov ? 'rgba(0,0,0,0.35)' : 'transparent' }}>
           <a href={p.demo} target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold"
-            style={{ background: 'var(--text-primary)', color: 'var(--bg)' }}>
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold backdrop-blur-md"
+            style={{ background: 'rgba(255,255,255,0.95)', color: 'var(--bg)' }}>
             <FiExternalLink size={11} /> {t.view}
           </a>
           <a href={p.repo} target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold"
-            style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}>
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold backdrop-blur-md"
+            style={{ background: 'rgba(0,0,0,0.55)', border: '1px solid rgba(255,255,255,0.12)', color: '#fff' }}>
             <FiGithub size={11} /> {t.github}
           </a>
         </motion.div>
@@ -139,7 +139,7 @@ function ProjectCard({ p, i, setActivePage }) {
       {/* Body */}
       <div className="p-4">
         <p className="text-sm font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>{p.title}</p>
-        <p className="text-xs mb-3 leading-relaxed" style={{ color: 'var(--text-muted)' }}>{p.desc}</p>
+        <p className="text-xs mb-3 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{p.desc}</p>
         <div className="flex flex-wrap gap-1.5">
           {p.stack.map(t => <span key={t} className="badge">{t}</span>)}
         </div>
@@ -148,7 +148,7 @@ function ProjectCard({ p, i, setActivePage }) {
   )
 }
 
-/* ── Testimonials drag scroll ── */
+/* ── Testimonials — equal-height cards ── */
 function Testimonials({ t }) {
   const scrollRef = useRef(null)
   const [dragging, setDragging] = useState(false)
@@ -164,18 +164,19 @@ function Testimonials({ t }) {
         onMouseMove={e => { if (!dragging) return; e.preventDefault(); scrollRef.current.scrollLeft = scrollLeft - (e.pageX - scrollRef.current.offsetLeft - startX) }}
         onMouseUp={() => setDragging(false)}
         onMouseLeave={() => setDragging(false)}
-        className="flex gap-3 overflow-x-auto pb-1 select-none"
+        className="flex gap-3 overflow-x-auto pb-2 select-none"
         style={{ scrollbarWidth: 'none', cursor: dragging ? 'grabbing' : 'grab' }}>
         {testimonials.map((t, i) => (
           <motion.div key={t.name}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.06, duration: 0.4 }}
-            className="flex-shrink-0 rounded-xl p-4"
-            style={{ width: 220, background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+            whileHover={{ y: -3, transition: { duration: 0.2 } }}
+            className="flex-shrink-0 rounded-xl p-5 flex flex-col"
+            style={{ width: 240, background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold"
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold"
                   style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
                   {t.initial}
                 </div>
@@ -184,13 +185,8 @@ function Testimonials({ t }) {
                   <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>{t.role}</p>
                 </div>
               </div>
-              <div className="flex gap-0.5">
-                {[...Array(5)].map((_, j) => (
-                  <span key={j} style={{ color: 'var(--text-muted)', fontSize: 10 }}>★</span>
-                ))}
-              </div>
             </div>
-            <p className="text-[11px] leading-relaxed" style={{ color: 'var(--text-secondary)' }}>"{t.text}"</p>
+            <p className="text-[11px] leading-relaxed flex-1" style={{ color: 'var(--text-secondary)' }}>"{t.text}"</p>
             <div className="mt-3 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
               <span className="text-[9px] font-medium px-2 py-0.5 rounded-full"
                 style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
@@ -214,26 +210,24 @@ export default function Hero({ setActivePage }) {
 
   return (
     <motion.div variants={stagger} initial="hidden" animate="show"
-      className="px-6 md:px-8 pt-8 pb-12 space-y-10">
+      className="px-6 md:px-8 pt-6 md:pt-8 pb-12 space-y-10 md:space-y-12">
 
       {/* ── Profile ── */}
       <motion.div variants={fadeUp}>
         <div className="flex items-start gap-4 mb-4">
           <div className="relative flex-shrink-0">
-            {/* Gradient glow behind avatar */}
             <div className="absolute inset-0 rounded-full pointer-events-none"
-                 style={{ background: 'radial-gradient(circle at center, rgba(255,255,255,0.15), transparent)', filter: 'blur(8px)' }} />
+                 style={{ background: 'radial-gradient(circle at center, rgba(255,255,255,0.12), transparent)', filter: 'blur(8px)' }} />
             <img src="/images/profile.jpeg" alt="Muhammad Syafa"
-              className="w-16 h-16 rounded-full object-cover"
+              className="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover"
               style={{ border: '1px solid var(--border)' }} />
             <span className="absolute bottom-0.5 right-0.5 w-2.5 h-2.5 rounded-full border-2 animate-pulse"
               style={{ background: '#22c55e', borderColor: 'var(--bg)' }} />
           </div>
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 flex-wrap mb-0.5">
-<h1 className="font-display font-extrabold text-3xl leading-tight"
-                      style={{ color: 'var(--text-primary)' }}>Muhammad Syafa</h1>
-              {/* Verified badge — monochrome */}
+            <div className="flex items-center gap-2 flex-wrap mb-1">
+              <h1 className="font-display font-extrabold text-2xl md:text-3xl leading-tight"
+                style={{ color: 'var(--text-primary)' }}>Muhammad Syafa</h1>
               <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
                 <circle cx="7.5" cy="7.5" r="7.5" fill="#1d9bf0" />
                 <path d="M4.5 7.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -260,22 +254,22 @@ export default function Hero({ setActivePage }) {
             </div>
           </div>
         </div>
-        <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', lineHeight: '1.8' }}>
+        <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)', lineHeight: '1.75' }}>
           {t.bio('SMK Wikrama')}
         </p>
         {/* Statistics */}
-        <div className="flex flex-wrap gap-4 mt-4">
+        <div className="flex flex-wrap gap-3 mt-4">
           {[12, 8, 15, 5].map((val, i) => (
             <motion.div key={statKeys[i]}
               initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ delay: i * 0.1, duration: 0.4 }}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"
               style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
             >
               <span className="font-medium text-sm">{val}</span>
-              <span className="text-xs text-muted" style={{ color: 'var(--text-muted)' }}>{t[statKeys[i]]}</span>
+              <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{t[statKeys[i]]}</span>
             </motion.div>
           ))}
         </div>
@@ -294,11 +288,12 @@ export default function Hero({ setActivePage }) {
           <p className="text-xs font-semibold tracking-widest uppercase"
             style={{ color: 'var(--text-muted)' }}>{t.featuredProjects}</p>
           <button onClick={() => setActivePage('projects')}
-            className="flex items-center gap-1 text-xs font-medium transition-colors"
+            className="flex items-center gap-1 text-xs font-medium transition-all duration-200 group"
             style={{ color: 'var(--text-muted)' }}
             onMouseEnter={e => e.currentTarget.style.color = 'var(--text-primary)'}
             onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}>
-            {t.seeAll} <FiArrowRight size={10} />
+            {t.seeAll}
+            <FiArrowRight size={10} className="transition-transform duration-200 group-hover:translate-x-0.5" />
           </button>
         </div>
         <div className="grid sm:grid-cols-2 gap-4">
@@ -315,20 +310,23 @@ export default function Hero({ setActivePage }) {
 
       {/* ── CTA ── */}
       <motion.div variants={fadeUp}
-        className="rounded-xl p-5"
+        className="rounded-xl p-5 md:p-6 relative overflow-hidden"
         style={{ background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Subtle gradient accent */}
+        <div className="absolute top-0 left-0 right-0 h-px"
+          style={{ background: 'linear-gradient(90deg, transparent, var(--border-hover), transparent)' }} />
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative">
           <div>
             <p className="text-sm font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>
               {t.letsWork}
             </p>
-            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
               {t.letsWorkSub}
             </p>
           </div>
           <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
             onClick={() => setActivePage('contact')}
-            className="flex-shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold"
+            className="flex-shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold transition-all"
             style={{ background: 'var(--text-primary)', color: 'var(--bg)' }}>
             {t.contactMe} <FiArrowRight size={12} />
           </motion.button>
@@ -338,4 +336,3 @@ export default function Hero({ setActivePage }) {
     </motion.div>
   )
 }
-

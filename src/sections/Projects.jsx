@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiExternalLink, FiGithub, FiArrowUpRight, FiX } from 'react-icons/fi'
 import SectionWrapper from '../components/SectionWrapper'
@@ -80,6 +80,22 @@ const projects = [
   },
 ]
 
+/* ── Tech badges with +N more ── */
+function TechBadges({ stack }) {
+  const visible = stack.slice(0, 3)
+  const extra = stack.length - 3
+  return (
+    <div className="flex flex-wrap gap-1.5">
+      {visible.map(t => <span key={t} className="badge">{t}</span>)}
+      {extra > 0 && (
+        <span className="badge" style={{ background: 'var(--accent-subtle)', color: 'var(--accent)', border: '1px solid transparent' }}>
+          +{extra}
+        </span>
+      )}
+    </div>
+  )
+}
+
 /* ── Floating detail ── */
 function ProjectDetail({ p, onClose }) {
   const { t } = useLang()
@@ -104,7 +120,6 @@ function ProjectDetail({ p, onClose }) {
           border: '1px solid var(--border)',
           boxShadow: 'var(--shadow-lg)',
         }}>
-        {/* Close */}
         <button onClick={onClose}
           className="absolute top-3 right-3 z-10 w-8 h-8 rounded-xl flex items-center justify-center transition-colors"
           style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}
@@ -113,7 +128,6 @@ function ProjectDetail({ p, onClose }) {
           <FiX size={14} />
         </button>
 
-        {/* Image */}
         {p.image && (
           <div className="relative w-full h-52 overflow-hidden" style={{ background: 'var(--bg-elevated)' }}>
             <img src={p.image} alt={p.title}
@@ -123,7 +137,6 @@ function ProjectDetail({ p, onClose }) {
           </div>
         )}
 
-        {/* Body */}
         <div className="p-6 pt-5">
           <p className="text-base font-bold mb-2" style={{ color: 'var(--text-primary)' }}>{p.title}</p>
           <p className="text-sm leading-relaxed mb-5" style={{ color: 'var(--text-muted)' }}>{p.desc}</p>
@@ -158,6 +171,72 @@ function ProjectDetail({ p, onClose }) {
   )
 }
 
+/* ── Hero card (first featured — premium showcase) ── */
+function HeroCard({ p, onSelect }) {
+  const { t } = useLang()
+  const [hov, setHov] = useState(false)
+  return (
+    <motion.div
+      onClick={() => onSelect(p)}
+      onHoverStart={() => setHov(true)} onHoverEnd={() => setHov(false)}
+      initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className="relative rounded-xl overflow-hidden cursor-pointer card-lift mb-5"
+      style={{
+        background: 'var(--bg-card)',
+        border: `1px solid ${hov ? 'var(--border-hover)' : 'var(--border)'}`,
+        boxShadow: hov ? 'var(--shadow-md)' : 'var(--shadow-sm)',
+        transition: 'border-color 0.2s, box-shadow 0.2s',
+      }}>
+      {/* Gradient accent line */}
+      <div className="absolute top-0 left-0 right-0 h-px z-10"
+        style={{ background: 'linear-gradient(90deg, transparent, var(--accent), transparent)' }} />
+      <div className="relative h-56 md:h-72 overflow-hidden" style={{ background: 'var(--bg-elevated)' }}>
+        {p.image && (
+          <img src={p.image} alt={p.title}
+            className="w-full h-full object-cover object-top transition-transform duration-700"
+            style={{ transform: hov ? 'scale(1.06)' : 'scale(1)' }} />
+        )}
+        <div className="absolute inset-0"
+          style={{ background: 'linear-gradient(to top, var(--bg-card) 0%, transparent 40%)' }} />
+        {/* Content overlay at bottom */}
+        <div className="absolute bottom-0 left-0 right-0 p-6 pb-5">
+          <p className="text-xl font-bold mb-1.5 font-display" style={{ color: 'var(--text-primary)' }}>{p.title}</p>
+          <p className="text-sm leading-relaxed mb-3 line-clamp-2" style={{ color: 'var(--text-secondary)' }}>{p.desc}</p>
+          <TechBadges stack={p.stack} />
+        </div>
+        {/* Hover overlay — glass buttons */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: hov ? 1 : 0 }}
+          transition={{ duration: 0.25 }}
+          className="absolute inset-0 flex items-center justify-center gap-3"
+          style={{ background: hov ? 'rgba(0,0,0,0.35)' : 'transparent' }}>
+          {p.demo && (
+            <a href={p.demo} target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-lg text-xs font-semibold backdrop-blur-md transition-transform duration-200"
+              style={{ background: 'rgba(255,255,255,0.95)', color: 'var(--bg)' }}
+              onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.04)'}
+              onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
+              <FiExternalLink size={12} /> {t.view}
+            </a>
+          )}
+          {p.repo && (
+            <a href={p.repo} target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-lg text-xs font-semibold backdrop-blur-md transition-transform duration-200"
+              style={{ background: 'rgba(0,0,0,0.55)', border: '1px solid rgba(255,255,255,0.12)', color: '#fff' }}
+              onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.04)'}
+              onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
+              <FiGithub size={12} /> {t.github}
+            </a>
+          )}
+        </motion.div>
+      </div>
+    </motion.div>
+  )
+}
+
 /* ── Featured card ── */
 function FeaturedCard({ p, index, onSelect }) {
   const { t } = useLang()
@@ -170,63 +249,47 @@ function FeaturedCard({ p, index, onSelect }) {
       viewport={{ once: true }}
       transition={{ delay: index * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
-      className="rounded-xl overflow-hidden cursor-pointer"
+      className="rounded-xl overflow-hidden cursor-pointer card-lift"
       style={{
         background: 'var(--bg-card)',
         border: `1px solid ${hov ? 'var(--border-hover)' : 'var(--border)'}`,
-        boxShadow: hov ? 'var(--shadow-md)' : 'none',
+        boxShadow: hov ? 'var(--shadow-md)' : 'var(--shadow-sm)',
         transition: 'border-color 0.2s, box-shadow 0.2s',
       }}>
-      {/* Image */}
       <div className="relative h-44 overflow-hidden" style={{ background: 'var(--bg-elevated)' }}>
         {p.image && (
           <img src={p.image} alt={p.title}
-            className="w-full h-full object-cover object-top transition-transform duration-500"
-            style={{ transform: hov ? 'scale(1.04)' : 'scale(1)' }} />
+            className="w-full h-full object-cover object-top transition-transform duration-700"
+            style={{ transform: hov ? 'scale(1.06)' : 'scale(1)' }} />
         )}
         <div className="absolute inset-0"
           style={{ background: 'linear-gradient(to top, var(--bg-card) 0%, transparent 50%)' }} />
-        <motion.div animate={{ opacity: hov ? 1 : 0 }} transition={{ duration: 0.2 }}
-          className="absolute inset-0 flex items-center justify-center gap-2">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: hov ? 1 : 0 }}
+          transition={{ duration: 0.25 }}
+          className="absolute inset-0 flex items-center justify-center gap-2.5"
+          style={{ background: hov ? 'rgba(0,0,0,0.35)' : 'transparent' }}>
           {p.demo && (
             <a href={p.demo} target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold"
-              style={{ background: 'var(--text-primary)', color: 'var(--bg)' }}>
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold backdrop-blur-md"
+              style={{ background: 'rgba(255,255,255,0.95)', color: 'var(--bg)' }}>
               <FiExternalLink size={11} /> {t.view}
             </a>
           )}
-          <a href={p.repo} target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold"
-            style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}>
-            <FiGithub size={11} /> {t.github}
-          </a>
-        </motion.div>
-      </div>
-      {/* Body */}
-      <div className="p-5">
-        <p className="text-sm font-semibold mb-1.5" style={{ color: 'var(--text-primary)' }}>{p.title}</p>
-        <p className="text-xs leading-relaxed mb-4" style={{ color: 'var(--text-muted)' }}>{p.desc}</p>
-        <div className="flex flex-wrap gap-1.5 mb-4">
-          {p.stack.map(t => <span key={t} className="badge">{t}</span>)}
-        </div>
-        <div className="flex items-center gap-3 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
-          {p.demo && (
-            <a href={p.demo} target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-1 text-xs font-medium transition-colors"
-              style={{ color: 'var(--text-secondary)' }}
-              onMouseEnter={e => e.currentTarget.style.color = 'var(--text-primary)'}
-              onMouseLeave={e => e.currentTarget.style.color = 'var(--text-secondary)'}>
-              <FiExternalLink size={11} /> {t.liveDemo}
+          {p.repo && (
+            <a href={p.repo} target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold backdrop-blur-md"
+              style={{ background: 'rgba(0,0,0,0.55)', border: '1px solid rgba(255,255,255,0.12)', color: '#fff' }}>
+              <FiGithub size={11} /> {t.github}
             </a>
           )}
-          <a href={p.repo} target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-1 text-xs font-medium ml-auto transition-colors"
-            style={{ color: 'var(--text-muted)' }}
-            onMouseEnter={e => e.currentTarget.style.color = 'var(--text-primary)'}
-            onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}>
-            <FiGithub size={11} /> {t.source}
-          </a>
-        </div>
+        </motion.div>
+      </div>
+      <div className="p-5">
+        <p className="text-sm font-semibold mb-1.5" style={{ color: 'var(--text-primary)' }}>{p.title}</p>
+        <p className="text-xs leading-relaxed mb-4 line-clamp-2" style={{ color: 'var(--text-muted)' }}>{p.desc}</p>
+        <TechBadges stack={p.stack} />
       </div>
     </motion.div>
   )
@@ -243,18 +306,18 @@ function SecondaryCard({ p, index, onSelect }) {
       viewport={{ once: true }}
       transition={{ delay: index * 0.08, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -3, transition: { duration: 0.2 } }}
-      className="rounded-xl overflow-hidden cursor-pointer"
+      className="rounded-xl overflow-hidden cursor-pointer card-lift"
       style={{
         background: 'var(--bg-card)',
         border: `1px solid ${hov ? 'var(--border-hover)' : 'var(--border)'}`,
-        boxShadow: hov ? 'var(--shadow-sm)' : 'none',
+        boxShadow: hov ? 'var(--shadow-sm)' : 'var(--shadow-sm)',
         transition: 'border-color 0.2s, box-shadow 0.2s',
       }}>
       <div className="relative h-28 overflow-hidden" style={{ background: 'var(--bg-elevated)' }}>
         {p.image && (
           <img src={p.image} alt={p.title}
-            className="w-full h-full object-cover object-top transition-transform duration-500"
-            style={{ transform: hov ? 'scale(1.04)' : 'scale(1)' }} />
+            className="w-full h-full object-cover object-top transition-transform duration-700"
+            style={{ transform: hov ? 'scale(1.06)' : 'scale(1)' }} />
         )}
         <div className="absolute inset-0"
           style={{ background: 'linear-gradient(to top, var(--bg-card) 0%, transparent 55%)' }} />
@@ -270,10 +333,8 @@ function SecondaryCard({ p, index, onSelect }) {
             <FiArrowUpRight size={11} />
           </a>
         </div>
-        <p className="text-xs leading-relaxed mb-3" style={{ color: 'var(--text-muted)' }}>{p.desc}</p>
-        <div className="flex flex-wrap gap-1.5">
-          {p.stack.slice(0, 3).map(t => <span key={t} className="badge">{t}</span>)}
-        </div>
+        <p className="text-xs leading-relaxed mb-3 line-clamp-2" style={{ color: 'var(--text-muted)' }}>{p.desc}</p>
+        <TechBadges stack={p.stack} />
       </div>
     </motion.div>
   )
@@ -283,6 +344,7 @@ export default function Projects() {
   const { t } = useLang()
   const [activeFilter, setActiveFilter] = useState('All')
   const [selected, setSelected] = useState(null)
+  const filterRef = useRef(null)
 
   const allTags = ['All', ...Array.from(new Set(projects.flatMap(p => p.stack)))]
 
@@ -293,20 +355,24 @@ export default function Projects() {
   const filteredFeatured  = filtered.filter(p => p.featured)
   const filteredSecondary = filtered.filter(p => !p.featured)
 
+  const [heroProject, ...restFeatured] = filteredFeatured
+
   return (
     <>
       <SectionWrapper id="projects" className="py-8 md:py-10">
         <div className="px-6 md:px-8">
           <SectionLabel number="04" label={t.nav.projects} heading={t.thingsIBuilt} />
 
-          {/* Filter bar */}
-          <div className="flex flex-wrap gap-2 mb-6">
+          {/* Horizontal scroll filter bar */}
+          <div ref={filterRef}
+            className="flex gap-2 mb-6 overflow-x-auto flex-nowrap pb-1"
+            style={{ scrollbarWidth: 'none' }}>
             {allTags.map(tag => {
               const on = activeFilter === tag
               return (
                 <motion.button key={tag} onClick={() => setActiveFilter(tag)}
                   whileTap={{ scale: 0.96 }}
-                  className="px-3 py-1 rounded-lg text-xs font-medium transition-all"
+                  className="flex-shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
                   style={{
                     background: on ? 'var(--text-primary)' : 'var(--bg-card)',
                     color: on ? 'var(--bg)' : 'var(--text-muted)',
@@ -325,16 +391,21 @@ export default function Projects() {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}>
 
-              {/* Featured 2-col */}
-              {filteredFeatured.length > 0 && (
+              {/* Hero project — first featured as premium hero card */}
+              {heroProject && (
+                <HeroCard p={heroProject} onSelect={setSelected} />
+              )}
+
+              {/* Featured 2-col grid */}
+              {restFeatured.length > 0 && (
                 <div className="grid sm:grid-cols-2 gap-4 mb-4">
-                  {filteredFeatured.map((p, i) => <FeaturedCard key={p.id} p={p} index={i} onSelect={setSelected} />)}
+                  {restFeatured.map((p, i) => <FeaturedCard key={p.id} p={p} index={i} onSelect={setSelected} />)}
                 </div>
               )}
 
-              {/* Secondary grid */}
+              {/* Secondary 3-col grid */}
               {filteredSecondary.length > 0 && (
-                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {filteredSecondary.map((p, i) => <SecondaryCard key={p.id} p={p} index={i} onSelect={setSelected} />)}
                 </div>
               )}
@@ -347,6 +418,7 @@ export default function Projects() {
                   </p>
                 </div>
               )}
+
             </motion.div>
           </AnimatePresence>
         </div>

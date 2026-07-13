@@ -58,13 +58,13 @@ export default function App() {
       </div>
 
       {/* ── Centered layout: sidebar + content side by side ── */}
-      <div className="relative z-10 min-h-screen flex justify-center">
+      <div className="relative z-10 min-h-screen min-h-[100dvh] flex justify-center w-full overflow-x-hidden">
 
-        {/* Max-width wrapper — centers the whole thing */}
-        <div className="w-full max-w-[1100px] flex relative">
+        {/* Max-width wrapper */}
+        <div className="w-full max-w-[1250px] flex relative">
 
-          {/* Sidebar — sticky left column */}
-          <div className="hidden lg:block flex-shrink-0" style={{ width: '220px' }}>
+          {/* Sidebar — sticky left column (desktop only) */}
+          <div className="hidden lg:block flex-shrink-0" style={{ width: '200px' }}>
             <div className="sticky top-0 h-screen">
               <Sidebar activePage={activePage} setActivePage={setActivePage} />
             </div>
@@ -72,7 +72,7 @@ export default function App() {
 
           {/* Main content — right column */}
           <div className="flex-1 min-w-0 flex flex-col">
-            {/* Mobile top padding */}
+            {/* Mobile top bar spacer */}
             <div className="lg:hidden h-12" />
 
             <AnimatePresence mode="wait">

@@ -1,5 +1,5 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Syne:wght@700;800&display=swap');
+@import "tailwindcss";
 
 /* ══════════════════════════════════════════
    TOKENS — MONOCHROME + 1 ACCENT
@@ -14,16 +14,16 @@
   --border-strong: #52525b;
   --text-primary:  #fafafa;
   --text-secondary:#a1a1aa;
-  --text-muted:    #52525b;
-  --accent:        #6366f1;          /* single accent — indigo */
+  --text-muted:    #636363;
+  --accent:        #6366f1;
   --accent-hover:  #818cf8;
   --accent-glow:   rgba(99,102,241,0.15);
   --accent-subtle: rgba(99,102,241,0.08);
   --glass-bg:      rgba(255,255,255,0.03);
   --glass-border:  #27272a;
-  --shadow-sm:     0 1px 4px rgba(0,0,0,0.5);
-  --shadow-md:     0 4px 20px rgba(0,0,0,0.6);
-  --shadow-lg:     0 12px 48px rgba(0,0,0,0.7);
+  --shadow-sm:     0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md:     0 4px 16px rgba(0,0,0,0.5);
+  --shadow-lg:     0 12px 40px rgba(0,0,0,0.6);
   --shadow-glow:   0 0 24px rgba(99,102,241,0.3);
 }
 
@@ -37,16 +37,16 @@
   --border-strong: #a1a1aa;
   --text-primary:  #09090b;
   --text-secondary:#71717a;
-  --text-muted:    #a1a1aa;
+  --text-muted:    #8f8f9a;
   --accent:        #6366f1;
   --accent-hover:  #4f46e5;
   --accent-glow:   rgba(99,102,241,0.1);
   --accent-subtle: rgba(99,102,241,0.06);
   --glass-bg:      rgba(255,255,255,0.8);
   --glass-border:  #e4e4e7;
-  --shadow-sm:     0 1px 4px rgba(0,0,0,0.05);
-  --shadow-md:     0 4px 20px rgba(0,0,0,0.07);
-  --shadow-lg:     0 12px 48px rgba(0,0,0,0.09);
+  --shadow-sm:     0 1px 3px rgba(0,0,0,0.04);
+  --shadow-md:     0 4px 16px rgba(0,0,0,0.06);
+  --shadow-lg:     0 12px 40px rgba(0,0,0,0.08);
   --shadow-glow:   0 0 24px rgba(99,102,241,0.2);
 }
 
@@ -75,8 +75,8 @@ a, button { cursor: pointer; }
 /* ══════════════════════════════════════════
    SCROLLBAR
 ══════════════════════════════════════════ */
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar { width: 2px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 99px; }
 
 /* ══════════════════════════════════════════
@@ -143,16 +143,15 @@ a, button { cursor: pointer; }
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 500;
-  padding: 4px 11px;
+  padding: 5px 12px;
   border-radius: 99px;
   background: var(--bg-elevated);
   color: var(--text-secondary);
   border: 1px solid var(--border);
   transition: border-color 0.2s, color 0.2s, background 0.2s;
   cursor: default;
-  white-space: nowrap;
 }
 .tech-pill:hover {
   border-color: var(--border-hover);
@@ -164,14 +163,16 @@ a, button { cursor: pointer; }
    BADGE / TAG — monochrome
 ══════════════════════════════════════════ */
 .badge {
-  display: inline-block;
-  font-size: 0.68rem;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.65rem;
   font-weight: 500;
-  padding: 2px 8px;
+  padding: 3px 9px;
   border-radius: 99px;
   background: var(--bg-elevated);
   color: var(--text-muted);
   border: 1px solid var(--border);
+  transition: border-color 0.2s, color 0.2s;
 }
 
 /* ══════════════════════════════════════════
@@ -222,6 +223,27 @@ a, button { cursor: pointer; }
    BACK TO TOP
 ══════════════════════════════════════════ */
 .back-to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100; }
+
+/* ══════════════════════════════════════════
+   CARD LIFT — premium hover
+══════════════════════════════════════════ */
+.card-lift {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.card-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ══════════════════════════════════════════
+   FOCUS RING
+══════════════════════════════════════════ */
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 
 /* ══════════════════════════════════════════
    NOISE

@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { motion, useAnimationFrame, useMotionValue } from 'framer-motion'
-import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaLinux, FaServer, FaPhp } from 'react-icons/fa'
+import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaPhp } from 'react-icons/fa'
 import { SiTailwindcss, SiLaravel, SiVercel, SiMysql } from 'react-icons/si'
 import { FiTarget, FiZap, FiUsers } from 'react-icons/fi'
 import SectionWrapper from '../components/SectionWrapper'
@@ -24,8 +24,6 @@ const hardSkills = [
   { icon: <SiLaravel style={{ color: '#ff2d20' }} />,     name: 'Laravel',      level: 'Beginner'     },
   { icon: <FaPhp style={{ color: '#8892be' }} />,         name: 'PHP',          level: 'Beginner'     },
   { icon: <SiMysql style={{ color: '#f29111' }} />,       name: 'MySQL',        level: 'Beginner'     },
-  { icon: <FaServer style={{ color: '#34d399' }} />,      name: 'VPS & Hosting',level: 'Intermediate' },
-  { icon: <FaLinux style={{ color: '#fcc624' }} />,       name: 'Linux',        level: 'Beginner'     },
   { icon: <SiVercel />,                                   name: 'Vercel',       level: 'Intermediate' },
 ]
 
@@ -60,11 +58,10 @@ function Marquee({ items, direction = 1, speed = 28 }) {
         style={{ background: 'linear-gradient(-90deg, var(--bg), transparent)' }} />
       <motion.div ref={ref} style={{ x }} className="flex gap-2 w-max py-1">
         {[...items, ...items].map((s, i) => (
-          <motion.div key={i} whileHover={{ scale: 1.05, y: -2 }}
-            className="tech-pill flex-shrink-0">
+          <span key={i} className="tech-pill">
             <span style={{ fontSize: '0.9rem' }}>{s.icon}</span>
             {s.name}
-          </motion.div>
+          </span>
         ))}
       </motion.div>
     </div>
