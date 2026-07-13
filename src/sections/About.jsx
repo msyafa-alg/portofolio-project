@@ -163,7 +163,7 @@ function CVTab() {
             IT Student · Web Developer · Bogor, Indonesia
           </p>
         </div>
-        <a href="https://drive.google.com/file/d/1zrCCOV-FjByQ3M2vY9M8RqJbZGb51aya/view?usp=sharing"
+        <a href="https://drive.google.com/file/d/17U5rM7LZ62KEBwg-gJI1MCwtzYpj5Os2/view?usp=sharing"
           target="_blank" rel="noopener noreferrer"
           className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all"
           style={{ background: 'var(--text-primary)', color: 'var(--bg)', border: '1px solid var(--text-primary)' }}
