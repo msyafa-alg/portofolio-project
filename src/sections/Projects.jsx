@@ -78,6 +78,15 @@ const projects = [
     demo: 'https://wikrama-2.vercel.app',
     repo: null,
   },
+  {
+    id: 8, featured: true,
+    image: 'https://files.catbox.moe/ypfhl7.png',
+    title: 'CourtSync',
+    desc: 'Sistem reservasi lapangan secara online — booking lapangan olahraga dengan autentikasi, jadwal real-time, dan manajemen pemesanan berbasis web.',
+    stack: ['React', 'Express', 'MySQL'],
+    demo: null,
+    repo: 'https://github.com/msyafa-alg/frontend-sportbook',
+  },
 ]
 
 /* ── Tech badges with +N more ── */

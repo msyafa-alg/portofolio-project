@@ -23,20 +23,20 @@ const tools = [
 
 const featuredProjects = [
   {
+    image: 'https://files.catbox.moe/ypfhl7.png',
+    title: 'CourtSync',
+    desc: 'Sistem reservasi lapangan secara online — booking lapangan olahraga dengan React & Express.',
+    stack: ['React', 'Express', 'MySQL'],
+    demo: null,
+    repo: 'https://github.com/msyafa-alg/frontend-sportbook',
+  },
+  {
     image: 'https://files.catbox.moe/juz07w.png',
     title: 'Anonymous Chat',
     desc: 'Anonymous messaging via unique link — no login required.',
     stack: ['React', 'JavaScript', 'Vercel'],
     demo: 'https://anonymchat-project.vercel.app/',
     repo: 'https://github.com/msyafa-alg/anonymchat',
-  },
-  {
-    image: 'https://files.catbox.moe/cyoawr.png',
-    title: 'Lumine Beauty',
-    desc: 'Modern makeup catalog with e-commerce concept and API integration.',
-    stack: ['React', 'API', 'Vercel'],
-    demo: 'https://luminebeauty-project.vercel.app/',
-    repo: 'https://github.com/msyafa-alg/luminebeauty',
   },
 ];
 
