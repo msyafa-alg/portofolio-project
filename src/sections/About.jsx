@@ -40,21 +40,21 @@ const experiences = [
 
 const education = [
   {
-    year: '2023 – Now',
+    year: '2024 – 2027',
     title: 'SMK Wikrama Bogor',
     degree: 'Rekayasa Perangkat Lunak',
     desc: 'Vocational IT track focused on software engineering, web development, and networking.',
     status: 'Current',
   },
   {
-    year: '2020 – 2023',
+    year: '2021 – 2024',
     title: 'Pesantren Fathan Mubina',
     degree: 'MTs',
     desc: 'Junior high with Islamic boarding school curriculum. Developed early interest in computers and technology.',
     status: 'Completed',
   },
   {
-    year: '2014 – 2020',
+    year: '2018 – 2021',
     title: 'SDIT Almadinah Cibinong',
     degree: 'SD',
     desc: 'Islamic integrated elementary school. Foundation of character and love for learning.',
