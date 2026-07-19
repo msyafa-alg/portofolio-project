@@ -23,7 +23,7 @@ const tools = [
 
 const featuredProjects = [
   {
-    image: 'https://files.catbox.moe/ypfhl7.png',
+    image: '/images/courtsync.png',
     title: 'CourtSync',
     desc: 'Sistem reservasi lapangan secara online — booking lapangan olahraga dengan React & Express.',
     stack: ['React', 'Express', 'MySQL'],
@@ -226,8 +226,8 @@ export default function Hero({ setActivePage }) {
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap mb-1">
-              <h1 className="font-display font-extrabold text-2xl md:text-3xl leading-tight"
-                style={{ color: 'var(--text-primary)' }}>Muhammad Syafa</h1>
+              <h1 className="font-display font-bold text-2xl md:text-3xl leading-tight tracking-wide"
+                style={{ color: 'var(--text-primary)' }}>Muhammad Syafa Algiffari Firdaus</h1>
               <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
                 <circle cx="7.5" cy="7.5" r="7.5" fill="#1d9bf0" />
                 <path d="M4.5 7.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

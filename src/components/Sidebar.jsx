@@ -12,7 +12,7 @@ function NavItem({ icon: Icon, label, id, active, onClick }) {
   return (
     <button
       onClick={() => onClick(id)}
-      className="relative flex items-center gap-2.5 w-full px-3 py-1.5 rounded-lg text-xs font-medium text-left select-none transition-all duration-200"
+      className="relative flex items-center gap-3 w-full px-3 py-2 rounded-lg text-sm font-medium text-left select-none transition-all duration-200"
       style={{
         color: active ? 'var(--text-primary)' : 'var(--text-secondary)',
         background: active ? 'var(--bg-elevated)' : 'transparent',
@@ -22,7 +22,7 @@ function NavItem({ icon: Icon, label, id, active, onClick }) {
       onMouseEnter={e => { if (!active) e.currentTarget.style.color = 'var(--text-primary)' }}
       onMouseLeave={e => { if (!active) e.currentTarget.style.color = 'var(--text-secondary)' }}
     >
-      <Icon size={13} className="flex-shrink-0" />
+      <Icon size={15} className="flex-shrink-0" />
       <span>{label}</span>
     </button>
   )
@@ -50,20 +50,20 @@ export default function Sidebar({ activePage, setActivePage }) {
     <div className="flex flex-col h-full" style={{ overflow: 'hidden auto' }}>
 
       {/* ── Profile ── */}
-      <div className="px-3 pt-5 pb-4" style={{ borderBottom: '1px solid var(--border)' }}>
+          <div className="px-3 pt-5 pb-4" style={{ borderBottom: '1px solid var(--border)' }}>
         <div className="flex items-center gap-3">
           <div className="relative flex-shrink-0">
             <img src="/images/profile.jpeg" alt="Syafa"
-              className="w-9 h-9 rounded-full object-cover"
+              className="w-10 h-10 rounded-full object-cover"
               style={{ border: '1px solid var(--border)' }} />
-            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-[1.5px]"
-              style={{ background: 'var(--text-secondary)', borderColor: 'var(--bg-surface)' }} />
+            <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-[1.5px]"
+              style={{ background: '#22c55e', borderColor: 'var(--bg-surface)' }} />
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
+            <p className="text-sm font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
               Muhammad Syafa
             </p>
-            <p className="text-[10px] truncate" style={{ color: 'var(--text-muted)' }}>@msyafa-alg</p>
+            <p className="text-xs truncate" style={{ color: 'var(--text-muted)' }}>@msyafa-alg</p>
           </div>
         </div>
       </div>
@@ -75,7 +75,7 @@ export default function Sidebar({ activePage, setActivePage }) {
         ))}
 
         <div className="mt-5 mb-2 px-3 pt-4" style={{ borderTop: '1px solid var(--border)' }}>
-          <p className="text-[9px] font-semibold tracking-[0.18em] uppercase"
+          <p className="text-[10px] font-semibold tracking-[0.18em] uppercase"
             style={{ color: 'var(--text-muted)' }}>{t.apps}</p>
         </div>
         {allAppItems.map(item => (
@@ -86,16 +86,16 @@ export default function Sidebar({ activePage, setActivePage }) {
       {/* ── Theme + Lang ── */}
       <div className="px-3 py-3 space-y-3" style={{ borderTop: '1px solid var(--border)' }}>
         <div className="flex items-center justify-between">
-          <p className="text-[9px] font-semibold tracking-[0.18em] uppercase"
+          <p className="text-[10px] font-semibold tracking-[0.18em] uppercase"
             style={{ color: 'var(--text-muted)' }}>{t.theme}</p>
           <ThemeToggle />
         </div>
         <div className="flex items-center justify-between">
-          <p className="text-[9px] font-semibold tracking-[0.18em] uppercase"
+          <p className="text-[10px] font-semibold tracking-[0.18em] uppercase"
             style={{ color: 'var(--text-muted)' }}>Lang</p>
           <button
             onClick={toggleLang}
-            className="text-[10px] font-medium px-2 py-0.5 rounded-md transition-colors"
+            className="text-xs font-medium px-2 py-0.5 rounded-md transition-colors"
             style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--border-hover)'; e.currentTarget.style.color = 'var(--text-primary)' }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-secondary)' }}
@@ -141,7 +141,7 @@ export default function Sidebar({ activePage, setActivePage }) {
               initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
               transition={{ type: 'spring', stiffness: 340, damping: 36 }}
               className="lg:hidden fixed left-0 top-0 bottom-0 z-50 flex flex-col"
-              style={{ width: '200px', background: 'var(--bg-surface)', borderRight: '1px solid var(--border)' }}>
+              style={{ width: '240px', background: 'var(--bg-surface)', borderRight: '1px solid var(--border)' }}>
               <Content />
             </motion.aside>
           </>

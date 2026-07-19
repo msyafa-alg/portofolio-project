@@ -80,7 +80,7 @@ const projects = [
   },
   {
     id: 8, featured: true,
-    image: 'https://files.catbox.moe/ypfhl7.png',
+    image: '/images/courtsync.png',
     title: 'CourtSync',
     desc: 'Sistem reservasi lapangan secara online — booking lapangan olahraga dengan autentikasi, jadwal real-time, dan manajemen pemesanan berbasis web.',
     stack: ['React', 'Express', 'MySQL'],

@@ -2,10 +2,10 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Sidebar        from './components/Sidebar'
 import CustomCursor   from './components/CustomCursor'
-import ParticleField  from './components/ParticleField'
-import ShootingStars  from './components/ShootingStars'
+import Starfield      from './components/Starfield'
 import ScrollProgress from './components/ScrollProgress'
 import BackToTop      from './components/BackToTop'
+import MouseSpotlight from './components/MouseSpotlight'
 import LoadingScreen  from './components/LoadingScreen'
 import Hero           from './sections/Hero'
 import About          from './sections/About'
@@ -34,20 +34,17 @@ const pages = (setActivePage) => ({
 
 export default function App() {
   const [activePage, setActivePage] = useState('home')
+  const [loaded, setLoaded] = useState(false)
 
   return (
     <>
-      <LoadingScreen />
+      <LoadingScreen onFinish={() => setLoaded(true)} />
       <ScrollProgress />
+      <Starfield />
       <CustomCursor />
-      <ShootingStars />
-      <ParticleField />
 
-      {/* Dot grid */}
-      <div className="fixed inset-0 pointer-events-none z-0" style={{
-        backgroundImage: 'radial-gradient(circle, var(--border) 1px, transparent 1px)',
-        backgroundSize: '40px 40px',
-      }} />
+      {/* Mouse spotlight */}
+      <MouseSpotlight />
 
       {/* Ambient blobs — subtle monochrome */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
@@ -57,6 +54,14 @@ export default function App() {
           style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.04) 0%, transparent 65%)' }} />
       </div>
 
+      {/* ── Main content — fades in after loading ── */}
+      <div
+        style={{
+          opacity: loaded ? 1 : 0,
+          transform: loaded ? 'translateY(0)' : 'translateY(20px)',
+          transition: 'opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)',
+        }}
+      >
       {/* ── Centered layout: sidebar + content side by side ── */}
       <div className="relative z-10 min-h-screen min-h-[100dvh] flex justify-center w-full overflow-x-hidden">
 
@@ -64,7 +69,7 @@ export default function App() {
         <div className="w-full max-w-[1250px] flex relative">
 
           {/* Sidebar — sticky left column (desktop only) */}
-          <div className="hidden lg:block flex-shrink-0" style={{ width: '200px' }}>
+          <div className="hidden lg:block flex-shrink-0" style={{ width: '240px' }}>
             <div className="sticky top-0 h-screen">
               <Sidebar activePage={activePage} setActivePage={setActivePage} />
             </div>
@@ -91,12 +96,13 @@ export default function App() {
         </div>
       </div>
 
-      {/* Mobile sidebar — rendered outside the centered wrapper so it overlays full screen */}
-      <div className="lg:hidden">
-        <Sidebar activePage={activePage} setActivePage={setActivePage} />
-      </div>
+        {/* Mobile sidebar — rendered outside the centered wrapper so it overlays full screen */}
+        <div className="lg:hidden">
+          <Sidebar activePage={activePage} setActivePage={setActivePage} />
+        </div>
 
-      <BackToTop />
+        <BackToTop />
+      </div>
     </>
   )
 }

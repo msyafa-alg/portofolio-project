@@ -5,7 +5,7 @@
    TOKENS — MONOCHROME + 1 ACCENT
 ══════════════════════════════════════════ */
 :root, [data-theme="dark"] {
-  --bg:            #0f0f11;
+  --bg:            #09090b;
   --bg-surface:    #141416;
   --bg-elevated:   #1c1c1f;
   --bg-card:       #18181b;
