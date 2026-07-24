@@ -63,20 +63,18 @@ export default function App() {
         }}
       >
       {/* ── Centered layout: sidebar + content side by side ── */}
-      <div className="relative z-10 min-h-screen min-h-[100dvh] flex justify-center w-full overflow-x-hidden">
+      <div className="relative z-10 h-screen h-[100dvh] flex justify-center w-full overflow-hidden">
 
         {/* Max-width wrapper */}
-        <div className="w-full max-w-[1250px] flex relative">
+        <div className="w-full max-w-[1250px] flex relative h-full">
 
-          {/* Sidebar — sticky left column (desktop only) */}
-          <div className="hidden lg:block flex-shrink-0" style={{ width: '240px' }}>
-            <div className="sticky top-0 h-screen">
-              <Sidebar activePage={activePage} setActivePage={setActivePage} />
-            </div>
+          {/* Sidebar — left column (desktop only) */}
+          <div className="hidden lg:block flex-shrink-0 self-start h-screen" style={{ width: '240px' }}>
+            <Sidebar activePage={activePage} setActivePage={setActivePage} />
           </div>
 
-          {/* Main content — right column */}
-          <div className="flex-1 min-w-0 flex flex-col">
+          {/* Main content — right column (scrollable) */}
+          <div className="flex-1 min-w-0 h-full overflow-y-auto">
             {/* Mobile top bar spacer */}
             <div className="lg:hidden h-12" />
 
@@ -87,7 +85,6 @@ export default function App() {
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                className="flex-1"
               >
                 {pages(setActivePage)[activePage]}
               </motion.div>

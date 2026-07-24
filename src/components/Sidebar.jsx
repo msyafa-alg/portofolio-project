@@ -47,7 +47,7 @@ export default function Sidebar({ activePage, setActivePage }) {
   ]
 
   const Content = () => (
-    <div className="flex flex-col h-full" style={{ overflow: 'hidden auto' }}>
+    <div className="flex flex-col h-full">
 
       {/* ── Profile ── */}
           <div className="px-3 pt-5 pb-4" style={{ borderBottom: '1px solid var(--border)' }}>
@@ -69,7 +69,7 @@ export default function Sidebar({ activePage, setActivePage }) {
       </div>
 
       {/* ── Nav ── */}
-      <nav className="flex-1 px-2 py-3 space-y-0.5">
+      <nav className="px-2 py-3 space-y-0.5">
         {allNavItems.map(item => (
           <NavItem key={item.id} {...item} active={activePage === item.id} onClick={go} />
         ))}
@@ -84,7 +84,7 @@ export default function Sidebar({ activePage, setActivePage }) {
       </nav>
 
       {/* ── Theme + Lang ── */}
-      <div className="px-3 py-3 space-y-3" style={{ borderTop: '1px solid var(--border)' }}>
+      <div className="mt-auto px-3 py-3 space-y-3" style={{ borderTop: '1px solid var(--border)' }}>
         <div className="flex items-center justify-between">
           <p className="text-[10px] font-semibold tracking-[0.18em] uppercase"
             style={{ color: 'var(--text-muted)' }}>{t.theme}</p>
