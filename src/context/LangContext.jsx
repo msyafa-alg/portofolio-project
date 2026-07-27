@@ -70,8 +70,6 @@ export const translations = {
     completed: 'Completed',
     edu: [
       { desc: 'Studying IT at SMK Wikrama with focus on web development, networking, and software engineering. Actively building projects.', tags: ['Web Dev', 'Networking', 'RPL'] },
-      { desc: 'Completed junior high at Pesantren Fathan Mubina. Alongside Islamic studies, developed early interest in computers and technology.', tags: ['Islamic Studies', 'Boarding School'] },
-      { desc: 'Completed elementary school at SDIT Almadinah Cibinong, an Islamic integrated school. Foundation of character and love for learning.', tags: ['SDIT', 'Cibinong', 'Bogor'] },
     ],
 
     // Projects
@@ -164,8 +162,6 @@ export const translations = {
     completed: 'Selesai',
     edu: [
       { desc: 'Mendalami IT di SMK Wikrama dengan fokus web development, jaringan, dan software engineering. Aktif membangun proyek.', tags: ['Web Dev', 'Jaringan', 'RPL'] },
-      { desc: 'Menempuh MTs di Pesantren Fathan Mubina. Selain ilmu agama, mulai tertarik dengan komputer dan teknologi yang mendorong memilih jalur IT.', tags: ['Studi Islam', 'Pesantren'] },
-      { desc: 'Menempuh SD di SDIT Almadinah Cibinong, sekolah Islam terpadu. Fondasi awal pembentukan karakter dan semangat belajar.', tags: ['SDIT', 'Cibinong', 'Bogor'] },
     ],
 
     // Projects
