@@ -74,7 +74,7 @@ export default function App() {
           </div>
 
           {/* Main content — right column (scrollable) */}
-          <div className="flex-1 min-w-0 h-full overflow-y-auto">
+          <div className="flex-1 min-w-0 h-full overflow-y-auto" style={{ willChange: 'transform', contain: 'paint' }}>
             {/* Mobile top bar spacer */}
             <div className="lg:hidden h-12" />
 
