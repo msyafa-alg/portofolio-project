@@ -3,7 +3,7 @@ import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
 
 const socials = [
   { Icon: FiGithub,   href: 'https://github.com/msyafa-alg',                          label: 'GitHub'   },
-  { Icon: FiLinkedin, href: 'https://www.linkedin.com/in/syafa-algiffari-567a48375/', label: 'LinkedIn' },
+  { Icon: FiLinkedin, href: 'https://www.linkedin.com/in/muhammad-syafa-algiffari-firdaus-567a48375/', label: 'LinkedIn' },
   { Icon: FiMail,     href: 'mailto:firdaussyafa12@gmail.com',                        label: 'Email'    },
 ]
 

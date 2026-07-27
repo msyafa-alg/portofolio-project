@@ -1,6 +1,6 @@
 import { useRef, useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { FiDownload, FiMapPin, FiBriefcase, FiBookOpen, FiCode, FiServer, FiCloud, FiExternalLink } from 'react-icons/fi'
+import { FiDownload, FiMapPin, FiBriefcase, FiBookOpen, FiCode, FiServer, FiCloud, FiExternalLink, FiMail } from 'react-icons/fi'
 import { FaReact, FaHtml5, FaCss3Alt, FaJs, FaNodeJs, FaPhp } from 'react-icons/fa'
 import { SiTailwindcss, SiLaravel, SiVercel, SiSupabase, SiPostgresql, SiMysql, SiExpress } from 'react-icons/si'
 import SectionWrapper from '../components/SectionWrapper'
@@ -65,7 +65,7 @@ const education = [
 const techFocus = [
   {
     label: 'Frontend',
-    icon: <FiCode size={14} />,
+    icon: <FiCode size={18} />,
     items: [
       { name: 'React', icon: <FaReact style={{ color: '#61dafb' }} /> },
       { name: 'Tailwind CSS', icon: <SiTailwindcss style={{ color: '#38bdf8' }} /> },
@@ -76,10 +76,10 @@ const techFocus = [
   },
   {
     label: 'Backend',
-    icon: <FiServer size={14} />,
+    icon: <FiServer size={18} />,
     items: [
       { name: 'Laravel', icon: <SiLaravel style={{ color: '#ff2d20' }} /> },
-      { name: 'Express.js', icon: <SiExpress style={{ color: '#ffffff' }} /> },
+      { name: 'Express.js', icon: <SiExpress style={{ color: '#cccccc' }} /> },
       { name: 'Node.js', icon: <FaNodeJs style={{ color: '#339933' }} /> },
       { name: 'PHP', icon: <FaPhp style={{ color: '#8892be' }} /> },
       { name: 'Supabase', icon: <SiSupabase style={{ color: '#3ECF8E' }} /> },
@@ -87,9 +87,9 @@ const techFocus = [
   },
   {
     label: 'Deployment',
-    icon: <FiCloud size={14} />,
+    icon: <FiCloud size={18} />,
     items: [
-      { name: 'Vercel', icon: <SiVercel /> },
+      { name: 'Vercel', icon: <SiVercel style={{ color: '#ffffff' }} /> },
       { name: 'PostgreSQL', icon: <SiPostgresql style={{ color: '#336791' }} /> },
       { name: 'MySQL', icon: <SiMysql style={{ color: '#f29111' }} /> },
     ],
@@ -117,9 +117,10 @@ function SpotlightCard({ children, className = '', style: extraStyle }) {
       style={{
         borderRadius: '20px',
         background: 'var(--bg-card)',
-        border: '1px solid var(--border)',
+        border: `1px solid ${hover ? 'var(--border-hover)' : 'var(--border)'}`,
+        boxShadow: hover ? 'var(--shadow-glow)' : 'none',
         transition: 'border-color 0.3s, box-shadow 0.3s, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
-        transform: hover ? 'translateY(-2px)' : 'translateY(0)',
+        transform: hover ? 'translateY(-3px)' : 'translateY(0)',
         ...extraStyle,
       }}
     >
@@ -169,7 +170,7 @@ function TechChip({ name, icon }) {
         transition: 'background 0.2s, border-color 0.2s, color 0.2s',
       }}
     >
-      <span style={{ fontSize: '0.85rem', display: 'flex' }}>{icon}</span>
+      <span style={{ fontSize: '1.15rem', display: 'flex' }}>{icon}</span>
       {name}
     </motion.span>
   )
@@ -230,7 +231,7 @@ export default function About() {
               }}
             >
               <img
-                src="/images/profile.jpeg"
+                src="/images/foto.png"
                 alt={fullName}
                 className="w-full h-full object-cover"
               />
@@ -271,9 +272,11 @@ export default function About() {
               </span>
             </div>
 
-            <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--text-secondary)' }}>
-              Saya adalah siswa SMK jurusan Rekayasa Perangkat Lunak yang fokus pada frontend development menggunakan React dan Tailwind CSS. Saya membangun aplikasi web modern, responsif, dan user-friendly — dari landing page hingga dashboard kompleks.
-            </p>
+            <div className="text-sm leading-relaxed mb-6 space-y-2" style={{ color: 'var(--text-secondary)' }}>
+              {t.aboutBio.map((p, i) => (
+                <p key={i}>{p('SMK Wikrama Bogor')}</p>
+              ))}
+            </div>
 
             <a
               href="https://drive.google.com/file/d/17U5rM7LZ62KEBwg-gJI1MCwtzYpj5Os2/view?usp=sharing"
@@ -284,7 +287,7 @@ export default function About() {
               onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
             >
               <FiDownload size={14} />
-              Download CV
+              {t.downloadCv}
               <FiExternalLink size={11} style={{ opacity: 0.5 }} />
             </a>
           </motion.div>
@@ -410,8 +413,8 @@ export default function About() {
             >
               <SpotlightCard className="p-5 h-full">
                 <div className="flex items-center gap-2 mb-4">
-                  <div className="w-7 h-7 rounded-lg flex items-center justify-center"
-                    style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center"
+                    style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--accent)' }}>
                     {group.icon}
                   </div>
                   <span className="text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>{group.label}</span>
@@ -442,22 +445,34 @@ export default function About() {
             }}
           >
             <p className="text-sm font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>
-              Interested working together?
+              {t.letsWork}
             </p>
             <p className="text-xs mb-5" style={{ color: 'var(--text-muted)' }}>
-              Let's build something great.
+              {t.letsWorkSub}
             </p>
-            <a
-              href="https://drive.google.com/file/d/17U5rM7LZ62KEBwg-gJI1MCwtzYpj5Os2/view?usp=sharing"
-              target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold transition-all"
-              style={{ background: 'var(--text-primary)', color: 'var(--bg)' }}
-              onMouseEnter={e => { e.currentTarget.style.opacity = '0.85' }}
-              onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
-            >
-              <FiDownload size={14} />
-              Download CV
-            </a>
+            <div className="flex items-center justify-center gap-3 flex-wrap">
+              <a
+                href="mailto:firdaussyafa12@gmail.com"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold transition-all"
+                style={{ background: 'var(--accent)', color: '#fff' }}
+                onMouseEnter={e => { e.currentTarget.style.opacity = '0.85' }}
+                onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
+              >
+                <FiMail size={14} />
+                {t.contactMe}
+              </a>
+              <a
+                href="https://drive.google.com/file/d/17U5rM7LZ62KEBwg-gJI1MCwtzYpj5Os2/view?usp=sharing"
+                target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all"
+                style={{ border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--border-hover)'; e.currentTarget.style.color = 'var(--text-primary)' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-secondary)' }}
+              >
+                <FiDownload size={14} />
+                {t.downloadCv}
+              </a>
+            </div>
           </div>
         </motion.div>
       </div>

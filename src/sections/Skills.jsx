@@ -12,11 +12,12 @@ import { useLang } from '../context/LangContext'
 
 const levelStyles = {
   Advanced: {
-    borderColor: '#52525b',
-    glow: 'rgba(255,255,255,0.08)',
-    badgeBg: '#fafafa',
-    badgeText: '#09090b',
-    tagBorder: '#3f3f46',
+    borderColor: '#2dd4bf',
+    glow: 'rgba(45,212,191,0.12)',
+    badgeBg: '#134e4a',
+    badgeText: '#2dd4bf',
+    tagBorder: '#115e59',
+    badgeBorder: 'rgba(45,212,191,0.3)',
   },
   Intermediate: {
     borderColor: '#3f3f46',
@@ -24,13 +25,15 @@ const levelStyles = {
     badgeBg: '#27272a',
     badgeText: '#a1a1aa',
     tagBorder: '#27272a',
+    badgeBorder: 'transparent',
   },
   Beginner: {
     borderColor: '#27272a',
     glow: 'rgba(255,255,255,0.02)',
-    badgeBg: '#1c1c1f',
+    badgeBg: '#18181b',
     badgeText: '#636363',
     tagBorder: '#18181b',
+    badgeBorder: 'transparent',
   },
 }
 
@@ -254,15 +257,15 @@ function SkillCard({ skill, index, variant }) {
         <span
           style={{
             fontSize: sz.badgeFont,
-            fontWeight: 600,
+            fontWeight: 700,
             padding: '2px 10px',
             borderRadius: '99px',
             background: ls.badgeBg,
             color: ls.badgeText,
             letterSpacing: '0.04em',
-            border: `1px solid ${isHovered ? ls.borderColor : 'transparent'}`,
+            border: `1px solid ${isHovered ? ls.badgeBorder : ls.badgeBorder}`,
             transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
-            boxShadow: isHovered && skill.level === 'Advanced' ? '0 0 12px rgba(255,255,255,0.08)' : 'none',
+            boxShadow: isHovered && skill.level === 'Advanced' ? '0 0 14px rgba(45,212,191,0.2)' : 'none',
           }}
         >
           {skill.level}
@@ -302,8 +305,8 @@ function SkillCard({ skill, index, variant }) {
         <p
           style={{
             fontSize: sz.descFont,
-            color: 'var(--text-muted)',
-            lineHeight: 1.5,
+            color: 'var(--text-secondary)',
+            lineHeight: 1.6,
             margin: '6px 0 12px',
           }}
         >
@@ -352,7 +355,7 @@ export default function Skills() {
         </div>
 
         {/* Featured */}
-        <div className="grid md:grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           {featuredSkills.map((s, i) => (
             <SkillCard key={s.name} skill={s} index={i} variant="featured" />
           ))}
@@ -365,7 +368,7 @@ export default function Skills() {
             <span className="text-[10px] font-semibold tracking-widest uppercase" style={{ color: 'var(--text-muted)' }}>Core</span>
             <div className="h-px flex-1" style={{ background: 'var(--border)' }} />
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
             {coreSkills.map((s, i) => (
               <SkillCard key={s.name} skill={s} index={i} variant="core" />
             ))}
@@ -379,7 +382,7 @@ export default function Skills() {
             <span className="text-[10px] font-semibold tracking-widest uppercase" style={{ color: 'var(--text-muted)' }}>Supporting</span>
             <div className="h-px flex-1" style={{ background: 'var(--border)' }} />
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-w-3xl mx-auto">
             {supportingSkills.map((s, i) => (
               <SkillCard key={s.name} skill={s} index={i} variant="supporting" />
             ))}

@@ -22,7 +22,7 @@ const socials = [
     Icon: FiLinkedin,
     label: 'LinkedIn',
     sub: 'syafa-algiffari',
-    href: 'https://www.linkedin.com/in/syafa-algiffari-567a48375/',
+    href: 'https://www.linkedin.com/in/muhammad-syafa-algiffari-firdaus-567a48375/',
   },
   {
     Icon: FiGithub,
