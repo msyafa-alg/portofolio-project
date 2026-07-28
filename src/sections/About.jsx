@@ -2,7 +2,7 @@ import { useRef, useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { FiDownload, FiMapPin, FiBriefcase, FiBookOpen, FiCode, FiServer, FiCloud, FiExternalLink, FiMail } from 'react-icons/fi'
 import { FaReact, FaHtml5, FaCss3Alt, FaJs, FaNodeJs, FaPhp } from 'react-icons/fa'
-import { SiTailwindcss, SiLaravel, SiVercel, SiSupabase, SiPostgresql, SiMysql, SiExpress } from 'react-icons/si'
+import { SiTailwindcss, SiLaravel, SiVercel, SiSupabase, SiPostgresql, SiMysql, SiExpress, SiLinux } from 'react-icons/si'
 import SectionWrapper from '../components/SectionWrapper'
 import SectionLabel from '../components/SectionLabel'
 import { useLang } from '../context/LangContext'
@@ -46,20 +46,6 @@ const education = [
     desc: 'Vocational IT track focused on software engineering, web development, and networking.',
     status: 'Current',
   },
-  {
-    year: '2021 – 2024',
-    title: 'Pesantren Fathan Mubina',
-    degree: 'MTs',
-    desc: 'Junior high with Islamic boarding school curriculum. Developed early interest in computers and technology.',
-    status: 'Completed',
-  },
-  {
-    year: '2018 – 2021',
-    title: 'SDIT Almadinah Cibinong',
-    degree: 'SD',
-    desc: 'Islamic integrated elementary school. Foundation of character and love for learning.',
-    status: 'Completed',
-  },
 ]
 
 const techFocus = [
@@ -90,8 +76,10 @@ const techFocus = [
     icon: <FiCloud size={18} />,
     items: [
       { name: 'Vercel', icon: <SiVercel style={{ color: '#ffffff' }} /> },
+      { name: 'Linux', icon: <SiLinux style={{ color: '#fcc624' }} /> },
       { name: 'PostgreSQL', icon: <SiPostgresql style={{ color: '#336791' }} /> },
       { name: 'MySQL', icon: <SiMysql style={{ color: '#f29111' }} /> },
+      { name: 'VPS', icon: <FiServer style={{ color: '#ffffff' }} /> },
     ],
   },
 ]
@@ -253,7 +241,7 @@ export default function About() {
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-medium uppercase tracking-wider mb-4"
               style={{ background: 'var(--accent-subtle)', color: 'var(--accent)', border: '1px solid var(--accent-subtle)', width: 'fit-content' }}>
               <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#22c55e' }} />
-              Frontend Developer
+              Frontend · Fullstack
             </div>
 
             <h1 className="font-display font-bold text-2xl md:text-3xl mb-2" style={{ color: 'var(--text-primary)' }}>
@@ -365,7 +353,7 @@ export default function About() {
         {/* ── Education ── */}
         <SectionDivider label="Education" />
 
-        <div className="grid md:grid-cols-3 gap-3 mb-14">
+        <div className="max-w-md mb-14">
           {education.map((edu, i) => (
             <motion.div
               key={i}

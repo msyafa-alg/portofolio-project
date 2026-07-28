@@ -1,6 +1,8 @@
-import { useState, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiExternalLink, FiGithub, FiArrowUpRight, FiX } from 'react-icons/fi'
+import { FiExternalLink, FiGithub, FiX, FiCode } from 'react-icons/fi'
+import { FaReact, FaJs, FaHtml5, FaCss3Alt, FaPhp, FaNodeJs, FaPython } from 'react-icons/fa'
+import { SiTailwindcss, SiLaravel, SiMysql, SiVercel, SiExpress, SiSupabase, SiPostgresql, SiFirebase, SiVite, SiFramer, SiReactrouter } from 'react-icons/si'
 import SectionWrapper from '../components/SectionWrapper'
 import SectionLabel from '../components/SectionLabel'
 import { useLang } from '../context/LangContext'
@@ -14,6 +16,13 @@ const projects = [
     stack: ['React', 'Firebase', 'Groq API'],
     demo: 'https://asefai.syafapnl.biz.id',
     repo: 'https://github.com/msyafa-alg/AiChat-GroqApi',
+    details: [
+      { label: 'Real-time Streaming', desc: 'Server-Sent Events (SSE) untuk streaming response AI secara real-time tanpa delay.' },
+      { label: 'Firebase Auth', desc: 'Autentikasi pengguna dengan Firebase — login aman dan cepat.' },
+      { label: 'Chat History', desc: 'Riwayat percakapan persistent — pengguna bisa lanjut chat dari sesi sebelumnya.' },
+      { label: 'Multi-Model AI', desc: 'Dukungan multiple AI model via Groq API dengan pemilihan model dinamis.' },
+      { label: 'Conversation Memory', desc: 'Memori percakapan agar konteks chat terjaga sepanjang sesi.' },
+    ],
   },
   {
     id: 1, featured: true,
@@ -23,6 +32,12 @@ const projects = [
     stack: ['React', 'JavaScript', 'Vercel'],
     demo: 'https://anonymchat.syafapersonalweb.my.id/a',
     repo: 'https://github.com/msyafa-alg/anonymchat',
+    details: [
+      { label: 'Unique Link', desc: 'Setiap chat room punya link unik — bagikan ke siapa saja untuk mulai ngobrol.' },
+      { label: 'No Login Required', desc: 'Langsung pakai tanpa registrasi atau login — privasi terjaga.' },
+      { label: 'Anonymous Identity', desc: 'Pengirim pesan tetap anonim, tidak ada data pribadi yang dikumpulkan.' },
+      { label: 'Real-time Chat', desc: 'Pesan terkirim dan diterima secara real-time tanpa perlu refresh.' },
+    ],
   },
   {
     id: 2, featured: true,
@@ -32,6 +47,12 @@ const projects = [
     stack: ['React', 'API Integration', 'Vercel'],
     demo: 'https://luminebeauty-project.vercel.app/',
     repo: 'https://github.com/msyafa-alg/luminebeauty',
+    details: [
+      { label: 'Product Catalog', desc: 'Katalog produk makeup modern dengan tampilan grid dan detail produk.' },
+      { label: 'API Integration', desc: 'Data produk diambil dari external API — real-time dan dinamis.' },
+      { label: 'E-commerce UI', desc: 'Tampilan toko online dengan keranjang, kategori, dan pencarian produk.' },
+      { label: 'Responsive Design', desc: 'Tampilan optimal di semua perangkat — mobile, tablet, dan desktop.' },
+    ],
   },
   {
     id: 3, featured: false,
@@ -41,6 +62,12 @@ const projects = [
     stack: ['React', 'Payment Gateway', 'Vercel'],
     demo: 'https://syafastoreofficial.vercel.app/',
     repo: 'https://github.com/msyafa-alg/syafastoreofficial',
+    details: [
+      { label: 'Product Listings', desc: 'Daftar produk Pterodactyl panel dengan harga dan deskripsi lengkap.' },
+      { label: 'Payment Gateway', desc: 'Integrasi Atlantic payment gateway untuk pembayaran otomatis.' },
+      { label: 'Pterodactyl Integration', desc: 'Terintegrasi dengan Pterodactyl panel untuk otomatisasi pengiriman layanan.' },
+      { label: 'Automated Delivery', desc: 'Produk dikirim otomatis setelah pembayaran berhasil — tanpa campur tangan manual.' },
+    ],
   },
   {
     id: 4, featured: false,
@@ -50,6 +77,12 @@ const projects = [
     stack: ['HTML', 'CSS', 'JavaScript'],
     demo: 'https://novahealth-project.vercel.app',
     repo: 'https://github.com/msyafa-alg/NovaHealt',
+    details: [
+      { label: 'BMI Calculator', desc: 'Hitung Body Mass Index berdasarkan berat dan tinggi badan dengan kategori kesehatan.' },
+      { label: 'Calorie Tracker', desc: 'Kalkulator kebutuhan kalori harian berdasarkan aktivitas dan target.' },
+      { label: 'Ideal Weight', desc: 'Perhitungan berat badan ideal berdasarkan tinggi dan usia.' },
+      { label: 'Carbon Footprint', desc: 'Tracker jejak karbon untuk meningkatkan kesadaran lingkungan.' },
+    ],
   },
   {
     id: 5, featured: false,
@@ -59,6 +92,12 @@ const projects = [
     stack: ['Laravel', 'PHP', 'MySQL'],
     demo: null,
     repo: 'https://github.com/msyafa-alg/tixid',
+    details: [
+      { label: 'Movie Listings', desc: 'Daftar film tayang dengan jadwal, genre, dan sinopsis lengkap.' },
+      { label: 'Ticket Booking', desc: 'Sistem pemesanan tiket dengan pemilihan kursi dan jadwal tayang.' },
+      { label: 'MVC Architecture', desc: 'Dibangun dengan pola MVC Laravel — model, view, controller terstruktur.' },
+      { label: 'Database Management', desc: 'Manajemen data film, jadwal, dan pemesanan dengan MySQL.' },
+    ],
   },
   {
     id: 6, featured: false,
@@ -68,6 +107,12 @@ const projects = [
     stack: ['JavaScript', 'HTML', 'CSS'],
     demo: null,
     repo: 'https://github.com/msyafa-alg/musicchart',
+    details: [
+      { label: 'Dynamic Charts', desc: 'Data chart musik yang di-render secara dinamis dengan JavaScript.' },
+      { label: 'Live Data', desc: 'Pembaruan data secara real-time tanpa perlu refresh halaman.' },
+      { label: 'Interactive UI', desc: 'Antarmuka interaktif dengan hover, klik, dan animasi transisi.' },
+      { label: 'Music Ranking', desc: 'Menampilkan peringkat musik dengan posisi dan pergerakan chart.' },
+    ],
   },
   {
     id: 7, featured: true,
@@ -77,6 +122,15 @@ const projects = [
     stack: ['React', 'Vite', 'Tailwind CSS', 'Framer Motion', 'Supabase', 'Firebase', 'React Router', 'React PDF', 'XLSX'],
     demo: 'https://wikrama-2.vercel.app',
     repo: null,
+    details: [
+      { label: 'Student Directory', desc: 'Direktori siswa per angkatan dengan profil lengkap dan pencarian.' },
+      { label: 'Alumni Archive', desc: 'Arsip alumni lengkap dengan data tahun lulus dan kontak.' },
+      { label: 'Real-time News', desc: 'Berita dan pengumuman real-time dengan sistem publikasi terintegrasi.' },
+      { label: 'Gallery & Media', desc: 'Galeri foto dan video kegiatan rayon.' },
+      { label: 'Achievement Data', desc: 'Data prestasi siswa yang bisa di-filter berdasarkan kategori dan tahun.' },
+      { label: 'Live Chat', desc: 'Fitur chat real-time untuk komunikasi internal rayon.' },
+      { label: 'Admin Panel', desc: 'Panel admin untuk mengelola konten, pengguna, dan data rayon.' },
+    ],
   },
   {
     id: 8, featured: true,
@@ -86,18 +140,68 @@ const projects = [
     stack: ['React', 'Express', 'MySQL'],
     demo: null,
     repo: 'https://github.com/msyafa-alg/frontend-sportbook',
+    details: [
+      { label: 'Online Booking', desc: 'Reservasi lapangan secara online dengan pemilihan tanggal dan jam.' },
+      { label: 'User Auth', desc: 'Autentikasi pengguna untuk manajemen pemesanan pribadi.' },
+      { label: 'Real-time Schedule', desc: 'Jadwal lapangan real-time — booking yang terisi langsung terlihat.' },
+      { label: 'Booking Management', desc: 'Manajemen pemesanan — riwayat, pembatalan, dan konfirmasi booking.' },
+      { label: 'Admin Dashboard', desc: 'Dashboard admin untuk mengelola lapangan, jadwal, dan pemesanan.' },
+    ],
+  },
+  {
+    id: 9, featured: true,
+    image: '/images/fraptools.png',
+    title: 'FrapPentest Ultra',
+    desc: 'Enterprise web security auditing tool untuk penetration tester dan bug hunter — automated, modular, dan report-ready dengan 6 modul inti.',
+    stack: ['Python', 'Async', 'Playwright', 'Security'],
+    demo: null,
+    repo: 'https://github.com/msyafa-alg/Frap-Pentest-Ultra',
+    details: [
+      { label: 'Async Crawler', desc: 'Crawl sampai 500 halaman secara paralel dengan aiohttp dan browser SPA crawling via Playwright (Chromium headless).' },
+      { label: 'Subdomain Discovery', desc: 'DNS brute-force dengan wordlist 80+ subdomain umum, DNS enumeration, dan Certificate Transparency logs lookup.' },
+      { label: 'Tech Fingerprinting', desc: 'Deteksi framework, CMS, WAF, server, dan infrastruktur dari HTML, headers, dan JS files dengan confidence score.' },
+      { label: 'Vuln Scanner', desc: 'Test SQLi, XSS, CSRF, exposed API docs, dan GraphQL introspection dengan multiple payload dan severity grading.' },
+      { label: 'Security Analyzer', desc: 'Audit 9 security header kritis dengan grading A-F, cookie security check (Secure, HttpOnly, SameSite), dan TLS/SSL analyzer.' },
+      { label: 'Multi-format Report', desc: 'Hasil scan dalam 4 format sekaligus: HTML visual dark-theme, JSON machine-readable, CSV findings, dan TXT summary.' },
+    ],
   },
 ]
 
-/* ── Tech badges with +N more ── */
-function TechBadges({ stack }) {
-  const visible = stack.slice(0, 3)
-  const extra = stack.length - 3
+/* ── Tech icon map ── */
+const techIcons = {
+  React: <FaReact style={{ color: '#61dafb' }} />,
+  Firebase: <SiFirebase style={{ color: '#ffca28' }} />,
+  JavaScript: <FaJs style={{ color: '#f7df1e' }} />,
+  Vercel: <SiVercel style={{ color: '#ffffff' }} />,
+  HTML: <FaHtml5 style={{ color: '#e34f26' }} />,
+  CSS: <FaCss3Alt style={{ color: '#264de4' }} />,
+  Laravel: <SiLaravel style={{ color: '#ff2d20' }} />,
+  PHP: <FaPhp style={{ color: '#8892be' }} />,
+  MySQL: <SiMysql style={{ color: '#f29111' }} />,
+  Vite: <SiVite style={{ color: '#646cff' }} />,
+  'Tailwind CSS': <SiTailwindcss style={{ color: '#38bdf8' }} />,
+  'Framer Motion': <SiFramer style={{ color: '#ffffff' }} />,
+  Supabase: <SiSupabase style={{ color: '#3ECF8E' }} />,
+  'React Router': <SiReactrouter style={{ color: '#f44250' }} />,
+  Express: <SiExpress style={{ color: '#cccccc' }} />,
+  'Node.js': <FaNodeJs style={{ color: '#339933' }} />,
+  PostgreSQL: <SiPostgresql style={{ color: '#336791' }} />,
+  Python: <FaPython style={{ color: '#3776AB' }} />,
+}
+
+function TechIcons({ stack }) {
+  const visible = stack.slice(0, 5)
+  const extra = stack.length - 5
   return (
-    <div className="flex flex-wrap gap-1.5">
-      {visible.map(t => <span key={t} className="badge">{t}</span>)}
+    <div className="flex items-center gap-1.5">
+      {visible.map(t => (
+        <span key={t} className="w-7 h-7 rounded-lg flex items-center justify-center"
+          style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', fontSize: '0.85rem' }}>
+          {techIcons[t] || <FiCode size={11} style={{ color: 'var(--text-muted)' }} />}
+        </span>
+      ))}
       {extra > 0 && (
-        <span className="badge" style={{ background: 'var(--accent-subtle)', color: 'var(--accent)', border: '1px solid transparent' }}>
+        <span className="text-[10px] font-medium px-1.5" style={{ color: 'var(--text-muted)' }}>
           +{extra}
         </span>
       )}
@@ -123,7 +227,7 @@ function ProjectDetail({ p, onClose }) {
         exit={{ opacity: 0, scale: 0.92, y: 20 }}
         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         onClick={e => e.stopPropagation()}
-        className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl"
+        className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl"
         style={{
           background: 'var(--bg-card)',
           border: '1px solid var(--border)',
@@ -138,21 +242,35 @@ function ProjectDetail({ p, onClose }) {
         </button>
 
         {p.image && (
-          <div className="relative w-full h-52 overflow-hidden" style={{ background: 'var(--bg-elevated)' }}>
+          <div className="relative w-full h-28 overflow-hidden" style={{ background: 'var(--bg-elevated)' }}>
             <img src={p.image} alt={p.title}
               className="w-full h-full object-cover object-top" />
             <div className="absolute inset-0"
-              style={{ background: 'linear-gradient(to top, var(--bg-card) 0%, transparent 40%)' }} />
+              style={{ background: 'linear-gradient(to top, var(--bg-card) 0%, transparent 30%)' }} />
           </div>
         )}
 
-        <div className="p-6 pt-5">
-          <p className="text-base font-bold mb-2" style={{ color: 'var(--text-primary)' }}>{p.title}</p>
-          <p className="text-sm leading-relaxed mb-5" style={{ color: 'var(--text-muted)' }}>{p.desc}</p>
-
-          <div className="flex flex-wrap gap-1.5 mb-5">
-            {p.stack.map(t => <span key={t} className="badge">{t}</span>)}
+        <div className="p-6">
+          <div className="flex items-start justify-between gap-4 mb-5">
+            <div className="flex-1 min-w-0">
+              <p className="text-lg font-bold mb-1" style={{ color: 'var(--text-primary)' }}>{p.title}</p>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>{p.desc}</p>
+            </div>
+            <div className="flex-shrink-0">
+              <TechIcons stack={p.stack} />
+            </div>
           </div>
+
+          {p.details && (
+            <div className="grid grid-cols-2 gap-2.5 mb-5">
+              {p.details.map((d, i) => (
+                <div key={i} className="p-3 rounded-xl" style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)' }}>
+                  <p className="text-xs font-semibold mb-0.5" style={{ color: 'var(--text-primary)' }}>{d.label}</p>
+                  <p className="text-[11px] leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{d.desc}</p>
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="flex items-center gap-3 pt-4" style={{ borderTop: '1px solid var(--border)' }}>
             {p.demo && (
@@ -180,74 +298,10 @@ function ProjectDetail({ p, onClose }) {
   )
 }
 
-/* ── Hero card (first featured — premium showcase) ── */
-function HeroCard({ p, onSelect }) {
-  const { t } = useLang()
-  const [hov, setHov] = useState(false)
-  return (
-    <motion.div
-      onClick={() => onSelect(p)}
-      onHoverStart={() => setHov(true)} onHoverEnd={() => setHov(false)}
-      initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="relative rounded-xl overflow-hidden cursor-pointer card-lift mb-5"
-      style={{
-        background: 'var(--bg-card)',
-        border: `1px solid ${hov ? 'var(--border-hover)' : 'var(--border)'}`,
-        boxShadow: hov ? 'var(--shadow-md)' : 'var(--shadow-sm)',
-        transition: 'border-color 0.2s, box-shadow 0.2s',
-      }}>
-      {/* Gradient accent line */}
-      <div className="absolute top-0 left-0 right-0 h-px z-10"
-        style={{ background: 'linear-gradient(90deg, transparent, var(--accent), transparent)' }} />
-      <div className="relative h-56 md:h-72 overflow-hidden" style={{ background: 'var(--bg-elevated)' }}>
-        {p.image && (
-          <img src={p.image} alt={p.title}
-            className="w-full h-full object-cover object-top transition-transform duration-700"
-            style={{ transform: hov ? 'scale(1.06)' : 'scale(1)' }} />
-        )}
-        <div className="absolute inset-0"
-          style={{ background: 'linear-gradient(to top, var(--bg-card) 0%, transparent 40%)' }} />
-        {/* Content overlay at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 pb-5">
-          <p className="text-xl font-bold mb-1.5 font-display" style={{ color: 'var(--text-primary)' }}>{p.title}</p>
-          <p className="text-sm leading-relaxed mb-3 line-clamp-2" style={{ color: 'var(--text-secondary)' }}>{p.desc}</p>
-          <TechBadges stack={p.stack} />
-        </div>
-        {/* Hover overlay — glass buttons */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: hov ? 1 : 0 }}
-          transition={{ duration: 0.25 }}
-          className="absolute inset-0 flex items-center justify-center gap-3"
-          style={{ background: hov ? 'rgba(0,0,0,0.35)' : 'transparent' }}>
-          {p.demo && (
-            <a href={p.demo} target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-4 py-2.5 rounded-lg text-xs font-semibold backdrop-blur-md transition-transform duration-200"
-              style={{ background: 'rgba(255,255,255,0.95)', color: 'var(--bg)' }}
-              onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.04)'}
-              onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
-              <FiExternalLink size={12} /> {t.view}
-            </a>
-          )}
-          {p.repo && (
-            <a href={p.repo} target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-4 py-2.5 rounded-lg text-xs font-semibold backdrop-blur-md transition-transform duration-200"
-              style={{ background: 'rgba(0,0,0,0.55)', border: '1px solid rgba(255,255,255,0.12)', color: '#fff' }}
-              onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.04)'}
-              onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
-              <FiGithub size={12} /> {t.github}
-            </a>
-          )}
-        </motion.div>
-      </div>
-    </motion.div>
-  )
-}
 
-/* ── Featured card ── */
-function FeaturedCard({ p, index, onSelect }) {
+
+/* ── Project card ── */
+function ProjectCard({ p, index, onSelect }) {
   const { t } = useLang()
   const [hov, setHov] = useState(false)
   return (
@@ -265,7 +319,7 @@ function FeaturedCard({ p, index, onSelect }) {
         boxShadow: hov ? 'var(--shadow-md)' : 'var(--shadow-sm)',
         transition: 'border-color 0.2s, box-shadow 0.2s',
       }}>
-      <div className="relative h-44 overflow-hidden" style={{ background: 'var(--bg-elevated)' }}>
+      <div className="relative h-52 overflow-hidden" style={{ background: 'var(--bg-elevated)' }}>
         {p.image && (
           <img src={p.image} alt={p.title}
             className="w-full h-full object-cover object-top transition-transform duration-700"
@@ -295,76 +349,27 @@ function FeaturedCard({ p, index, onSelect }) {
           )}
         </motion.div>
       </div>
-      <div className="p-5">
-        <p className="text-sm font-semibold mb-1.5" style={{ color: 'var(--text-primary)' }}>{p.title}</p>
-        <p className="text-xs leading-relaxed mb-4 line-clamp-2" style={{ color: 'var(--text-muted)' }}>{p.desc}</p>
-        <TechBadges stack={p.stack} />
+      <div className="p-6">
+        <p className="text-base font-semibold mb-1.5" style={{ color: 'var(--text-primary)' }}>{p.title}</p>
+        <p className="text-sm leading-relaxed mb-4 line-clamp-2" style={{ color: 'var(--text-muted)' }}>{p.desc}</p>
+        <TechIcons stack={p.stack} />
       </div>
     </motion.div>
   )
 }
 
-/* ── Secondary card ── */
-function SecondaryCard({ p, index, onSelect }) {
-  const [hov, setHov] = useState(false)
-  return (
-    <motion.div
-      onClick={() => onSelect(p)}
-      onHoverStart={() => setHov(true)} onHoverEnd={() => setHov(false)}
-      initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.08, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -3, transition: { duration: 0.2 } }}
-      className="rounded-xl overflow-hidden cursor-pointer card-lift"
-      style={{
-        background: 'var(--bg-card)',
-        border: `1px solid ${hov ? 'var(--border-hover)' : 'var(--border)'}`,
-        boxShadow: hov ? 'var(--shadow-sm)' : 'var(--shadow-sm)',
-        transition: 'border-color 0.2s, box-shadow 0.2s',
-      }}>
-      <div className="relative h-28 overflow-hidden" style={{ background: 'var(--bg-elevated)' }}>
-        {p.image && (
-          <img src={p.image} alt={p.title}
-            className="w-full h-full object-cover object-top transition-transform duration-700"
-            style={{ transform: hov ? 'scale(1.06)' : 'scale(1)' }} />
-        )}
-        <div className="absolute inset-0"
-          style={{ background: 'linear-gradient(to top, var(--bg-card) 0%, transparent 55%)' }} />
-      </div>
-      <div className="p-4">
-        <div className="flex items-start justify-between gap-2 mb-1.5">
-          <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{p.title}</p>
-          <a href={p.demo || p.repo} target="_blank" rel="noopener noreferrer"
-            className="flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center transition-colors"
-            style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}
-            onMouseEnter={e => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--border-hover)' }}
-            onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)'; e.currentTarget.style.borderColor = 'var(--border)' }}>
-            <FiArrowUpRight size={11} />
-          </a>
-        </div>
-        <p className="text-xs leading-relaxed mb-3 line-clamp-2" style={{ color: 'var(--text-muted)' }}>{p.desc}</p>
-        <TechBadges stack={p.stack} />
-      </div>
-    </motion.div>
-  )
-}
+
 
 export default function Projects() {
   const { t } = useLang()
-  const [activeFilter, setActiveFilter] = useState('All')
   const [selected, setSelected] = useState(null)
-  const filterRef = useRef(null)
 
-  const allTags = ['All', ...Array.from(new Set(projects.flatMap(p => p.stack)))]
-
-  const filtered = activeFilter === 'All'
-    ? projects
-    : projects.filter(p => p.stack.includes(activeFilter))
-
-  const filteredFeatured  = filtered.filter(p => p.featured)
-  const filteredSecondary = filtered.filter(p => !p.featured)
-
-  const [heroProject, ...restFeatured] = filteredFeatured
+  useEffect(() => {
+    if (selected) {
+      const el = document.querySelector('.flex-1.min-w-0.h-full')
+      if (el) el.scrollTop = 0
+    }
+  }, [selected])
 
   return (
     <>
@@ -372,68 +377,12 @@ export default function Projects() {
         <div className="px-6 md:px-8">
           <SectionLabel number="04" label={t.nav.projects} heading={t.thingsIBuilt} />
 
-          {/* Horizontal scroll filter bar */}
-          <div ref={filterRef}
-            className="flex gap-2 mb-6 overflow-x-auto flex-nowrap pb-1"
-            style={{ scrollbarWidth: 'none' }}>
-            {allTags.map(tag => {
-              const on = activeFilter === tag
-              return (
-                <motion.button key={tag} onClick={() => setActiveFilter(tag)}
-                  whileTap={{ scale: 0.96 }}
-                  className="flex-shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
-                  style={{
-                    background: on ? 'var(--text-primary)' : 'var(--bg-card)',
-                    color: on ? 'var(--bg)' : 'var(--text-muted)',
-                    border: `1px solid ${on ? 'var(--text-primary)' : 'var(--border)'}`,
-                  }}>
-                  {tag === 'All' ? t.allFilter : tag}
-                </motion.button>
-              )
-            })}
+          <div className="grid sm:grid-cols-2 gap-6">
+            {projects.map((p, i) => <ProjectCard key={p.id} p={p} index={i} onSelect={setSelected} />)}
           </div>
-
-          <AnimatePresence mode="wait">
-            <motion.div key={activeFilter}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}>
-
-              {/* Hero project — first featured as premium hero card */}
-              {heroProject && (
-                <HeroCard p={heroProject} onSelect={setSelected} />
-              )}
-
-              {/* Featured 2-col grid */}
-              {restFeatured.length > 0 && (
-                <div className="grid sm:grid-cols-2 gap-4 mb-4">
-                  {restFeatured.map((p, i) => <FeaturedCard key={p.id} p={p} index={i} onSelect={setSelected} />)}
-                </div>
-              )}
-
-              {/* Secondary 3-col grid */}
-              {filteredSecondary.length > 0 && (
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {filteredSecondary.map((p, i) => <SecondaryCard key={p.id} p={p} index={i} onSelect={setSelected} />)}
-                </div>
-              )}
-
-              {/* Empty state */}
-              {filtered.length === 0 && (
-                <div className="py-16 text-center">
-                  <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-                    {t.noProjects} <span style={{ color: 'var(--text-primary)' }}>{activeFilter === 'All' ? t.allFilter : activeFilter}</span>.
-                  </p>
-                </div>
-              )}
-
-            </motion.div>
-          </AnimatePresence>
         </div>
       </SectionWrapper>
 
-      {/* Floating detail */}
       <AnimatePresence>
         {selected && <ProjectDetail p={selected} onClose={() => setSelected(null)} />}
       </AnimatePresence>

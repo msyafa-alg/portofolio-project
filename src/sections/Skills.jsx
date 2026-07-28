@@ -4,8 +4,9 @@ import {
   FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaPhp,
 } from 'react-icons/fa'
 import {
-  SiTailwindcss, SiExpress, SiVercel, SiSupabase, SiPostgresql, SiMysql, SiLaravel,
+  SiTailwindcss, SiExpress, SiVercel, SiSupabase, SiPostgresql, SiMysql, SiLaravel, SiLinux,
 } from 'react-icons/si'
+import { FiServer } from 'react-icons/fi'
 import SectionWrapper from '../components/SectionWrapper'
 import SectionLabel from '../components/SectionLabel'
 import { useLang } from '../context/LangContext'
@@ -147,6 +148,22 @@ const supportingSkills = [
     level: 'Beginner',
     desc: 'Server-side scripting for dynamic web pages.',
     tags: ['OOP', 'PDO', 'Sessions'],
+  },
+  {
+    icon: <SiLinux style={{ color: '#fcc624' }} />,
+    name: 'Linux',
+    category: 'DevOps',
+    level: 'Beginner',
+    desc: 'Basic command-line usage, navigation, and server management on Linux systems.',
+    tags: ['Terminal', 'CLI', 'Basic Admin'],
+  },
+  {
+    icon: <FiServer style={{ color: '#ffffff' }} />,
+    name: 'VPS Deployment',
+    category: 'Deployment',
+    level: 'Beginner',
+    desc: 'Deploying and managing web applications on virtual private servers.',
+    tags: ['Nginx', 'SSH', 'DNS'],
   },
 ]
 

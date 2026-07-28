@@ -17,7 +17,7 @@ export const translations = {
 
     // Hero
     openToWork: 'Open To Work',
-    bio: (name) => `IT student at ${name} focused on building clean, efficient, and modern web experiences. Passionate about frontend development.`,
+    bio: (name) => `IT student at ${name} focused on building clean, efficient, and modern web experiences. Passionate about fullstack development.`,
     featuredProjects: 'Featured Projects',
     seeAll: 'See all',
     toolsUsed: 'Tools That I Have Used',
@@ -109,7 +109,7 @@ export const translations = {
 
     // Hero
     openToWork: 'Buka Peluang Kerja',
-    bio: (name) => `Siswa IT di ${name} yang fokus membangun pengalaman web yang bersih, efisien, dan modern. Passionate di frontend development.`,
+    bio: (name) => `Siswa IT di ${name} yang fokus membangun pengalaman web yang bersih, efisien, dan modern. Passionate di fullstack development.`,
     featuredProjects: 'Proyek Unggulan',
     seeAll: 'Lihat semua',
     toolsUsed: 'Tools yang Saya Gunakan',

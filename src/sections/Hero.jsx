@@ -7,7 +7,7 @@ import useTyping from '../hooks/useTyping'
 import { useLang } from '../context/LangContext'
 
 /* ── Data ── */
-const roles = ['Frontend Developer', 'IT Student', 'Web Builder']
+const roles = ['Frontend Developer', 'Fullstack Developer', 'Web Builder']
 
 const tools = [
   { icon: <FaReact style={{ color: '#61dafb' }} />,       name: 'React'        },
